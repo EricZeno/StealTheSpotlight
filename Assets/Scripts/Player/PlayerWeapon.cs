@@ -2,18 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerWeapon : MonoBehaviour {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+public interface PlayerWeaponInterface {
+    void UnsetWeapon();
+    void SetWeapon(int weaponID);
+}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+[DisallowMultipleComponent]
+public class PlayerWeapon : MonoBehaviour, PlayerWeaponInterface {
 
     #region Input Receivers
     // Executes attack functionality when player attack input is received

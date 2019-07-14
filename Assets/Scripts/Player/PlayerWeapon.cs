@@ -5,6 +5,8 @@ using UnityEngine;
 public interface PlayerWeaponInterface {
     void UnsetWeapon();
     void SetWeapon(int weaponID);
+
+    void UseWeapon();
 }
 
 [DisallowMultipleComponent]

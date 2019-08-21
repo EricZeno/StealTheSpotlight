@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public enum UnitType {
@@ -15,79 +16,11 @@ public enum Status {
     Slow
 }
 
-[System.Serializable]
-public abstract class UnitStats
+//[System.Serializable]
+public abstract class UnitStats : MonoBehaviour
 {
-    #region Private Attributes
-    //Determines the type of the unit for external use
-    private UnitType p_Type;
 
-    //Stunned units cannot input movement, attack, ability, or inventory commands
-    private bool p_IsStunned = false;
-    public void Stun(float duration = -1) {
-        p_IsStunned = true;
-
-        if (duration != -1) {
-
-        }
-    }
-    public void UnStun() {
-        p_IsStunned = false;
-    }
-
-    //Rooted units cannot input movement commands
-    private bool p_IsRooted = false;
-    public void Root(float duration = -1) {
-        p_IsRooted = true;
-
-        if (duration != -1) {
-
-        }
-    }
-    public void UnRoot()
-    {
-        p_IsRooted = false;
-    }
-
-    //Invulnerable units cannot lose health
-    private bool p_IsInvuln = false;
-    public void Invuln(float duration = -1) {
-        p_IsInvuln = true;
-
-        if (duration != -1) {
-
-        }
-    }
-    public void UnInvuln() {
-        p_IsInvuln = false;
-    }
-
-    //Determines whether a unit has attacks enabled
-    private bool p_CanAttack = true;
-    public void Disarm(float duration = -1) {
-        p_CanAttack = false;
-
-        if (duration != -1) {
-
-        }
-    }
-    public void Rearm() {
-        p_CanAttack = true;
-    }
-
-    //The current movement speed of a unit
-    private int p_CurrMovementSpeed;
-    public int CurrMovementSpeed {
-        get {
-            return p_CurrMovementSpeed;
-        }
-    }
-
-    //Currently not in use. Exists for potential use for Enemy and class power/health calculation
-    private int p_Level;
-    #endregion
-
-    #region Public Attributes
+    #region Public Variables
     [SerializeField]
     [Tooltip("The power of a unit determines the strength of a unit, including the base amount of damage it deals, before weapon bonuses, and any healing it does")]
     private int p_Power;
@@ -123,6 +56,76 @@ public abstract class UnitStats
         set {
             p_Tenacity = value;
         }
+    }
+    #endregion
+
+    #region Private Attributes
+    //Determines the type of the unit for external use
+    private UnitType p_Type;
+
+    //Invulnerable units cannot lose health
+    private bool p_IsInvuln = false;
+    public void Invuln(float duration = -1) {
+        p_IsInvuln = true;
+
+        if (duration != -1) {
+            StartCoroutine(EffectDuration(duration, true, UnInvuln, Status.Burn));
+        }
+    }
+    public void UnInvuln(Status status) {
+        p_IsInvuln = false;
+    }
+
+    //Determines whether a unit has attacks enabled
+    private bool p_CanAttack = true;
+    public void Disarm(float duration = -1) {
+        p_CanAttack = false;
+
+        if (duration != -1) {
+            StartCoroutine(EffectDuration(duration, true, Rearm, Status.Burn));
+        }
+    }
+    public void Rearm(Status status) {
+        p_CanAttack = true;
+    }
+
+    //The current movement speed of a unit
+    private int p_CurrMovementSpeed;
+    public int CurrMovementSpeed {
+        get {
+            return p_CurrMovementSpeed;
+        }
+    }
+
+    //Currently not in use. Exists for potential use for Enemy and class power/health calculation
+    private int p_Level;
+    #endregion
+
+    #region Crowd Control
+    //Stunned units cannot input movement, attack, ability, or inventory commands
+    private bool p_IsStunned = false;
+    public void Stun(float duration = -1) {
+        p_IsStunned = true;
+
+        if (duration != -1) {
+            StartCoroutine(EffectDuration(duration, true, UnStun, Status.Burn));
+        }
+    }
+    public void UnStun(Status status) {
+        p_IsStunned = false;
+    }
+
+    //Rooted units cannot input movement commands
+    private bool p_IsRooted = false;
+    public void Root(float duration = -1) {
+        p_IsRooted = true;
+
+        if (duration != -1) {
+            StartCoroutine(EffectDuration(duration, true, UnRoot, Status.Burn));
+        }
+    }
+    public void UnRoot(Status status) {
+        p_IsRooted = false;
     }
     #endregion
 
@@ -180,7 +183,7 @@ public abstract class UnitStats
     private bool p_Poison = false;
     private bool p_Slow = false;
 
-    public void AddStatus(Status status, float duration = -1) {
+    public void AddStatus(Status status, bool isCrowdControl, float duration = -1) {
         switch(status) {
             case Status.Burn: p_Burn = true;
                 break;
@@ -195,11 +198,11 @@ public abstract class UnitStats
         }
 
         if (duration != -1) {
-
+            StartCoroutine(EffectDuration(duration, isCrowdControl, RemoveStatus, status));
         }
     }
 
-    public void RemoveStatus(Status status) {
+    private void RemoveStatus(Status status) {
         switch (status) {
             case Status.Burn:
                 p_Burn = false;
@@ -220,8 +223,8 @@ public abstract class UnitStats
     }
     #endregion
 
-    #region Constructor
-    public UnitStats(UnitType unitType, int baseHealth) {
+    #region PseudoConstructor
+    public void InitUnitStats(UnitType unitType, int baseHealth) {
         p_Type = unitType;
 
         p_BaseHealth = baseHealth;
@@ -275,9 +278,12 @@ public abstract class UnitStats
     #endregion
 
     #region Misc
+
+    private delegate void EffectRemover(Status status);
+
     //This is a timer that will be started whenever an effect is applied to the unit.
     //TODO: It will take in a function to remove the effect and call it once the timer expires.
-    private IEnumerator EffectDuration(float duration, bool isCrowdControl) {
+    private IEnumerator EffectDuration(float duration, bool isCrowdControl, EffectRemover RemoveEffect, Status status) {
         if (isCrowdControl) {
             duration = duration * (1 - Tenacity);
         }
@@ -285,6 +291,7 @@ public abstract class UnitStats
             duration -= Time.deltaTime;
             yield return null;
         }
+        RemoveEffect(status);
     }
     #endregion
 }

@@ -2,40 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Type { player, enemy, boss }
-public enum Status { burn, freeze, paraylze, poison, slow }
+public enum UnitType {
+    Player,
+    Enemy,
+    Boss
+}
+public enum Status {
+    Burn,
+    Freeze,
+    Paralyze,
+    Poison,
+    Slow
+}
 
 [System.Serializable]
 public abstract class UnitStats
 {
     #region Private Attributes
     //Determines the type of the unit for external use
-    private Type p_Type;
+    private UnitType p_Type;
 
     //Stunned units cannot input movement, attack, ability, or inventory commands
     private bool p_IsStunned = false;
-    public void Stun(float duration = -1)
-    {
+    public void Stun(float duration = -1) {
         p_IsStunned = true;
 
-        if (duration != -1)
-        {
+        if (duration != -1) {
 
         }
     }
-    public void UnStun()
-    {
+    public void UnStun() {
         p_IsStunned = false;
     }
 
     //Rooted units cannot input movement commands
     private bool p_IsRooted = false;
-    public void Root(float duration = -1)
-    {
+    public void Root(float duration = -1) {
         p_IsRooted = true;
 
-        if (duration != -1)
-        {
+        if (duration != -1) {
 
         }
     }
@@ -46,34 +51,36 @@ public abstract class UnitStats
 
     //Invulnerable units cannot lose health
     private bool p_IsInvuln = false;
-    public void Invuln(float duration = -1)
-    {
+    public void Invuln(float duration = -1) {
         p_IsInvuln = true;
 
-        if (duration != -1)
-        {
+        if (duration != -1) {
 
         }
     }
-    public void UnInvuln()
-    {
+    public void UnInvuln() {
         p_IsInvuln = false;
     }
 
     //Determines whether a unit has attacks enabled
     private bool p_CanAttack = true;
-    public void Disarm(float duration = -1)
-    {
+    public void Disarm(float duration = -1) {
         p_CanAttack = false;
 
-        if (duration != -1)
-        {
+        if (duration != -1) {
 
         }
     }
-    public void Rearm()
-    {
+    public void Rearm() {
         p_CanAttack = true;
+    }
+
+    //The current movement speed of a unit
+    private int p_CurrMovementSpeed;
+    public int CurrMovementSpeed {
+        get {
+            return p_CurrMovementSpeed;
+        }
     }
 
     //Currently not in use. Exists for potential use for Enemy and class power/health calculation
@@ -82,16 +89,13 @@ public abstract class UnitStats
 
     #region Public Attributes
     [SerializeField]
-    [Tooltip("The power of a unit determines the base amount of damage it deals, before weapon bonuses")]
+    [Tooltip("The power of a unit determines the strength of a unit, including the base amount of damage it deals, before weapon bonuses, and any healing it does")]
     private int p_Power;
-    public int Power
-    {
-        get
-        {
+    public int Power {
+        get {
             return p_Power;
         }
-        set
-        {
+        set {
             p_Power = value;
         }
     }
@@ -99,41 +103,24 @@ public abstract class UnitStats
     [SerializeField]
     [Tooltip("The base movement speed of a unit, before any modifiers")]
     private int p_BaseMovementSpeed;
-    public int BaseMovementSpeed
-    {
-        get
-        {
+    public int BaseMovementSpeed {
+        get {
             return p_BaseMovementSpeed;
         }
-        set
-        {
+        set {
             p_BaseMovementSpeed = value;
         }
     }
 
     [SerializeField]
-    [Tooltip("The current movement speed of a unit")]
-    private int p_CurrMovementSpeed;
-    public int CurrMovementSpeed
-    {
-        get
-        {
-            return p_CurrMovementSpeed;
-        }
-    }
-
-    [SerializeField]
-    [Tooltip("Tenacity reduces crowd control duration by a percentage.")]
+    [Tooltip("Tenacity multiplicatively reduces the duration of crowd control (stun, root...) applied to the unit")]
     [Range(0, 1)]
     private int p_Tenacity;
-    public int Tenacity
-    {
-        get
-        {
+    public int Tenacity {
+        get {
             return p_Tenacity;
         }
-        set
-        {
+        set {
             p_Tenacity = value;
         }
     }
@@ -146,14 +133,11 @@ public abstract class UnitStats
     [SerializeField]
     [Tooltip("Max health is after all modifiers. This is the effective health.")]
     private int p_MaxHealth;
-    public int MaxHealth
-    {
-        get
-        {
+    public int MaxHealth {
+        get {
             return p_MaxHealth;
         }
-        set
-        {
+        set {
             int tempMaxHealth = p_MaxHealth;
             p_MaxHealth = value;
             p_CurrHealth = p_CurrHealth * p_MaxHealth / tempMaxHealth;
@@ -163,27 +147,28 @@ public abstract class UnitStats
     //The current amount of hitpoints the unit has
     private int p_CurrHealth;
 
-    public void TakeDamage(int damage)
-    {
-        if(IsInvuln())
-        {
+    public void TakeDamage(int damage) {
+        if(IsInvuln()) {
             return;
         }
 
         p_CurrHealth -= damage;
-        if (p_CurrHealth <= 0)
-        {
+        if (p_CurrHealth <= 0) {
             KillUnit();
         }
     }
 
-    public void Heal(int healing)
-    {
+    public void Heal(int healing) {
         p_CurrHealth += healing;
-        if (p_CurrHealth > MaxHealth)
-        {
+        if (p_CurrHealth > MaxHealth) {
             p_CurrHealth = MaxHealth;
         }
+    }
+
+    //This should be overriden by the subclass, as each unit type will require its own sequence
+    private void KillUnit()
+    {
+        gameObject.SetActive(false);
     }
     #endregion
 
@@ -195,45 +180,40 @@ public abstract class UnitStats
     private bool p_Poison = false;
     private bool p_Slow = false;
 
-    public void AddStatus(Status status, float duration = -1)
-    {
-        switch(status)
-        {
-            case Status.burn: p_Burn = true;
+    public void AddStatus(Status status, float duration = -1) {
+        switch(status) {
+            case Status.Burn: p_Burn = true;
                 break;
-            case Status.freeze: p_Freeze = true;
+            case Status.Freeze: p_Freeze = true;
                 break;
-            case Status.paraylze: p_Paralyze = true;
+            case Status.Paralyze: p_Paralyze = true;
                 break;
-            case Status.poison: p_Poison = true;
+            case Status.Poison: p_Poison = true;
                 break;
-            case Status.slow: p_Slow = true;
+            case Status.Slow: p_Slow = true;
                 break;
         }
 
-        if (duration != -1)
-        {
+        if (duration != -1) {
 
         }
     }
 
-    public void RemoveStatus(Status status)
-    {
-        switch (status)
-        {
-            case Status.burn:
+    public void RemoveStatus(Status status) {
+        switch (status) {
+            case Status.Burn:
                 p_Burn = false;
                 break;
-            case Status.freeze:
+            case Status.Freeze:
                 p_Freeze = false;
                 break;
-            case Status.paraylze:
+            case Status.Paralyze:
                 p_Paralyze = false;
                 break;
-            case Status.poison:
+            case Status.Poison:
                 p_Poison = false;
                 break;
-            case Status.slow:
+            case Status.Slow:
                 p_Slow = false;
                 break;
         }
@@ -241,8 +221,7 @@ public abstract class UnitStats
     #endregion
 
     #region Constructor
-    public UnitStats(Type unitType, int baseHealth)
-    {
+    public UnitStats(UnitType unitType, int baseHealth) {
         p_Type = unitType;
 
         p_BaseHealth = baseHealth;
@@ -251,78 +230,61 @@ public abstract class UnitStats
     #endregion
 
     #region Checkers
-    public bool IsPlayer()
-    {
-        return p_Type == Type.player;
+    public bool IsPlayer() {
+        return p_Type == UnitType.Player;
     }
-    public bool IsEnemy()
-    {
-        return p_Type == Type.enemy;
+    public bool IsEnemy() {
+        return p_Type == UnitType.Enemy;
     }
-    public bool IsBoss()
-    {
-        return p_Type == Type.boss;
+    public bool IsBoss() {
+        return p_Type == UnitType.Boss;
     }
 
-    public bool IsStunned()
-    {
+    public bool IsStunned() {
         return p_IsStunned;
     }
-    public bool IsRooted()
-    {
+    public bool IsRooted() {
         return p_IsRooted;
     }
-    public bool CanAttack()
-    {
+    public bool CanAttack() {
         return p_CanAttack;
     }
-    public bool IsInvuln()
-    {
+    public bool IsInvuln() {
         return p_IsInvuln;
     }
 
-    public bool HasBurn()
-    {
+    public bool HasBurn() {
         return p_Burn;
     }
-    public bool HasFreeze()
-    {
+    public bool HasFreeze() {
         return p_Freeze;
     }
-    public bool HasParalyze()
-    {
+    public bool HasParalyze() {
         return p_Paralyze;
     }
-    public bool HasPoison()
-    {
+    public bool HasPoison() {
         return p_Poison;
     }
-    public bool HasSlow()
-    {
+    public bool HasSlow() {
         return p_Slow;
     }
 
-    private bool IsAlive()
-    {
+    private bool IsAlive() {
         return p_CurrHealth > 0;
     }
     #endregion
 
     #region Misc
-    private IEnumerator EffectDuration(float duration, bool isCrowdControl)
-    {
-        if (isCrowdControl)
-        {
+    //This is a timer that will be started whenever an effect is applied to the unit.
+    //TODO: It will take in a function to remove the effect and call it once the timer expires.
+    private IEnumerator EffectDuration(float duration, bool isCrowdControl) {
+        if (isCrowdControl) {
             duration = duration * (1 - Tenacity);
         }
         while (duration > 0) {
             duration -= Time.deltaTime;
             yield return null;
         }
-    }
-    private void KillUnit()
-    {
-        gameObject.SetActive(false);
     }
     #endregion
 }

@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Scenes/EricScene.unity.meta
 guid: 5680a353daddb45a4b9797ca293430eb
+=======
+guid: e819db3e24808194e9b104d9413b0e53
+folderAsset: yes
+>>>>>>> e5e60b8279db03067a702750cd4d939c7e4ec061:Assets/Scripts/Player/Misc.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

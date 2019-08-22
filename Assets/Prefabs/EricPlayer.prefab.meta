@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Prefabs/EricPlayer.prefab.meta
 guid: 28b06bba6a0454bd78ae8a3112a916fa
 PrefabImporter:
+=======
+guid: 916eb07cc88538f40a80e1d294eaf134
+folderAsset: yes
+DefaultImporter:
+>>>>>>> e5e60b8279db03067a702750cd4d939c7e4ec061:Assets/Scripts/Player.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

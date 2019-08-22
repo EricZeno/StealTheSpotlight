@@ -1,6 +1,10 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Scripts/EricPlayer.meta
 guid: 14f95afa06f5c40358e6d613820080cb
 folderAsset: yes
+=======
+guid: 44e3b859bd22dee4290a7d302f523ca8
+>>>>>>> e5e60b8279db03067a702750cd4d939c7e4ec061:Assets/Scenes/MertScene.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

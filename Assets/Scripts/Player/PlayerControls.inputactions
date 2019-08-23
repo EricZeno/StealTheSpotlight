@@ -62,7 +62,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "SwapWeapons",
+                    "name": "SwitchWeapons",
                     "type": "Button",
                     "id": "525ff357-afed-45b0-9103-52fcbd4dbf0a",
                     "expectedControlType": "",
@@ -73,6 +73,14 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "ef458cbf-4d09-40a9-806e-891459fd321f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "DropWeapon",
+                    "type": "Button",
+                    "id": "2281d46b-3ba4-4de4-a399-a10cbed6c907",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -163,7 +171,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwapWeapons",
+                    "action": "SwitchWeapons",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -175,6 +183,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "85511ee0-8036-48a7-a0b7-843db47a0241",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DropWeapon",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -193,7 +212,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Drop",
+                    "name": "DropItem",
                     "type": "Button",
                     "id": "8390ea40-1312-4751-b35e-e19889bb41d9",
                     "expectedControlType": "",
@@ -201,7 +220,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Close",
+                    "name": "CloseInventory",
                     "type": "Button",
                     "id": "d6f27193-ab4b-4b1d-9272-50d7db544b14",
                     "expectedControlType": "",
@@ -215,13 +234,21 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "bd9e6015-f2fe-47d3-8fd2-d5d9ec5340a6",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "994496ae-ca8b-44f2-bd94-08537411b620",
-                    "path": "<Gamepad>/leftStick/left",
+                    "path": "<Gamepad>/rightStick/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -236,7 +263,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Drop",
+                    "action": "DropItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -247,18 +274,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Close",
+                    "action": "CloseInventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "4d91d237-2fd2-46aa-b4e9-fc10b50afe3d",
-                    "path": "<Gamepad>/leftStick/right",
+                    "path": "<Gamepad>/rightStick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "CycleRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "edfc3abf-8ee2-4920-a4f1-5707180e0598",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

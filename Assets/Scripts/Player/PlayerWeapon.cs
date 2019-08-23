@@ -15,4 +15,13 @@ public class PlayerWeapon : MonoBehaviour
     {
         
     }
+
+    #region Input Receivers
+
+    private void OnAttack()
+    {
+        Debug.Log("Detected attack input");
+    }
+
+    #endregion
 }

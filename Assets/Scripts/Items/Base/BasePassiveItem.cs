@@ -15,8 +15,10 @@ public interface IBasePassiveItem {
 }
 
 public abstract class BasePassiveItem : BaseItem, IBasePassiveItem {
-    #region Private Variables
-    private EPassiveItemActivationType p_ActivationType;
+    #region Editor Variables
+    [SerializeField]
+    [Tooltip("When the effect of this item should activate.")]
+    private EPassiveItemActivationType m_ActivationType;
     #endregion
 
     #region Initialization
@@ -24,7 +26,7 @@ public abstract class BasePassiveItem : BaseItem, IBasePassiveItem {
         p_Type = EItemType.PASSIVE;
     }
     #endregion
-
+    
     #region Base Passive Item Interface Methods
     public abstract void ApplyEffect();
     public abstract void RemoveEffect();

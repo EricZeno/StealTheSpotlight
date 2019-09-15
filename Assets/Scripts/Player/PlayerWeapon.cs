@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerWeapon : MonoBehaviour
-{
+public class PlayerWeapon : MonoBehaviour {
     // Start is called before the first frame update
     void Start()
     {
@@ -15,4 +14,11 @@ public class PlayerWeapon : MonoBehaviour
     {
         
     }
+
+    #region Input Receivers
+    // Executes attack functionality when player attack input is received
+    private void OnAttack() {
+        Debug.Log("Detected attack input");
+    }
+    #endregion
 }

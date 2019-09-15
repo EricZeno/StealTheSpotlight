@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public enum EUnitType {
     Player,
@@ -83,7 +84,7 @@ public abstract class UnitStats
         p_Type = unitType;
 
         p_BaseHealth = baseHealth;
-        MaxHealth = p_BaseHealth;
+        //MaxHealth = p_BaseHealth;
     }
     #endregion
 
@@ -140,7 +141,7 @@ public abstract class UnitStats
 
         //Replace this to instead call UnitManager.RemoveEffect, which should start this coroutine
         if (duration != -1) {
-            StartCoroutine(EffectDuration(duration, true, UnStun, EStatus.Burn));
+            //StartCoroutine(EffectDuration(duration, true, UnStun, EStatus.Burn));
         }
     }
     public void UnStun(EStatus status) {
@@ -154,7 +155,7 @@ public abstract class UnitStats
 
         //Replace this to instead call UnitManager.RemoveEffect, which should start this coroutine
         if (duration != -1) {
-            StartCoroutine(EffectDuration(duration, true, UnRoot, EStatus.Burn));
+            //StartCoroutine(EffectDuration(duration, true, UnRoot, EStatus.Burn));
         }
     }
     public void UnRoot(EStatus status) {
@@ -168,7 +169,7 @@ public abstract class UnitStats
 
         //Replace this to instead call UnitManager.RemoveEffect, which should start this coroutine
         if (duration != -1) {
-            StartCoroutine(EffectDuration(duration, true, UnInvuln, EStatus.Burn));
+            //StartCoroutine(EffectDuration(duration, true, UnInvuln, EStatus.Burn));
         }
     }
     public void UnInvuln(EStatus status) {
@@ -182,7 +183,7 @@ public abstract class UnitStats
 
         //Replace this to instead call UnitManager.RemoveEffect, which should start this coroutine
         if (duration != -1) {
-            StartCoroutine(EffectDuration(duration, true, Rearm, EStatus.Burn));
+            //StartCoroutine(EffectDuration(duration, true, Rearm, EStatus.Burn));
         }
     }
     public void Rearm(EStatus status) {
@@ -276,7 +277,7 @@ public abstract class UnitStats
 
         //Replace this to instead call UnitManager.RemoveEffect, which should start this coroutine
         if (duration != -1) {
-            StartCoroutine(EffectDuration(duration, isCrowdControl, RemoveStatus, status));
+            //StartCoroutine(EffectDuration(duration, isCrowdControl, RemoveStatus, status));
         }
     }
 

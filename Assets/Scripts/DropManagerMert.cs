@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-enum ERarity {
+public enum ERarityMert {
     Common,
     Uncommon,
     Rare,
@@ -11,7 +11,7 @@ enum ERarity {
 }
 
 [DisallowMultipleComponent]
-public class DropManager : MonoBehaviour
+public class DropManagerMert : MonoBehaviour
 {
     public void Awake() {
         p_Random = new Random();
@@ -37,7 +37,7 @@ public class DropManager : MonoBehaviour
     private int p_Floor = 0;
 
     //Maps rarities to the drop chances of each rarity for the current
-    private Dictionary<ERarity, float> p_RarityValues;
+    private Dictionary<ERarityMert, float> p_RarityValues;
 
     //Maps unique items to the remaining number of times they can drop
     private Dictionary<int, int> p_UniqueItemCount;
@@ -99,14 +99,14 @@ public class DropManager : MonoBehaviour
             //If there are no special item rules
             if (specialTotalWeight == 0) {
                 foreach (int item in categoryItems) {
-                    if (m_ItemManager.isPassive(item)) {
-                        ERarity rarity = m_ItemManager.GetPassiveInformation(item).rarity;
+                    if (m_ItemManager.IsPassiveItem(item)) {
+                        ERarityMert rarity = m_ItemManager.GetPassiveItem(item).Rarity;
                         dropChance += p_RarityValues[rarity];
-                    } else if (m_ItemManager.isWeapon(item)) {
-                        ERarity rarity = m_ItemManager.GetWeaponInformation(item).rarity;
+                    } else if (m_ItemManager.IsWeaponItem(item)) {
+                        ERarityMert rarity = m_ItemManager.GetWeaponItem(item).Rarity;
                         dropChance += p_RarityValues[rarity];
                     } else {
-                        ERarity rarity = m_ItemManager.GetActiveInformation(item).rarity;
+                        ERarityMert rarity = m_ItemManager.GetActiveItem(item).Rarity;
                         dropChance += p_RarityValues[rarity];
                     }
                     selectionList.Add(dropChance);
@@ -125,14 +125,14 @@ public class DropManager : MonoBehaviour
 
                 //Add default items to selection list
                 foreach (int item in categoryItems) {
-                    if (m_ItemManager.isPassive(item)) {
-                        ERarity rarity = m_ItemManager.GetPassiveInformation(item).rarity;
+                    if (m_ItemManager.IsPassiveItem(item)) {
+                        ERarityMert rarity = m_ItemManager.GetPassiveItem(item).Rarity;
                         dropChance += p_RarityValues[rarity] * (1-specialTotalWeight);
-                    } else if ((m_ItemManager.isWeapon(item)) {
-                        ERarity rarity = m_ItemManager.GetWeaponInformation(item).rarity;
+                    } else if (m_ItemManager.IsWeaponItem(item)) {
+                        ERarityMert rarity = m_ItemManager.GetWeaponItem(item).Rarity;
                         dropChance += p_RarityValues[rarity] * (1 - specialTotalWeight);
                     } else {
-                        ERarity rarity = m_ItemManager.GetActiveInformation(item).rarity;
+                        ERarityMert rarity = m_ItemManager.GetActiveItem(item).Rarity;
                         dropChance += p_RarityValues[rarity] * (1 - specialTotalWeight);
                     }
                     selectionList.Add(dropChance);
@@ -163,13 +163,13 @@ public class DropManager : MonoBehaviour
     //Called by floor manager to update rarity drop chances for floor
     public void UpdateRarityTable(float common, float uncommon, float rare, float epic, float legendary) {
         if(common + uncommon + rare + epic + legendary != 1) {
-            Debug.Log("Total rarity droprate does not add up to 1")
+            Debug.Log("Total rarity droprate does not add up to 1");
         }
-        p_RarityValues[ERarity.Common] = common;
-        p_RarityValues[ERarity.Uncommon] = uncommon;
-        p_RarityValues[ERarity.Rare] = rare;
-        p_RarityValues[ERarity.Epic] = epic;
-        p_RarityValues[ERarity.Legendary] = legendary;
+        p_RarityValues[ERarityMert.Common] = common;
+        p_RarityValues[ERarityMert.Uncommon] = uncommon;
+        p_RarityValues[ERarityMert.Rare] = rare;
+        p_RarityValues[ERarityMert.Epic] = epic;
+        p_RarityValues[ERarityMert.Legendary] = legendary;
     }
     #endregion
 
@@ -178,20 +178,20 @@ public class DropManager : MonoBehaviour
     public void AddAll() {
         List<int> allItems = new List<int>();
 
-        foreach(int item in m_ItemManager.passiveItems) {
-            allItems.Add(item);
-        }
-        foreach (int item in m_ItemManager.activeItems) {
-            allItems.Add(item);
-        }
-        foreach (int item in m_ItemManager.weapons) {
-            allItems.Add(item);
-        }
+        //foreach (int item in m_ItemManager.passiveItems) {
+        //    allItems.Add(item);
+        //}
+        //foreach (int item in m_ItemManager.activeItems) {
+        //    allItems.Add(item);
+        //}
+        //foreach (int item in m_ItemManager.weapons) {
+        //    allItems.Add(item);
+        //}
 
-        p_BossDrops = allItems;
-        p_HardEnemyDrops = allItems;
-        p_MedEnemyDrops = allItems;
-        p_EasyEnemyDrops = allItems;
-        p_ObjectiveDrops = allItems;
+        //p_BossDrops = allItems;
+        //p_HardEnemyDrops = allItems;
+        //p_MedEnemyDrops = allItems;
+        //p_EasyEnemyDrops = allItems;
+        //p_ObjectiveDrops = allItems;
     }
 }

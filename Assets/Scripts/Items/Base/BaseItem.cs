@@ -52,5 +52,9 @@ public abstract class BaseItem : ScriptableObject {
     public string GetItemName() {
         return m_ItemName;
     }
+
+    public ERarityMert Rarity {
+        get { return ERarityMert.Common; }
+    }
     #endregion
 }

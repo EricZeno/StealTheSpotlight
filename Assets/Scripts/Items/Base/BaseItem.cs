@@ -16,16 +16,41 @@ public enum EItemRarity {
 }
 
 public abstract class BaseItem : ScriptableObject {
+    #region Editor Variables
+    [SerializeField]
+    [Tooltip("The ID of the item. This MUST be unique. It is how the code will refer to the item.")]
+    private int m_ID;
+
+    [SerializeField]
+    [Tooltip("The name of this item. When a player picks up this item, this name is dispalyed.")]
+    private string m_ItemName;
+    [SerializeField]
+    [Tooltip("The description of this item. This is the flavor text. It should be short, concise, and " +
+        "it should leave out percentages and numbers as much as possible. This description will be visible " +
+        "to players in the game.")]
+    private string m_Description;
+
+    [SerializeField]
+    [Tooltip("How rare this item is. This attribute of the item affects how often it will be seen within a session.")]
+    private EItemRarity m_Rarity;
+    [SerializeField]
+    [Tooltip("How many times this item may drop in total throughout all floors of a game session. For \"infinite\", use 0.")]
+    [Range(0, 999)]
+    private int m_Limit;
+
+    [SerializeField]
+    [Tooltip("The representation of this item as a drop on the floor and the icon that will appear in a player's inventory.")]
+    private Sprite m_Icon;
+    #endregion
+
     #region Private Variables
-    private int p_ID;
+    // Whether this item is a passive, active, or a weapon.
+    protected EItemType p_Type;
+    #endregion
 
-    private string p_Name;
-    private string p_Description;
-
-    private EItemType p_Type;
-    private EItemRarity p_Rarity;
-    private int p_Limit;
-
-    private Sprite p_Icon;
+    #region Accessors
+    public string GetItemName() {
+        return m_ItemName;
+    }
     #endregion
 }

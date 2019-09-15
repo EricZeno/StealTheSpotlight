@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 3255784592
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: items/passiveitems
+      Dependencies: {}

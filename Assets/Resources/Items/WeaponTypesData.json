@@ -1,0 +1,16 @@
+{
+   "AllTypes": [
+      {
+         "Name": "ShortBlade",
+         "WindupTime": 0.07,
+         "AttackTime": 0.15,
+         "TotalAnimationTime":  0.2
+      },
+      {
+         "Name": "Heavy",
+         "WindupTime": 0.1,
+         "AttackTime": 0.3,
+         "TotalAnimationTime":  0.4
+      }
+   ]
+}

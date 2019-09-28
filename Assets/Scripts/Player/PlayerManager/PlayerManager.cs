@@ -57,7 +57,7 @@ public class PlayerManager : MonoBehaviour {
         return m_Data;
     }
     #endregion
-
+    
     #region Input Receivers
     private void OnCycleLeft() {
         p_Inventory.CycleLeft();

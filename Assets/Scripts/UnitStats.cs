@@ -19,7 +19,7 @@ public enum EStatus {
     Slow
 }
 
-//[System.Serializable]
+[System.Serializable]
 public abstract class UnitStats
 {
 
@@ -38,13 +38,13 @@ public abstract class UnitStats
 
     [SerializeField]
     [Tooltip("The base movement speed of a unit, before any modifiers")]
-    private int p_BaseMovementSpeed;
-    public int BaseMovementSpeed {
+    private float m_BaseMovementSpeed;
+    public float BaseMovementSpeed {
         get {
-            return p_BaseMovementSpeed;
+            return m_BaseMovementSpeed;
         }
         set {
-            p_BaseMovementSpeed = value;
+            m_BaseMovementSpeed = value;
         }
     }
 
@@ -67,8 +67,8 @@ public abstract class UnitStats
     protected EUnitType p_Type;
 
     //The current movement speed of a unit
-    private int p_CurrMovementSpeed;
-    public int CurrMovementSpeed {
+    private float p_CurrMovementSpeed;
+    public float CurrMovementSpeed {
         get {
             return p_CurrMovementSpeed;
         }

@@ -30,12 +30,6 @@ public class PlayerMovement : MonoBehaviour {
     #endregion
 
     #region Main Updates
-    private void Update() {
-        float horiz = Input.GetAxis("Horizontal");
-        p_Move.x = horiz;
-        Debug.Log(p_Move);
-    }
-
     private void FixedUpdate() {
         cc_Rb.MovePosition(cc_Rb.position + p_Move * Time.fixedDeltaTime * m_Speed);
     }
@@ -44,9 +38,8 @@ public class PlayerMovement : MonoBehaviour {
     #region Input Receivers
     // Detects left trigger movement input
     private void OnMove(InputValue value) {
-        //p_Move = value.Get<Vector2>();
-        //p_Move.Normalize();
-        Debug.Log(value);
+        p_Move = value.Get<Vector2>();
+        p_Move.Normalize();
     }
 
     // Detects right trigger aiming input, will be used to rotate the player

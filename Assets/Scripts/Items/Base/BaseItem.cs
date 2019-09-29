@@ -53,8 +53,16 @@ public abstract class BaseItem : ScriptableObject {
         return m_ItemName;
     }
 
+    public int GetID() {
+        return m_ID;
+    }
+
     public ERarityMert Rarity {
         get { return ERarityMert.Common; }
+    }
+
+    public Sprite GetIcon() {
+        return m_Icon;
     }
     #endregion
 }

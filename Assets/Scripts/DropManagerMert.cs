@@ -99,10 +99,10 @@ public class DropManagerMert : MonoBehaviour
             //If there are no special item rules
             if (specialTotalWeight == 0) {
                 foreach (int item in categoryItems) {
-                    if (m_ItemManager.IsPassiveItem(item)) {
+                    if (ItemManager.IsPassiveItem(item)) {
                         ERarityMert rarity = m_ItemManager.GetPassiveItem(item).Rarity;
                         dropChance += p_RarityValues[rarity];
-                    } else if (m_ItemManager.IsWeaponItem(item)) {
+                    } else if (ItemManager.IsWeaponItem(item)) {
                         ERarityMert rarity = m_ItemManager.GetWeaponItem(item).Rarity;
                         dropChance += p_RarityValues[rarity];
                     } else {
@@ -125,10 +125,10 @@ public class DropManagerMert : MonoBehaviour
 
                 //Add default items to selection list
                 foreach (int item in categoryItems) {
-                    if (m_ItemManager.IsPassiveItem(item)) {
+                    if (ItemManager.IsPassiveItem(item)) {
                         ERarityMert rarity = m_ItemManager.GetPassiveItem(item).Rarity;
                         dropChance += p_RarityValues[rarity] * (1-specialTotalWeight);
-                    } else if (m_ItemManager.IsWeaponItem(item)) {
+                    } else if (ItemManager.IsWeaponItem(item)) {
                         ERarityMert rarity = m_ItemManager.GetWeaponItem(item).Rarity;
                         dropChance += p_RarityValues[rarity] * (1 - specialTotalWeight);
                     } else {

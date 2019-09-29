@@ -25,6 +25,7 @@ public class PlayerWeapon : MonoBehaviour, PlayerWeaponInterface {
     private float p_AnimationLength;
 
     private WeaponBaseData p_WeaponBaseData;
+    private List<ItemAndEffect> p_OnAttackEffects;
     #endregion
 
     #region Cached Components
@@ -43,6 +44,8 @@ public class PlayerWeapon : MonoBehaviour, PlayerWeaponInterface {
         p_WeaponID = -1;    // TODO: Set to not a weapon
         p_IsInUse = false;
         p_IsInAnimation = false;
+
+        p_OnAttackEffects = new List<ItemAndEffect>();
     }
 
     private void Start() {
@@ -56,10 +59,6 @@ public class PlayerWeapon : MonoBehaviour, PlayerWeaponInterface {
 
     #region Main Updates
     private void Update() {
-        // Mimicing controller
-        ControllerUpdate();
-
-        //--------------------
         if (p_IsInUse && CanUse()) {
             StartCoroutine(UseWeapon());
         }
@@ -68,35 +67,6 @@ public class PlayerWeapon : MonoBehaviour, PlayerWeaponInterface {
         }
         else {
             p_CooldownTimer = 0;
-        }
-    }
-    #endregion
-
-    #region Secondary Updates
-    private void ControllerUpdate() {
-        if (Input.GetButtonDown(Consts.TEST_BUTTON_2)) {
-            if (p_HasWeaponEquipped) {
-                Unequip();
-            }
-            else {
-                Equip(0);
-            }
-        }
-
-        if (Input.GetButtonDown(Consts.TEST_BUTTON_3)) {
-            if (p_HasWeaponEquipped) {
-                Unequip();
-            }
-            else {
-                Equip(1);
-            }
-        }
-
-        if (Input.GetButtonDown(Consts.TEST_BUTTON_1)) {
-            Use();
-        }
-        else if (Input.GetButtonUp(Consts.TEST_BUTTON_1)) {
-            StopUse();
         }
     }
     #endregion
@@ -175,7 +145,11 @@ public class PlayerWeapon : MonoBehaviour, PlayerWeaponInterface {
     }
 
     private void ActivateWeapon() {
-        cr_Weapon.Activate(p_WeaponBaseData);
+        WeaponBase.OnAttackEffect[] effects = new WeaponBase.OnAttackEffect[p_OnAttackEffects.Count];
+        for (int i = 0; i < p_OnAttackEffects.Count; i++) {
+            effects[i] = p_OnAttackEffects[i].Effect;
+        }
+        cr_Weapon.Activate(p_WeaponBaseData, effects);
     }
 
     private void DeactivateWeapon() {
@@ -212,6 +186,31 @@ public class PlayerWeapon : MonoBehaviour, PlayerWeaponInterface {
     // Executes attack functionality when player attack input is received
     private void OnAttack() {
         Debug.Log("Detected attack input");
+    }
+    #endregion
+
+    #region On Attack Effect
+    public void AddItemEffect(int itemID, WeaponBase.OnAttackEffect effect) {
+        p_OnAttackEffects.Add(new ItemAndEffect(itemID, effect));
+    }
+
+    public void SubtractItemEffect(int itemID) {
+        for (int i = 0; i < p_OnAttackEffects.Count; i++) {
+            if (p_OnAttackEffects[i].ItemID == itemID) {
+                p_OnAttackEffects.RemoveAt(i);
+                break;
+            }
+        }
+    }
+
+    private struct ItemAndEffect {
+        public int ItemID;
+        public WeaponBase.OnAttackEffect Effect;
+
+        public ItemAndEffect(int itemID, WeaponBase.OnAttackEffect effect) {
+            ItemID = itemID;
+            Effect = effect;
+        }
     }
     #endregion
 }

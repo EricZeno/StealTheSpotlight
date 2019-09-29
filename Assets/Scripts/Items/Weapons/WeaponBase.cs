@@ -20,6 +20,13 @@ public struct WeaponBaseData {
         p_AttackSpeed = Mathf.Max(Consts.MINIMUM_ATTACK_SPEED, attackSpeed);
         p_Sprite = sprite;
     }
+
+    public WeaponBaseData(WeaponBaseData data) {
+        p_Damage = data.p_Damage;
+        p_KnockbackPower = data.p_KnockbackPower;
+        p_AttackSpeed = data.p_AttackSpeed;
+        p_Sprite = data.p_Sprite;
+    }
     #endregion
 
     #region Accessors and Mutators
@@ -29,6 +36,9 @@ public struct WeaponBaseData {
 
     public float GetKnockbackPower() {
         return p_KnockbackPower;
+    }
+    public void SetKnockbackPower(float newPower) {
+        p_KnockbackPower = newPower;
     }
 
     public float GetAttackSpeed() {
@@ -42,7 +52,7 @@ public struct WeaponBaseData {
 }
 
 public interface WeaponInterface {
-    void Activate(WeaponBaseData data);
+    void Activate(WeaponBaseData data, WeaponBase.OnAttackEffect[] effects);
     void Deactivate();
     void UpdateGraphics(WeaponBaseData data);
 }
@@ -50,6 +60,10 @@ public interface WeaponInterface {
 [DisallowMultipleComponent]
 public class WeaponBase : MonoBehaviour, WeaponInterface
 {
+    #region Delegates
+    public delegate void OnAttackEffect(WeaponBaseData originalData, WeaponBaseData newData);
+    #endregion
+
     #region Cached Reference
     private SpriteRenderer cr_Renderer;
 
@@ -71,9 +85,11 @@ public class WeaponBase : MonoBehaviour, WeaponInterface
     #endregion
 
     #region Interface Required Methods
-    public void Activate(WeaponBaseData data) {
+    public void Activate(WeaponBaseData originalData, OnAttackEffect[] effects) {
+        WeaponBaseData postEffectsData = ApplyAllOnAttackEffects(originalData, effects);
+
         cr_Hitbox.gameObject.SetActive(true);
-        cr_Hitbox.SetHitboxStats(data);
+        cr_Hitbox.SetHitboxStats(postEffectsData);
     }
 
     public void Deactivate() {
@@ -82,6 +98,16 @@ public class WeaponBase : MonoBehaviour, WeaponInterface
 
     public void UpdateGraphics(WeaponBaseData data) {
         cr_Renderer.sprite = data.GetSprite();
+    }
+    #endregion
+
+    #region On Attack Effects
+    private WeaponBaseData ApplyAllOnAttackEffects(WeaponBaseData originalData, OnAttackEffect[] effects) {
+        WeaponBaseData postEffectsData = new WeaponBaseData(originalData);
+        foreach (var effect in effects) {
+            effect(originalData, postEffectsData);
+        }
+        return postEffectsData;
     }
     #endregion
 }

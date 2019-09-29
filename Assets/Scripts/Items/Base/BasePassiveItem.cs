@@ -10,8 +10,8 @@ public enum EPassiveItemActivationType {
 }
 
 public interface IBasePassiveItem {
-    void ApplyEffect();
-    void RemoveEffect();
+    void ApplyEffect(PlayerManager player);
+    void RemoveEffect(PlayerManager player);
 }
 
 public abstract class BasePassiveItem : BaseItem, IBasePassiveItem {
@@ -20,15 +20,21 @@ public abstract class BasePassiveItem : BaseItem, IBasePassiveItem {
     [Tooltip("When the effect of this item should activate.")]
     private EPassiveItemActivationType m_ActivationType;
     #endregion
-
+    
     #region Initialization
     private void Awake() {
         p_Type = EItemType.PASSIVE;
     }
     #endregion
-    
+
+    #region Accessors
+    public EPassiveItemActivationType GetActivationType() {
+        return m_ActivationType;
+    }
+    #endregion
+
     #region Base Passive Item Interface Methods
-    public abstract void ApplyEffect();
-    public abstract void RemoveEffect();
+    public abstract void ApplyEffect(PlayerManager player);
+    public abstract void RemoveEffect(PlayerManager player);
     #endregion
 }

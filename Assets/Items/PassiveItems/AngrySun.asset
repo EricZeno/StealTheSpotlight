@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3600a58a01c7ca4eaefda886fdfb514, type: 3}
+  m_Name: AngrySun
+  m_EditorClassIdentifier: 
+  m_ID: 5
+  m_ItemName: Angry Sun
+  m_Description: Push your enemies further back with your anger.
+  m_Rarity: 0
+  m_Limit: 0
+  m_Icon: {fileID: 1282145184737861891, guid: b5fe88c9a2fe4994b8c7bbc4a59777a6, type: 3}
+  m_ActivationType: 1
+  m_KnockbackMultiplier: 1.3

@@ -1,22 +1,37 @@
 ManifestFileVersion: 0
-CRC: 4286774373
+CRC: 208200166
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 9b5aa583ccf7d41d672f90c2ef77f933
+    Hash: d6e3741f68e7b58d6f81fdee1c9f5a41
   TypeTreeHash:
     serializedVersion: 2
-    Hash: deebf516c27483082ee64b15a76fb996
+    Hash: bdf4cf583cf748f4c33e2e4a683c6c5f
 HashAppended: 0
 ClassTypes:
 - Class: 28
   Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: 11500000, guid: b4611f741183c184887c2f02fefe68cd, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 12f18a161b7bbd9458e8786aec972cd8, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b9b5115690e1b634cb7b2a241262487f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 455f7a47b5072864282b2581d39075fd, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: c3600a58a01c7ca4eaefda886fdfb514, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fca6ad591ed725b4da8be2362ff2cb74, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
 Assets:
+- Assets/Items/PassiveItems/MagnifyingGlass.asset
 - Assets/Items/PassiveItems/SpikedPlate.asset
+- Assets/Items/PassiveItems/AngrySun.asset
+- Assets/Items/PassiveItems/RunningShoes.asset
+- Assets/Items/PassiveItems/TiredHeart.asset
+- Assets/Items/PassiveItems/HeartyHeart.asset
 Dependencies: []

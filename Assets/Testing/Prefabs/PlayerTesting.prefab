@@ -104,7 +104,7 @@ MonoBehaviour:
     m_BaseMovementSpeed: 5
     p_Tenacity: 0
     m_BaseHealth: 1000
-    m_InteractionRadius: 5
+    m_InteractionRadius: 2
 --- !u!114 &1544037880152640488
 MonoBehaviour:
   m_ObjectHideFlags: 0

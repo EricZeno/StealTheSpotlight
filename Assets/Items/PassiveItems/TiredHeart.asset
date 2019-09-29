@@ -9,13 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4611f741183c184887c2f02fefe68cd, type: 3}
-  m_Name: SpikedPlate
+  m_Script: {fileID: 11500000, guid: 12f18a161b7bbd9458e8786aec972cd8, type: 3}
+  m_Name: TiredHeart
   m_EditorClassIdentifier: 
-  m_ID: 0
-  m_ItemName: SpikedPlate
-  m_Description: Your enemies will suffer when they attack you!
+  m_ID: 4
+  m_ItemName: Tired Heart
+  m_Description: Time heals all wounds.
   m_Rarity: 0
   m_Limit: 0
-  m_Icon: {fileID: 21300000, guid: 67cc6b0211b7c0248b7cfd55a9cec2ac, type: 3}
+  m_Icon: {fileID: -2797228196451957092, guid: b5fe88c9a2fe4994b8c7bbc4a59777a6, type: 3}
   m_ActivationType: 2
+  m_HealPercent: 0.1
+  m_TimeToNextHeal: 1

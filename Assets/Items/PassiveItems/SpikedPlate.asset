@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4611f741183c184887c2f02fefe68cd, type: 3}
   m_Name: SpikedPlate
   m_EditorClassIdentifier: 
-  m_ID: 1
+  m_ID: 0
   m_ItemName: SpikedPlate
   m_Description: Your enemies will suffer when they attack you!
   m_Rarity: 0

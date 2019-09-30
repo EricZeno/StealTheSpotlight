@@ -95,7 +95,14 @@ public struct Inventory : InventoryInterace {
     }
 
     private bool IsPassive(int index) {
-        throw new System.NotImplementedException();
+        if (index < 0 || index >= p_Inventory.Count) {
+            throw new System.ArgumentOutOfRangeException($"Index for inventory must be between 0 and the number of items you have. You asked for index {index}. Inventory size is {p_Inventory.Count}");
+        }
+        return ItemManager.IsPassiveItem(p_Inventory[index]);
+    }
+
+    private bool HasPassiveRoom() {
+        return p_NumPassives < p_MaxPassives;
     }
 
     private bool HasActive() {
@@ -188,23 +195,24 @@ public struct Inventory : InventoryInterace {
     }
 
     public void PickupItem(int itemID) {
-        throw new System.NotImplementedException();
-        /*
-        if is a weapon,
-            if zeroth is not a weapon,
-                put in zero
-            else if one is not a weapon,
-                put in one
-            return
-        if is an active,
-            if active is in 0, 1, or 2,
-                return
-            put in 2
-            return
-        if passive count < max passive count
-            find position for passive
-            put in position
-         */
+        if (ItemManager.IsWeaponItem(itemID)) {
+            if (p_Inventory.Count < 1 || !ItemManager.IsWeaponItem(p_Inventory[0])) {
+                p_Inventory.Insert(0, itemID);
+            }
+            else if (p_Inventory.Count < 2 || !ItemManager.IsWeaponItem(p_Inventory[1])) {
+                p_Inventory.Insert(1, itemID);
+            }
+        }
+        else if (ItemManager.IsActiveItem(itemID)) {
+            if (!HasActive()) {
+                p_Inventory.Insert(2, itemID);
+            }
+        }
+        else if (HasPassiveRoom()) {
+            // TODO: Add passive item based on rarity
+            p_Inventory.Add(itemID);
+            p_NumPassives++;
+        }
     }
 
     public int ReplaceCurrentActive(int itemID) {

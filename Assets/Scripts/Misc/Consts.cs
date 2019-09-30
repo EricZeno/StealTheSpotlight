@@ -2,6 +2,12 @@
 {
     #region Tags
     public const string GENERAL_ENEMY_TAG = "Enemy";
+
+    public const string PLAYER_TAG = "Player";
+    #endregion
+
+    #region Layers
+    public const string ITEM_PHYSICS_LAYER = "Item";
     #endregion
 
     #region Player Animator Triggers
@@ -29,5 +35,9 @@
     #region Sprite File Paths
     public const string TEST_SWORD_1_SPRITE_PATH = "Sprites/Weapons/ShortBlade/Sword-1";
     public const string TEST_SWORD_2_SPRITE_PATH = "Sprites/Weapons/ShortBlade/Sword-2";
+    #endregion
+
+    #region Null Values
+    public const int NULL_ITEM_ID = -1;
     #endregion
 }

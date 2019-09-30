@@ -19,7 +19,7 @@ public enum EStatus {
     Slow
 }
 
-//[System.Serializable]
+[System.Serializable]
 public abstract class UnitStats
 {
 
@@ -38,13 +38,13 @@ public abstract class UnitStats
 
     [SerializeField]
     [Tooltip("The base movement speed of a unit, before any modifiers")]
-    private int p_BaseMovementSpeed;
-    public int BaseMovementSpeed {
+    private float m_BaseMovementSpeed;
+    public float BaseMovementSpeed {
         get {
-            return p_BaseMovementSpeed;
+            return m_BaseMovementSpeed;
         }
         set {
-            p_BaseMovementSpeed = value;
+            m_BaseMovementSpeed = value;
         }
     }
 
@@ -64,11 +64,11 @@ public abstract class UnitStats
 
     #region Private Variables
     //Determines the type of the unit for external use
-    private EUnitType p_Type;
+    protected EUnitType p_Type;
 
     //The current movement speed of a unit
-    private int p_CurrMovementSpeed;
-    public int CurrMovementSpeed {
+    private float p_CurrMovementSpeed;
+    public float CurrMovementSpeed {
         get {
             return p_CurrMovementSpeed;
         }
@@ -78,13 +78,11 @@ public abstract class UnitStats
     private int p_Level;
     #endregion
 
-    #region Constructor
-
-    protected UnitStats(EUnitType unitType, int baseHealth) {
-        p_Type = unitType;
-
-        p_BaseHealth = baseHealth;
-        //MaxHealth = p_BaseHealth;
+    #region Resetters
+    public virtual void ResetAllStatsDefault() {
+        p_CurrMovementSpeed = m_BaseMovementSpeed;
+        p_MaxHealth = m_BaseHealth;
+        p_CurrHealth = m_BaseHealth;
     }
     #endregion
 
@@ -192,8 +190,9 @@ public abstract class UnitStats
     #endregion
 
     #region Health
-    //Base health is the health a unit has by default, before any modifiers
-    private int p_BaseHealth;
+    [SerializeField]
+    [Tooltip("Base health is the health a unit has by default, before any modifiers.")]
+    private int m_BaseHealth;
 
     //Max health is after all modifiers. This is the effective health.
     private int p_MaxHealth;
@@ -240,9 +239,23 @@ public abstract class UnitStats
         }
     }
 
-    public void AddHealth(int health) {
+    public void AddXPercBaseHealth(float multiplier) {
+        if (multiplier < 0) {
+            throw new System.ArgumentException("Percent must be larger than or equal to 0.");
+        }
+
         int tempMaxHealth = p_MaxHealth;
-        p_MaxHealth += health;
+        p_MaxHealth += (int)(m_BaseHealth * (multiplier - 1));
+        p_CurrHealth = p_CurrHealth * p_MaxHealth / tempMaxHealth;
+    }
+
+    public void SubtractXPercBaseHealth(float multiplier) {
+        if (multiplier < 0) {
+            throw new System.ArgumentException("Percent must be larger than or equal to 0.");
+        }
+
+        int tempMaxHealth = p_MaxHealth;
+        p_MaxHealth -= (int)(m_BaseHealth * (multiplier - 1));
         p_CurrHealth = p_CurrHealth * p_MaxHealth / tempMaxHealth;
     }
     #endregion
@@ -299,6 +312,24 @@ public abstract class UnitStats
                 p_Slow = false;
                 break;
         }
+    }
+    #endregion
+
+    #region Stat Modifiers
+    public void AddXPercBaseSpeed(float multiplier) {
+        if (multiplier < 0) {
+            throw new System.ArgumentException("Percent must be larger than or equal to 0.");
+        }
+
+        p_CurrMovementSpeed += m_BaseMovementSpeed * multiplier;
+    }
+
+    public void SubtractXPercBaseSpeed(float multiplier) {
+        if (multiplier < 0) {
+            throw new System.ArgumentException("Percent must be larger than or equal to 0.");
+        }
+
+        p_CurrMovementSpeed -= m_BaseMovementSpeed * multiplier;
     }
     #endregion
 

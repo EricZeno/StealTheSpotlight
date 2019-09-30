@@ -2,17 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerData : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+[System.Serializable]
+public class PlayerData : UnitStats {
+    #region Editor Variables
+    [SerializeField]
+    [Tooltip("The interaction radius when a player presses the interact button.")]
+    private float m_InteractionRadius;
+    #endregion
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    #region Resetters
+    public override void ResetAllStatsDefault() {
+        base.ResetAllStatsDefault();
+        p_Type = EUnitType.Player;
     }
+    #endregion
+
+    #region Accessors
+    public float GetInteractionRadius() {
+        return m_InteractionRadius;
+    }
+    #endregion
 }

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8a19beab1b1f5740a35d1a1eefd719e, type: 3}
+  m_Name: Surrender
+  m_EditorClassIdentifier: 
+  m_ID: 3334
+  m_ItemName: Surrender
+  m_Description: I'm a pacifist
+  m_Rarity: 0
+  m_Limit: 0
+  m_Icon: {fileID: 21300000, guid: 5cb3adc8d59b42045af1ef4c54d03a5e, type: 3}
+  m_Stack: 0
+  m_Cooldown: 20
+  m_EffectLength: 5

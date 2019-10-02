@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4462817945306814934}
   - component: {fileID: 4462817945306814932}
   - component: {fileID: 4462817945306814933}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 4462817945807781203}
   - component: {fileID: 4462817945807781201}
   - component: {fileID: 4462817945807781202}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SoundTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,7 +166,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4462817946172587181}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 4462817946423847190}
   - component: {fileID: 4462817946423847191}
   - component: {fileID: 906885800368925510}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -242,10 +242,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Data:
     p_Power: 0
-    m_BaseMovementSpeed: 0
+    m_BaseMovementSpeed: 5
     p_Tenacity: 0
-    m_BaseHealth: 0
-    m_InteractionRadius: 0
+    m_BaseHealth: 1000
+    m_InteractionRadius: 2
 --- !u!114 &4462817946423847186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843ff9a59df115d4a8d0c2067b07ccf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Speed: 2.5
+  m_Speed: 5
 --- !u!114 &4462817946423847187
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -30,13 +30,14 @@ public class ItemManager : MonoBehaviour {
     }
 
     private void Start() {
-        SetupItems(ref p_PassiveItems);
+        SetupItems(ref p_PassiveItems, Consts.PASSIVE_ITEM_BUNDLE_NAME);
+	    SetupItems(ref p_ActiveItems, Consts.ACTIVE_ITEM_BUNDLE_NAME);
     }
     #endregion
 
     #region Loading Item Groups
-    private void SetupItems<T>(ref T[] items) where T : BaseItem {
-        items = LoadItemGroup<T>(Consts.PASSIVE_ITEM_BUNDLE_NAME);
+    private void SetupItems<T>(ref T[] items, string bundleName) where T : BaseItem {
+        items = LoadItemGroup<T>(bundleName);
         items = items.OrderBy(item => item.GetID()).ToArray();
     }
 
@@ -64,7 +65,7 @@ public class ItemManager : MonoBehaviour {
         return itemGroup;
     }
     #endregion
-    
+
     #region Accessors
     public static BaseItem GetItem(int ID) {
         AssertItemManagerExists();

@@ -21,7 +21,7 @@ public class AngrySun : BasePassiveItem {
     #endregion
 
     #region Effect Functions
-    private void IncreaseKnockback(WeaponBaseData originalData, WeaponBaseData newData) {
+    private void IncreaseKnockback(WeaponBaseData originalData, ref WeaponBaseData newData) {
         float originalPower = originalData.GetKnockbackPower();
         newData.SetKnockbackPower(originalPower * m_KnockbackMultiplier + originalPower);
     }

@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public enum EUnitType {
     Player,
     Enemy,
     Boss
 }
-public enum EStatus {
+public enum Status {
     //Burn does damage over time to the unit
     Burn,
     //Freeze immobilizes the unit. It can still attack and cast spells
@@ -16,7 +17,9 @@ public enum EStatus {
     //Poison increases damage taken and disables abilities for the unit
     Poison,
     //Slow reduces attack speed and movement speed
-    Slow
+    Slow,
+    //Invulnerability prevents all damage
+    Invulnerable
 }
 
 [System.Serializable]
@@ -26,14 +29,9 @@ public abstract class UnitStats
     #region Editor Variables
     [SerializeField]
     [Tooltip("The power of a unit determines the strength of a unit, including the base amount of damage it deals, before weapon bonuses, and any healing it does")]
-    private int p_Power;
-    public int Power {
-        get {
-            return p_Power;
-        }
-        set {
-            p_Power = value;
-        }
+    private int m_Power;
+    public int GetPower() {
+            return m_Power;
     }
 
     [SerializeField]
@@ -83,11 +81,16 @@ public abstract class UnitStats
         p_CurrMovementSpeed = m_BaseMovementSpeed;
         p_MaxHealth = m_BaseHealth;
         p_CurrHealth = m_BaseHealth;
-    }
-    #endregion
 
-    #region Checkers
-    public bool IsPlayer() {
+        m_StatusEffects = new Dictionary<Status, bool>();
+        foreach (Status s in System.Enum.GetValues(typeof(Status))) {
+            m_StatusEffects[s] = false;
+        }
+    }
+#endregion
+
+#region Checkers
+public bool IsPlayer() {
         return p_Type == EUnitType.Player;
     }
     public bool IsEnemy() {
@@ -107,23 +110,23 @@ public abstract class UnitStats
         return p_CanAttack;
     }
     public bool IsInvuln() {
-        return p_IsInvuln;
+        return m_StatusEffects[Status.Invulnerable];
     }
 
     public bool HasBurn() {
-        return p_Burn;
+        return m_StatusEffects[Status.Burn];
     }
     public bool HasFreeze() {
-        return p_Freeze;
+        return m_StatusEffects[Status.Freeze];
     }
     public bool HasParalyze() {
-        return p_Paralyze;
+        return m_StatusEffects[Status.Paralyze];
     }
     public bool HasPoison() {
-        return p_Poison;
+        return m_StatusEffects[Status.Poison];
     }
     public bool HasSlow() {
-        return p_Slow;
+        return m_StatusEffects[Status.Slow];
     }
 
     private bool IsAlive() {
@@ -142,7 +145,7 @@ public abstract class UnitStats
             //StartCoroutine(EffectDuration(duration, true, UnStun, EStatus.Burn));
         }
     }
-    public void UnStun(EStatus status) {
+    public void UnStun(Status status) {
         p_IsStunned = false;
     }
 
@@ -156,22 +159,8 @@ public abstract class UnitStats
             //StartCoroutine(EffectDuration(duration, true, UnRoot, EStatus.Burn));
         }
     }
-    public void UnRoot(EStatus status) {
+    public void UnRoot(Status status) {
         p_IsRooted = false;
-    }
-
-    //Invulnerable units cannot lose health
-    private bool p_IsInvuln = false;
-    public void Invuln(float duration = -1) {
-        p_IsInvuln = true;
-
-        //Replace this to instead call UnitManager.RemoveEffect, which should start this coroutine
-        if (duration != -1) {
-            //StartCoroutine(EffectDuration(duration, true, UnInvuln, EStatus.Burn));
-        }
-    }
-    public void UnInvuln(EStatus status) {
-        p_IsInvuln = false;
     }
 
     //Determines whether a unit has attacks enabled
@@ -184,7 +173,7 @@ public abstract class UnitStats
             //StartCoroutine(EffectDuration(duration, true, Rearm, EStatus.Burn));
         }
     }
-    public void Rearm(EStatus status) {
+    public void Rearm(Status status) {
         p_CanAttack = true;
     }
     #endregion
@@ -212,8 +201,7 @@ public abstract class UnitStats
 
     public void TakeDamage(int damage) {
         if (damage < 0) {
-            Debug.Log("damage can't be negative");
-            return;
+            throw new System.ArgumentException("Damage cannot be negative.");
         }
 
         if (IsInvuln()) {
@@ -229,8 +217,7 @@ public abstract class UnitStats
 
     public void Heal(int healing) {
         if (healing < 0) {
-            Debug.Log("healing can't be negative");
-            return;
+            throw new System.ArgumentException("Healing cannot be negative.");
         }
 
         p_CurrHealth += healing;
@@ -261,57 +248,14 @@ public abstract class UnitStats
     #endregion
 
     #region Status Effects
-    //This will be refactored into a dictionary with keys = EStatus and value = Bool later
-    //The variables below determine whether a unit is afflicted by any status effects
-    private bool p_Burn = false;
-    private bool p_Freeze = false;
-    private bool p_Paralyze = false;
-    private bool p_Poison = false;
-    private bool p_Slow = false;
+    private Dictionary<Status, bool> m_StatusEffects;
 
-    public void AddStatus(EStatus status, bool isCrowdControl, float duration = -1) {
-        switch (status) {
-            case EStatus.Burn:
-                p_Burn = true;
-                break;
-            case EStatus.Freeze:
-                p_Freeze = true;
-                break;
-            case EStatus.Paralyze:
-                p_Paralyze = true;
-                break;
-            case EStatus.Poison:
-                p_Poison = true;
-                break;
-            case EStatus.Slow:
-                p_Slow = true;
-                break;
-        }
-
-        //Replace this to instead call UnitManager.RemoveEffect, which should start this coroutine
-        if (duration != -1) {
-            //StartCoroutine(EffectDuration(duration, isCrowdControl, RemoveStatus, status));
-        }
+    public void AddStatus(Status status) {
+        m_StatusEffects[status] = true;
     }
 
-    private void RemoveStatus(EStatus status) {
-        switch (status) {
-            case EStatus.Burn:
-                p_Burn = false;
-                break;
-            case EStatus.Freeze:
-                p_Freeze = false;
-                break;
-            case EStatus.Paralyze:
-                p_Paralyze = false;
-                break;
-            case EStatus.Poison:
-                p_Poison = false;
-                break;
-            case EStatus.Slow:
-                p_Slow = false;
-                break;
-        }
+    public void RemoveStatus(Status status) {
+        m_StatusEffects[status] = false;
     }
     #endregion
 
@@ -336,10 +280,10 @@ public abstract class UnitStats
     #region Misc
     //Move these to the UnitManager
 
-    private delegate void EffectRemover(EStatus status);
+    private delegate void EffectRemover(Status status);
 
     //This is a timer that will be started whenever an effect is applied to the unit.
-    private IEnumerator EffectDuration(float duration, bool isCrowdControl, EffectRemover RemoveEffect, EStatus status) {
+    private IEnumerator EffectDuration(float duration, bool isCrowdControl, EffectRemover RemoveEffect, Status status) {
         if (isCrowdControl) {
             duration = duration * (1 - Tenacity);
         }

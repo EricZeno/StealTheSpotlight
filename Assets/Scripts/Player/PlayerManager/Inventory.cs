@@ -69,7 +69,7 @@ public struct Inventory : InventoryInterace {
     private bool IsEmpty() {
         return p_Inventory.Count == 0;
     }
-    
+
     private bool HasPassiveRoom() {
         return p_NumPassives < p_MaxPassives;
     }

@@ -18,9 +18,7 @@ public interface InventoryInterace {
 
     int DropSelectedItem();
     int DropCurrentWeapon();
-    void PickupItem(int itemID);
-    int ReplaceCurrentWeapon(int itemID);
-    int ReplaceCurrentActive(int itemID);
+    int PickupItem(int itemID);
 
     int GetSelectedItem();
     int[] GetXNeighborsOfSelectedItem(int x);
@@ -34,10 +32,6 @@ public interface InventoryInterace {
 
 [System.Serializable]
 public struct Inventory : InventoryInterace {
-    #region Delegates
-    private delegate bool CheckerDelegate(int index);
-    #endregion
-
     #region Private Variables
     // All of the items in the inventory. The items are stored using their IDs.
     // Under the hood, the zeroth position will usually be for the current
@@ -70,81 +64,191 @@ public struct Inventory : InventoryInterace {
         p_CurrentlySelectedItem = 0;
     }
     #endregion
-
-    #region Getters
-    private int GetItem(int index, CheckerDelegate isTypeOfChecker = null) {
-        if (p_Inventory.Count <= index || 
-            (isTypeOfChecker != null && !isTypeOfChecker(index))) {
-            return -1;
-        }
-        return p_Inventory[index];
-    }
-    #endregion
-
+    
     #region Checkers
     private bool IsEmpty() {
         return p_Inventory.Count == 0;
     }
-
-    private bool IsWeapon(int index) {
-        throw new System.NotImplementedException();
-    }
-
-    private bool IsActive(int index) {
-        throw new System.NotImplementedException();
-    }
-
-    private bool IsPassive(int index) {
-        if (index < 0 || index >= p_Inventory.Count) {
-            throw new System.ArgumentOutOfRangeException($"Index for inventory must be between 0 and the number of items you have. You asked for index {index}. Inventory size is {p_Inventory.Count}");
-        }
-        return ItemManager.IsPassiveItem(p_Inventory[index]);
-    }
-
+    
     private bool HasPassiveRoom() {
         return p_NumPassives < p_MaxPassives;
     }
 
     private bool HasActive() {
-        if (p_Inventory.Count > 2 &&
-            (IsActive(0) || IsActive(1) || IsActive(2))) {
-            return true;
-        }
-        if (p_Inventory.Count > 1 &&
-            (IsActive(0) || IsActive(2))) {
-            return true;
-        }
-        if (p_Inventory.Count > 0 && IsActive(0)) {
-            return true;
+        if (p_Inventory.Count > 0) {
+            if (ItemManager.IsActiveItem(p_Inventory[0])) {
+                return true;
+            }
+            else if (p_Inventory.Count > 1) {
+                if (ItemManager.IsActiveItem(p_Inventory[1])) {
+                    return true;
+                }
+                else if (p_Inventory.Count > 2 &&
+                    ItemManager.IsActiveItem(p_Inventory[2])) {
+                    return true;
+                }
+            }
         }
         return false;
+    }
+
+    private bool HasTwoWeapons() {
+        return p_Inventory.Count >= 2 &&
+            ItemManager.IsWeaponItem(p_Inventory[0]) &&
+            ItemManager.IsWeaponItem(p_Inventory[1]);
     }
     #endregion
 
     #region Picking up and Dropping
-    private int DropItem(int index) {
+    private int DropItemAtIndex(int index) {
+        if (index < 0) {
+            throw new System.IndexOutOfRangeException($"Tried to drop item " +
+                $"in inventory position {index}. This is illegal.");
+        }
         if (p_Inventory.Count <= index) {
-            return -1;
+            throw new System.IndexOutOfRangeException($"Tried to drop item " +
+                $"in inventory position {index} but inventory only has " +
+                $"{p_Inventory.Count} items.");
         }
-        if (IsPassive(index)) {
-            p_NumPassives--;
-        }
+
         int itemID = p_Inventory[index];
         p_Inventory.RemoveAt(index);
+
+        if (ItemManager.IsPassiveItem(itemID)) {
+            p_NumPassives--;
+        }
+
         return itemID;
     }
 
-    private void PickupItem(int itemID, int index) {
-        if (index < 0) {
-            index = 0;
+    private void InsertItemIntoInventory(int itemID) {
+        if (itemID == Consts.NULL_ITEM_ID) {
+            throw new System.ArgumentNullException("A null value was " +
+                "provided for the item ID");
         }
-        else if (index > p_Inventory.Count) {
-            index = p_Inventory.Count;
+
+        if (ItemManager.IsWeaponItem(itemID)) {
+            InsertWeaponItemIntoInv(itemID);
         }
-        p_Inventory.Insert(index, itemID);
-        if (IsPassive(index)) {
+        if (ItemManager.IsActiveItem(itemID)) {
+            InsertActiveItemIntoInv(itemID);
+        }
+        if (ItemManager.IsPassiveItem(itemID)) {
+            InsertPassiveItemIntoInv(itemID);
             p_NumPassives++;
         }
+    }
+
+    private void InsertWeaponItemIntoInv(int itemID) {
+        if (!ItemManager.IsWeaponItem(itemID)) {
+            throw new System.ArgumentException($"This function only inserts " +
+                $"weapon items into the inventory but was given {itemID} " +
+                $"which is NOT a weapon item.");
+        }
+        if (HasTwoWeapons()) {
+            throw new System.AccessViolationException("Trying to insert " +
+                "a weapon item into the inventory but player already " +
+                "has two weapons in inventory.");
+        }
+
+        if (p_Inventory.Count > 0) {
+            if (ItemManager.IsWeaponItem(p_Inventory[0])) {
+                p_Inventory.Insert(1, itemID);
+            }
+            else {
+                p_Inventory.Insert(0, itemID);
+            }
+        }
+        else {
+            p_Inventory.Insert(0, itemID);
+        }
+    }
+
+    private void InsertActiveItemIntoInv(int itemID) {
+        if (!ItemManager.IsActiveItem(itemID)) {
+            throw new System.ArgumentException($"This function only inserts " +
+                $"active items into the inventory but was given {itemID} " +
+                $"which is NOT an active item.");
+        }
+        if (HasActive()) {
+            throw new System.AccessViolationException("Trying to insert " +
+                "an active item into the inventory but player already " +
+                "has an active in inventory.");
+        }
+
+        if (p_Inventory.Count > 0) {
+            //  Inventory does not have any weapon items
+            if (ItemManager.IsPassiveItem(p_Inventory[0])) {
+                p_Inventory.Insert(0, itemID);
+            }
+            else if (p_Inventory.Count > 1) {
+                // Inventory has a single weapon item
+                if (ItemManager.IsPassiveItem(p_Inventory[1])) {
+                    p_Inventory.Insert(1, itemID);
+                }
+                else { // Inventory has two weapon items
+                    p_Inventory.Insert(2, itemID);
+                }
+            }
+            else { // Inventory has a single item. It is a weapon
+                p_Inventory.Insert(1, itemID);
+            }
+        }
+        else { // Inventory is empty
+            p_Inventory.Insert(0, itemID);
+        }
+    }
+
+    private void InsertPassiveItemIntoInv(int itemID) {
+        if (!ItemManager.IsPassiveItem(itemID)) {
+            throw new System.ArgumentException($"This function only inserts " +
+                $"passive items into the inventory but was given {itemID} " +
+                $"which is NOT a passive item.");
+        }
+        if (!HasPassiveRoom()) {
+            throw new System.AccessViolationException("Trying to insert " +
+                "a passive item into the inventory but player already " +
+                "has maximum passives in inventory.");
+        }
+
+        // TODO: sort by rarity then alphabetically
+        p_Inventory.Add(itemID);
+    }
+
+    private int ReplaceCurrentActive(int itemID) {
+        if (!HasActive()) {
+            throw new System.InvalidOperationException("Attempting to " +
+                "replace the current active item but this inventory does " +
+                "not have any active items.");
+        }
+
+        int activeInd = Consts.NULL_ITEM_ID;
+        if (p_Inventory.Count > 0) {
+            if (ItemManager.IsActiveItem(p_Inventory[0])) {
+                activeInd = 0;
+            }
+            else if (p_Inventory.Count > 1) {
+                if (ItemManager.IsActiveItem(p_Inventory[1])) {
+                    activeInd = 1;
+                }
+                else {
+                    activeInd = 2;
+                }
+            }
+        }
+        
+        int currentActiveID = DropItemAtIndex(activeInd);
+        InsertItemIntoInventory(itemID);
+        return currentActiveID;
+    }
+
+    private int ReplaceCurrentWeapon(int itemID) {
+        int currentWeaponID = DropCurrentWeapon();
+        InsertItemIntoInventory(itemID);
+        if (HasTwoWeapons()) {
+            SwitchWeapons();
+        }
+        return currentWeaponID;
     }
     #endregion
 
@@ -184,78 +288,68 @@ public struct Inventory : InventoryInterace {
 
     #region Pickup and Drop
     public int DropCurrentWeapon() {
-        if (IsWeapon(0)) {
-            return DropItem(0);
+        if (p_Inventory.Count > 0 && 
+            ItemManager.IsWeaponItem(p_Inventory[0])) {
+            return DropItemAtIndex(0);
         }
-        return -1;
+        return Consts.NULL_ITEM_ID;
     }
 
     public int DropSelectedItem() {
-        return DropItem(p_CurrentlySelectedItem);
+        return DropItemAtIndex(p_CurrentlySelectedItem);
     }
 
-    public void PickupItem(int itemID) {
-        if (ItemManager.IsWeaponItem(itemID)) {
-            if (p_Inventory.Count < 1 || !ItemManager.IsWeaponItem(p_Inventory[0])) {
-                p_Inventory.Insert(0, itemID);
-            }
-            else if (p_Inventory.Count < 2 || !ItemManager.IsWeaponItem(p_Inventory[1])) {
-                p_Inventory.Insert(1, itemID);
-            }
+    public int PickupItem(int itemID) {
+        if (ItemManager.IsActiveItem(itemID) && HasActive()) {
+            return ReplaceCurrentActive(itemID);
         }
-        else if (ItemManager.IsActiveItem(itemID)) {
-            if (!HasActive()) {
-                p_Inventory.Insert(2, itemID);
-            }
+        else if(ItemManager.IsWeaponItem(itemID) && HasTwoWeapons()) {
+            return ReplaceCurrentWeapon(itemID);
         }
-        else if (HasPassiveRoom()) {
-            // TODO: Add passive item based on rarity
-            p_Inventory.Add(itemID);
-            p_NumPassives++;
+        else if (ItemManager.IsPassiveItem(itemID) && !HasPassiveRoom()) {
+            return Consts.NULL_ITEM_ID;
         }
-    }
-
-    public int ReplaceCurrentActive(int itemID) {
-        int activeInd = -1;
-        if (p_Inventory.Count > 2 && IsActive(2)) {
-            activeInd = 2;
-        }
-        else if (p_Inventory.Count > 1 && IsActive(1)) {
-            activeInd = 1;
-        }
-        else if (p_Inventory.Count > 0 && IsActive(0)) {
-            activeInd = 0;
-        }
-        int currentActiveID = DropItem(activeInd);
-        PickupItem(itemID, activeInd);
-        return currentActiveID;
-    }
-
-    public int ReplaceCurrentWeapon(int itemID) {
-        int currentWeaponID = DropCurrentWeapon();
-        PickupItem(itemID, 0);
-        return currentWeaponID;
+        InsertItemIntoInventory(itemID);
+        return itemID;
     }
     #endregion
 
     #region Getters
     public int GetCurrentWeapon() {
-        return GetItem(0, IsWeapon);
+        if (p_Inventory.Count > 0 &&
+            ItemManager.IsWeaponItem(p_Inventory[0])) {
+            return p_Inventory[0];
+        }
+        return Consts.NULL_ITEM_ID;
     }
 
     public int GetSecondaryWeapon() {
-        return GetItem(1, IsWeapon);
+        if (!HasTwoWeapons()) {
+            return Consts.NULL_ITEM_ID;
+        }
+
+        return p_Inventory[1];
     }
 
     public int GetCurrentActive() {
-        return GetItem(2, IsActive);
+        if (!HasActive()) {
+            return Consts.NULL_ITEM_ID;
+        }
+
+        if (ItemManager.IsActiveItem(p_Inventory[0])) {
+            return p_Inventory[0];
+        }
+        else if (ItemManager.IsActiveItem(p_Inventory[1])) {
+            return p_Inventory[1];
+        }
+        return p_Inventory[2];
     }
 
     public int GetSelectedItem() {
         if (!p_IsOpen) {
-            return -1;
+            return Consts.NULL_ITEM_ID;
         }
-        return GetItem(p_CurrentlySelectedItem);
+        return p_Inventory[p_CurrentlySelectedItem];
     }
 
     public int[] GetXNeighborsOfSelectedItem(int x) {
@@ -301,7 +395,8 @@ public struct Inventory : InventoryInterace {
         if (p_Inventory.Count < 2) {
             return;
         }
-        if (IsWeapon(0) && IsWeapon(1)) {
+        if (ItemManager.IsWeaponItem(p_Inventory[0]) &&
+            ItemManager.IsWeaponItem(p_Inventory[1])) {
             int temp = p_Inventory[0];
             p_Inventory[0] = p_Inventory[1];
             p_Inventory[1] = temp;
@@ -312,10 +407,10 @@ public struct Inventory : InventoryInterace {
         if (!HasActive()) {
             return;
         }
-        if (IsActive(0)) {
+        if (ItemManager.IsActiveItem(p_Inventory[0])) {
             p_Inventory.RemoveAt(0);
         }
-        else if (IsActive(1)) {
+        else if (ItemManager.IsActiveItem(p_Inventory[1])) {
             p_Inventory.RemoveAt(1);
         }
         else {

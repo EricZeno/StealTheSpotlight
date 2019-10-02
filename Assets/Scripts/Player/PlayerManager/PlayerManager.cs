@@ -83,7 +83,7 @@ public class PlayerManager : MonoBehaviour {
 
     private void OnDropItem() {
         int itemID = p_Inventory.DropSelectedItem();
-        ItemManager.GetSingleton().GetPassiveItem(itemID).RemoveEffect(this);
+        ItemManager.GetPassiveItem(itemID).RemoveEffect(this);
         DropManager.DropItem(itemID, transform.position);
     }
 
@@ -113,7 +113,7 @@ public class PlayerManager : MonoBehaviour {
     }
 
     private void PickUpPassiveItem(int itemID) {
-        BasePassiveItem item = ItemManager.GetSingleton().GetPassiveItem(itemID);
+        BasePassiveItem item = ItemManager.GetPassiveItem(itemID);
         item.ApplyEffect(this);
     }
     #endregion

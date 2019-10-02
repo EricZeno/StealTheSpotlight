@@ -18,7 +18,7 @@
     public const float ATTACK_SPEED_MULTIPLIER = 1;
     #endregion
 
-    #region Bounding Constants
+    #region Bounding Consts
     public const float MINIMUM_ATTACK_SPEED = 0.001f;
     #endregion
 
@@ -39,5 +39,28 @@
 
     #region Null Values
     public const int NULL_ITEM_ID = -1;
+    #endregion
+
+    #region Item ID Boundaries
+    public const int MIN_PASSIVE_ITEM_ID = 0;
+    public const int MAX_PASSIVE_ITEM_ID = 3333;
+
+    public const int MIN_ACTIVE_ITEM_ID = 3334;
+    public const int MAX_ACTIVE_ITEM_ID = 6666;
+
+    public const int MIN_WEAPON_ITEM_ID = 6667;
+    public const int MAX_WEAPON_ITEM_ID = 9999;
+    #endregion
+
+    #region Item Type Names
+    public const string PASSIVE_ITEM_NAME = "passive";
+    public const string ACTIVE_ITEM_NAME = "active";
+    public const string WEAPON_ITEM_NAME = "weapon";
+    #endregion
+
+    #region AssetBundles
+    public const string ASSETBUNDLES_DIRECTORY = "AssetBundles";
+    public const string RUNTIME_STREAMING_ASSETS_DIRECTORY = "MunchkinCrawler_Data/StreamingAssets";
+    public const string PASSIVE_ITEM_BUNDLE_NAME = "passiveitems";
     #endregion
 }

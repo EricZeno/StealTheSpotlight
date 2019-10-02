@@ -29,10 +29,6 @@ public class DropManagerMert : MonoBehaviour
     #endregion
 
     #region Private Variables
-    [SerializeField]
-    [Tooltip("This is a reference to the ItemManager")]
-    private ItemManager m_ItemManager;
-
     Random p_Random;
     private int p_Floor = 0;
 
@@ -100,13 +96,13 @@ public class DropManagerMert : MonoBehaviour
             if (specialTotalWeight == 0) {
                 foreach (int item in categoryItems) {
                     if (ItemManager.IsPassiveItem(item)) {
-                        ERarityMert rarity = m_ItemManager.GetPassiveItem(item).Rarity;
+                        ERarityMert rarity = ItemManager.GetPassiveItem(item).Rarity;
                         dropChance += p_RarityValues[rarity];
                     } else if (ItemManager.IsWeaponItem(item)) {
-                        ERarityMert rarity = m_ItemManager.GetWeaponItem(item).Rarity;
+                        ERarityMert rarity = ItemManager.GetWeaponItem(item).Rarity;
                         dropChance += p_RarityValues[rarity];
                     } else {
-                        ERarityMert rarity = m_ItemManager.GetActiveItem(item).Rarity;
+                        ERarityMert rarity = ItemManager.GetActiveItem(item).Rarity;
                         dropChance += p_RarityValues[rarity];
                     }
                     selectionList.Add(dropChance);
@@ -126,13 +122,13 @@ public class DropManagerMert : MonoBehaviour
                 //Add default items to selection list
                 foreach (int item in categoryItems) {
                     if (ItemManager.IsPassiveItem(item)) {
-                        ERarityMert rarity = m_ItemManager.GetPassiveItem(item).Rarity;
+                        ERarityMert rarity = ItemManager.GetPassiveItem(item).Rarity;
                         dropChance += p_RarityValues[rarity] * (1-specialTotalWeight);
                     } else if (ItemManager.IsWeaponItem(item)) {
-                        ERarityMert rarity = m_ItemManager.GetWeaponItem(item).Rarity;
+                        ERarityMert rarity = ItemManager.GetWeaponItem(item).Rarity;
                         dropChance += p_RarityValues[rarity] * (1 - specialTotalWeight);
                     } else {
-                        ERarityMert rarity = m_ItemManager.GetActiveItem(item).Rarity;
+                        ERarityMert rarity = ItemManager.GetActiveItem(item).Rarity;
                         dropChance += p_RarityValues[rarity] * (1 - specialTotalWeight);
                     }
                     selectionList.Add(dropChance);

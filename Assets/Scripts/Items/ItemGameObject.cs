@@ -34,7 +34,7 @@ public class ItemGameObject : MonoBehaviour {
 
     public void SetupGameObject(int itemID) {
         m_ID = itemID;
-        BaseItem item = ItemManager.GetSingleton().GetItem(itemID);
+        BaseItem item = ItemManager.GetItem(itemID);
         cc_Renderer.sprite = item.GetIcon();
     }
     #endregion

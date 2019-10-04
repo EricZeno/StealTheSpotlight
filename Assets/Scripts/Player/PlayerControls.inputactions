@@ -57,9 +57,9 @@
                     "name": "UseActive",
                     "type": "Button",
                     "id": "e80adab4-84d8-4f34-9f85-3e3b720262a8",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press(behavior=2)"
                 },
                 {
                     "name": "SwitchWeapons",
@@ -204,10 +204,10 @@
             "id": "5f15e7b5-1a15-4a8c-840b-650587bf79c6",
             "actions": [
                 {
-                    "name": "CycleLeft",
-                    "type": "Button",
+                    "name": "Cycle",
+                    "type": "Value",
                     "id": "517bc54b-dbf7-40da-8d27-6653def4dadf",
-                    "expectedControlType": "",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
                 },
@@ -228,14 +228,6 @@
                     "interactions": ""
                 },
                 {
-                    "name": "CycleRight",
-                    "type": "Button",
-                    "id": "419a2f66-ac44-4918-b42a-b585f877587c",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Move",
                     "type": "Value",
                     "id": "bd9e6015-f2fe-47d3-8fd2-d5d9ec5340a6",
@@ -248,11 +240,11 @@
                 {
                     "name": "",
                     "id": "994496ae-ca8b-44f2-bd94-08537411b620",
-                    "path": "<Gamepad>/rightStick/left",
+                    "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "CycleLeft",
+                    "action": "Cycle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -275,17 +267,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "CloseInventory",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4d91d237-2fd2-46aa-b4e9-fc10b50afe3d",
-                    "path": "<Gamepad>/rightStick/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CycleRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

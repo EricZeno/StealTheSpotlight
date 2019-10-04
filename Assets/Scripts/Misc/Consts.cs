@@ -18,14 +18,29 @@
     public const float ATTACK_SPEED_MULTIPLIER = 1;
     #endregion
 
+    #region General Player
+    public const string INVENTORY_INPUT_ACTION_MAP_NAME = "Inventory";
+    public const string GAMEPLAY_INPUT_ACTION_MAP_NAME = "Gameplay";
+
+    public const int NUM_MAX_PASSIVES_IN_INV = 10;
+
+    public const float TIME_INV_CYCLE_PAUSED = 0.2f;
+    #endregion
+
     #region Bounding Consts
     public const float MINIMUM_ATTACK_SPEED = 0.001f;
+
+    public const float SQR_MAG_CLOSE_TO_ONE_LOW = 0.95f;
+    public const float SQR_MAG_CLOSE_TO_ONE_HIGH = 1.05f;
+    public const float SQR_MAG_CLOSE_TO_ZERO_HIGH = 0.05f;
     #endregion
 
     #region Buttons
     public const string TEST_BUTTON_1 = "TestButton1";
     public const string TEST_BUTTON_2 = "TestButton2";
     public const string TEST_BUTTON_3 = "TestButton3";
+
+    public const float INV_CYCLE_THRESHOLD = 0.5f;
     #endregion
 
     #region Text File Paths
@@ -62,5 +77,6 @@
     public const string ASSETBUNDLES_DIRECTORY = "AssetBundles";
     public const string RUNTIME_STREAMING_ASSETS_DIRECTORY = "MunchkinCrawler_Data/StreamingAssets";
     public const string PASSIVE_ITEM_BUNDLE_NAME = "passiveitems";
+    public const string ACTIVE_ITEM_BUNDLE_NAME = "activeitems";
     #endregion
 }

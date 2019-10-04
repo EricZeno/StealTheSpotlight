@@ -4,49 +4,53 @@ using UnityEngine;
 
 public struct WeaponBaseData {
     #region Private Variables
-    private float p_Damage;
+    private float m_Damage;
 
-    private float p_KnockbackPower;
+    private float m_KnockbackPower;
 
-    private float p_AttackSpeed;
+    private float m_AttackSpeed;
 
-    private Sprite p_Sprite;
+    private Sprite m_Sprite;
     #endregion
 
     #region Constructors
     public WeaponBaseData(float damage, float knockbackPower, float attackSpeed, Sprite sprite) {
-        p_Damage = Mathf.Max(0, damage);
-        p_KnockbackPower = Mathf.Max(0, knockbackPower);
-        p_AttackSpeed = Mathf.Max(Consts.MINIMUM_ATTACK_SPEED, attackSpeed);
-        p_Sprite = sprite;
+        m_Damage = Mathf.Max(0, damage);
+        m_KnockbackPower = Mathf.Max(0, knockbackPower);
+        m_AttackSpeed = Mathf.Max(Consts.MINIMUM_ATTACK_SPEED, attackSpeed);
+        m_Sprite = sprite;
     }
 
     public WeaponBaseData(WeaponBaseData data) {
-        p_Damage = data.p_Damage;
-        p_KnockbackPower = data.p_KnockbackPower;
-        p_AttackSpeed = data.p_AttackSpeed;
-        p_Sprite = data.p_Sprite;
+        m_Damage = data.m_Damage;
+        m_KnockbackPower = data.m_KnockbackPower;
+        m_AttackSpeed = data.m_AttackSpeed;
+        m_Sprite = data.m_Sprite;
     }
     #endregion
 
     #region Accessors and Mutators
     public float GetDamage() {
-        return p_Damage;
+        return m_Damage;
+    }
+
+    public void SetDamage(float newDamage) {
+        m_Damage = newDamage;
     }
 
     public float GetKnockbackPower() {
-        return p_KnockbackPower;
+        return m_KnockbackPower;
     }
     public void SetKnockbackPower(float newPower) {
-        p_KnockbackPower = newPower;
+        m_KnockbackPower = newPower;
     }
 
     public float GetAttackSpeed() {
-        return p_AttackSpeed;
+        return m_AttackSpeed;
     }
 
     public Sprite GetSprite() {
-        return p_Sprite;
+        return m_Sprite;
     }
     #endregion
 }
@@ -61,7 +65,7 @@ public interface WeaponInterface {
 public class WeaponBase : MonoBehaviour, WeaponInterface
 {
     #region Delegates
-    public delegate void OnAttackEffect(WeaponBaseData originalData, WeaponBaseData newData);
+    public delegate void OnAttackEffect(WeaponBaseData originalData, ref WeaponBaseData newData);
     #endregion
 
     #region Cached Reference
@@ -105,7 +109,7 @@ public class WeaponBase : MonoBehaviour, WeaponInterface
     private WeaponBaseData ApplyAllOnAttackEffects(WeaponBaseData originalData, OnAttackEffect[] effects) {
         WeaponBaseData postEffectsData = new WeaponBaseData(originalData);
         foreach (var effect in effects) {
-            effect(originalData, postEffectsData);
+            effect(originalData, ref postEffectsData);
         }
         return postEffectsData;
     }

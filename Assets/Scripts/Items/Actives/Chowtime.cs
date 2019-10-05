@@ -28,8 +28,9 @@ public class Chowtime : BaseActiveItem {
     #endregion
 
     #region Effect Methods
-    private void MultiplyAttackDamage(WeaponBaseData originalData, ref WeaponBaseData newData) {
-        newData.SetDamage(originalData.GetDamage() * m_DamageMultiplier);
+    private WeaponBaseData MultiplyAttackDamage(WeaponBaseData originalData) {
+        originalData.Damage = (int)(originalData.Damage * m_DamageMultiplier);
+        return originalData;
     }
     #endregion
 }

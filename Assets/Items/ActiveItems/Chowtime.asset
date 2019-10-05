@@ -21,4 +21,4 @@ MonoBehaviour:
   m_Stack: 0
   m_Cooldown: 15
   m_EffectLength: 5
-  m_DamageMultiplier: 2
+  m_DamageMultiplier: 20

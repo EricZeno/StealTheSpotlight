@@ -79,6 +79,7 @@
     public const string RUNTIME_STREAMING_ASSETS_DIRECTORY = "MunchkinCrawler_Data/StreamingAssets";
     public const string PASSIVE_ITEM_BUNDLE_NAME = "passiveitems";
     public const string ACTIVE_ITEM_BUNDLE_NAME = "activeitems";
+    public const string WEAPON_ITEM_BUNDLE_NAME = "weaponitems";
     #endregion
 
     #region Respawn

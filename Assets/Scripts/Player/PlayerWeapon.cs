@@ -14,104 +14,104 @@ public interface PlayerWeaponInterface {
 [RequireComponent(typeof(Animator))]
 public class PlayerWeapon : MonoBehaviour, PlayerWeaponInterface {
     #region Private Variables
-    private bool p_HasWeaponEquipped;
-    private int p_WeaponID;
-    private bool p_IsInUse;
-    private float p_CooldownTimer;
+    private bool m_HasWeaponEquipped;
+    private int m_WeaponID;
+    private bool m_IsInUse;
+    private float m_CooldownTimer;
 
-    private bool p_IsInAnimation;
-    private float p_WindupTime;
-    private float p_AttackTime;
-    private float p_AnimationLength;
+    private bool m_IsInAnimation;
+    private float m_WindupTime;
+    private float m_AttackTime;
+    private float m_AnimationLength;
 
-    private WeaponBaseData p_WeaponBaseData;
-    private List<ItemAndEffect> p_OnAttackEffects;
+    private WeaponBaseData m_WeaponBaseData;
+    private List<ItemAndEffect> m_OnAttackEffects;
     #endregion
 
     #region Cached Components
-    private Animator cc_Animator;
+    private Animator m_Animator;
     #endregion
 
     #region Cached References
-    private WeaponInterface cr_Weapon;
+    private WeaponInterface m_Weapon;
     #endregion
 
     #region Initialization
     private void Awake() {
-        cc_Animator = GetComponent<Animator>();
+        m_Animator = GetComponent<Animator>();
 
-        p_HasWeaponEquipped = false;
-        p_WeaponID = -1;    // TODO: Set to not a weapon
-        p_IsInUse = false;
-        p_IsInAnimation = false;
+        m_HasWeaponEquipped = false;
+        m_WeaponID = Consts.NULL_ITEM_ID;
+        m_IsInUse = false;
+        m_IsInAnimation = false;
 
-        p_OnAttackEffects = new List<ItemAndEffect>();
+        m_OnAttackEffects = new List<ItemAndEffect>();
     }
 
     private void Start() {
-        cr_Weapon = GetComponentInChildren<WeaponInterface>();
-        if (cr_Weapon == null) {
+        m_Weapon = GetComponentInChildren<WeaponInterface>();
+        if (m_Weapon == null) {
             Debug.LogError("Could not find WeaponBase.");
         }
-        cr_Weapon.Deactivate();
+        Invoke("DeactivateWeapon", 0.2f);
     }
     #endregion
 
     #region Main Updates
     private void Update() {
-        if (p_IsInUse && CanUse()) {
+        if (m_IsInUse && CanUse()) {
             StartCoroutine(UseWeapon());
         }
         else if (WaitingOnCooldown()) {
-            p_CooldownTimer -= Time.deltaTime;
+            m_CooldownTimer -= Time.deltaTime;
         }
         else {
-            p_CooldownTimer = 0;
+            m_CooldownTimer = 0;
         }
     }
     #endregion
 
     #region Resetters
     private void ResetCooldown() {
-        p_CooldownTimer = Consts.ATTACK_SPEED_MULTIPLIER * 1 / p_WeaponBaseData.GetAttackSpeed();
+        m_CooldownTimer = Consts.ATTACK_SPEED_MULTIPLIER * 1 / m_WeaponBaseData.GetAttackSpeed();
     }
     #endregion
 
     #region Checkers
     private bool CanUse() {
-        if (!p_HasWeaponEquipped)
+        if (!m_HasWeaponEquipped)
             return false;
-        if (p_IsInAnimation)
+        if (m_IsInAnimation)
             return false;
-        if (p_CooldownTimer > 0)
+        if (m_CooldownTimer > 0)
             return false;
 
         return true;
     }
 
     private bool WaitingOnCooldown() {
-        return p_CooldownTimer > 0;
+        return m_CooldownTimer > 0;
     }
     #endregion
 
     #region Equip Helper Methods
     private void SetWeaponData() {
         string type = "ShortBlade";
-        p_WindupTime = WeaponTypeDataManager.singleton.WindupTime(type);
-        p_AttackTime = WeaponTypeDataManager.singleton.AttackTime(type);
-        p_AnimationLength = WeaponTypeDataManager.singleton.AnimationTime(type);
+        m_WindupTime = WeaponTypeDataManager.singleton.WindupTime(type);
+        m_AttackTime = WeaponTypeDataManager.singleton.AttackTime(type);
+        m_AnimationLength = WeaponTypeDataManager.singleton.AnimationTime(type);
 
         // TODO: set rest of data
-        if (p_WeaponID == 0) {
-            p_WeaponBaseData = new WeaponBaseData(0, 0, 1, Utility.LoadSpriteFile(Consts.TEST_SWORD_1_SPRITE_PATH));
+        if (m_WeaponID == 0) {
+            m_WeaponBaseData = new WeaponBaseData(0, 0, 1, Utility.LoadSpriteFile(Consts.TEST_SWORD_1_SPRITE_PATH));
         }
-        else if (p_WeaponID == 1) {
-            p_WeaponBaseData = new WeaponBaseData(0, 0, 1, Utility.LoadSpriteFile(Consts.TEST_SWORD_2_SPRITE_PATH));
+        else if (m_WeaponID == 1) {
+            m_WeaponBaseData = new WeaponBaseData(0, 0, 1, Utility.LoadSpriteFile(Consts.TEST_SWORD_2_SPRITE_PATH));
         }
     }
 
     private void ApplyWeaponData() {
-        cr_Weapon.UpdateGraphics(p_WeaponBaseData);
+        m_Weapon.UpdateGraphics(m_WeaponBaseData);
     }
     #endregion
 
@@ -119,15 +119,15 @@ public class PlayerWeapon : MonoBehaviour, PlayerWeaponInterface {
     private IEnumerator UseWeapon() {
         StartAnimations();
 
-        yield return new WaitForSeconds(p_WindupTime);
+        yield return new WaitForSeconds(m_WindupTime);
 
         ActivateWeapon();
 
-        yield return new WaitForSeconds(p_AttackTime - p_WindupTime);
+        yield return new WaitForSeconds(m_AttackTime - m_WindupTime);
 
         DeactivateWeapon();
 
-        yield return new WaitForSeconds(p_AnimationLength - p_AttackTime);
+        yield return new WaitForSeconds(m_AnimationLength - m_AttackTime);
 
         EndAnimations();
 
@@ -135,50 +135,50 @@ public class PlayerWeapon : MonoBehaviour, PlayerWeaponInterface {
     }
 
     private void StartAnimations() {
-        p_IsInAnimation = true;
+        m_IsInAnimation = true;
 
-        cc_Animator.SetTrigger(Consts.USE_WEAPON_ANIMATOR_TRIGGER);
+        m_Animator.SetTrigger(Consts.USE_WEAPON_ANIMATOR_TRIGGER);
     }
 
     private void EndAnimations() {
-        p_IsInAnimation = false;
+        m_IsInAnimation = false;
     }
 
     private void ActivateWeapon() {
-        WeaponBase.OnAttackEffect[] effects = new WeaponBase.OnAttackEffect[p_OnAttackEffects.Count];
-        for (int i = 0; i < p_OnAttackEffects.Count; i++) {
-            effects[i] = p_OnAttackEffects[i].Effect;
+        WeaponBase.OnAttackEffect[] effects = new WeaponBase.OnAttackEffect[m_OnAttackEffects.Count];
+        for (int i = 0; i < m_OnAttackEffects.Count; i++) {
+            effects[i] = m_OnAttackEffects[i].Effect;
         }
-        cr_Weapon.Activate(p_WeaponBaseData, effects);
+        m_Weapon.Activate(m_WeaponBaseData, effects);
     }
 
     private void DeactivateWeapon() {
-        cr_Weapon.Deactivate();
+        m_Weapon.Deactivate();
     }
     #endregion
 
     #region Interface Required Methods
     public void Equip(int weaponID) {
-        p_WeaponID = weaponID;
+        m_WeaponID = weaponID;
 
         // TODO: Get weapon data
         // TODO: Set weapon data
         SetWeaponData();
         ApplyWeaponData();
         
-        p_HasWeaponEquipped = true;
+        m_HasWeaponEquipped = true;
     }
 
     public void Unequip() {
-        p_HasWeaponEquipped = false;
+        m_HasWeaponEquipped = false;
     }
 
     public void Use() {
-        p_IsInUse = true;
+        m_IsInUse = true;
     }
 
     public void StopUse() {
-        p_IsInUse = false;
+        m_IsInUse = false;
     }
     #endregion
 
@@ -191,13 +191,13 @@ public class PlayerWeapon : MonoBehaviour, PlayerWeaponInterface {
 
     #region On Attack Effect
     public void AddItemEffect(int itemID, WeaponBase.OnAttackEffect effect) {
-        p_OnAttackEffects.Add(new ItemAndEffect(itemID, effect));
+        m_OnAttackEffects.Add(new ItemAndEffect(itemID, effect));
     }
 
     public void SubtractItemEffect(int itemID) {
-        for (int i = 0; i < p_OnAttackEffects.Count; i++) {
-            if (p_OnAttackEffects[i].ItemID == itemID) {
-                p_OnAttackEffects.RemoveAt(i);
+        for (int i = 0; i < m_OnAttackEffects.Count; i++) {
+            if (m_OnAttackEffects[i].ItemID == itemID) {
+                m_OnAttackEffects.RemoveAt(i);
                 break;
             }
         }

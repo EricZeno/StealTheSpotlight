@@ -69,20 +69,20 @@ public class WeaponBase : MonoBehaviour, WeaponInterface
     #endregion
 
     #region Cached Reference
-    private SpriteRenderer cr_Renderer;
+    private SpriteRenderer m_Renderer;
 
-    private WeaponHitbox cr_Hitbox;
+    private WeaponHitbox m_Hitbox;
     #endregion
 
     #region Initialization
     private void Start() {
-        cr_Renderer = GetComponentInChildren<SpriteRenderer>();
-        if (cr_Renderer == null) {
+        m_Renderer = GetComponentInChildren<SpriteRenderer>();
+        if (m_Renderer == null) {
             Debug.LogError("Could not find sprite renderer.");
         }
 
-        cr_Hitbox = GetComponentInChildren<WeaponHitbox>();
-        if (cr_Hitbox == null) {
+        m_Hitbox = GetComponentInChildren<WeaponHitbox>();
+        if (m_Hitbox == null) {
             Debug.LogError("Could not find weapon collider.");
         }
     }
@@ -92,16 +92,16 @@ public class WeaponBase : MonoBehaviour, WeaponInterface
     public void Activate(WeaponBaseData originalData, OnAttackEffect[] effects) {
         WeaponBaseData postEffectsData = ApplyAllOnAttackEffects(originalData, effects);
 
-        cr_Hitbox.gameObject.SetActive(true);
-        cr_Hitbox.SetHitboxStats(postEffectsData);
+        m_Hitbox.gameObject.SetActive(true);
+        m_Hitbox.SetHitboxStats(postEffectsData);
     }
 
     public void Deactivate() {
-        cr_Hitbox.gameObject.SetActive(false);
+        m_Hitbox.gameObject.SetActive(false);
     }
 
     public void UpdateGraphics(WeaponBaseData data) {
-        cr_Renderer.sprite = data.GetSprite();
+        m_Renderer.sprite = data.GetSprite();
     }
     #endregion
 

@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine.InputSystem.PlayerInput;
 using UnityEngine;
+using System;
 
 [DisallowMultipleComponent]
 public class PlayerManager : MonoBehaviour {
-    #region Delegates
+    #region Events and Delegates
     public delegate void EffectToApply(PlayerManager player);
+    public delegate void Death(int playerID);
+    public static event Death DeathEvent;
     #endregion
 
     #region Editor Variables
@@ -28,6 +31,8 @@ public class PlayerManager : MonoBehaviour {
     private Dictionary<int, List<IEnumerator>> m_TimedEffects;
 
     private Vector2 m_AimDir;
+
+	private int m_PlayerID;
     #endregion
 
     #region Cached Components
@@ -64,10 +69,10 @@ public class PlayerManager : MonoBehaviour {
         CycleInventory();
         ReduceActiveItemCooldown();
     }
-    #endregion
+	#endregion
 
-    #region Accessors
-    public float GetMoveSpeed() {
+	#region Accessors and Setters
+	public float GetMoveSpeed() {
         return m_Data.CurrMovementSpeed;
     }
 
@@ -78,8 +83,16 @@ public class PlayerManager : MonoBehaviour {
     public Vector2 GetAimDir() {
         return m_AimDir;
     }
+
+    public int GetID() {
+        return m_PlayerID;
+    }
+
+    public void SetID(int ID) {
+        m_PlayerID = ID;
+    }
     #endregion
-    
+
     #region Input Receivers
     private void OnCycle(InputValue value) {
         // TODO: first two items cycle slowly but then it cycles really fast
@@ -196,6 +209,9 @@ public class PlayerManager : MonoBehaviour {
     #region Health Methods
     public void TakeDamage(int damage) {
         m_Data.TakeDamage(damage);
+        if (m_Data.CurrHealth <= 0) {
+            DeathEvent(m_PlayerID);
+        }
     }
 
     public void Heal(float m_HealPercent) {

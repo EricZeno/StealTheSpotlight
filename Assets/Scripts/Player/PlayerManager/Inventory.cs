@@ -38,53 +38,53 @@ public struct Inventory : InventoryInterace {
     // weapon, the first position will be for the secondary weapon, the second
     // position will be for the active item and the rest of the positions are
     // for all of the passive items.
-    private List<int> p_Inventory;
+    private List<int> m_Inventory;
 
     // The current number of passive items being carried
-    private int p_NumPassives;
+    private int m_NumPassives;
 
     // The maximum number of passive items allowed to be carried
-    private int p_MaxPassives;
+    private int m_MaxPassives;
 
     // If the inventory is open, this is set to true. Certain things will not
     // work unless the inventory is open (cycling).
-    private bool p_IsOpen;
+    private bool m_IsOpen;
 
     // When the inventory is open, this is the position in the inventory array
     // of the currently selected item.
-    private int p_CurrentlySelectedItem;
+    private int m_CurrentlySelectedItem;
     #endregion
 
     #region Constructor
     public Inventory(int maxPassives) {
-        p_Inventory = new List<int>();
-        p_NumPassives = 0;
-        p_MaxPassives = maxPassives;
-        p_IsOpen = false;
-        p_CurrentlySelectedItem = 0;
+        m_Inventory = new List<int>();
+        m_NumPassives = 0;
+        m_MaxPassives = maxPassives;
+        m_IsOpen = false;
+        m_CurrentlySelectedItem = 0;
     }
     #endregion
     
     #region Checkers
     private bool IsEmpty() {
-        return p_Inventory.Count == 0;
+        return m_Inventory.Count == 0;
     }
 
     private bool HasPassiveRoom() {
-        return p_NumPassives < p_MaxPassives;
+        return m_NumPassives < m_MaxPassives;
     }
 
     private bool HasActive() {
-        if (p_Inventory.Count > 0) {
-            if (ItemManager.IsActiveItem(p_Inventory[0])) {
+        if (m_Inventory.Count > 0) {
+            if (ItemManager.IsActiveItem(m_Inventory[0])) {
                 return true;
             }
-            else if (p_Inventory.Count > 1) {
-                if (ItemManager.IsActiveItem(p_Inventory[1])) {
+            else if (m_Inventory.Count > 1) {
+                if (ItemManager.IsActiveItem(m_Inventory[1])) {
                     return true;
                 }
-                else if (p_Inventory.Count > 2 &&
-                    ItemManager.IsActiveItem(p_Inventory[2])) {
+                else if (m_Inventory.Count > 2 &&
+                    ItemManager.IsActiveItem(m_Inventory[2])) {
                     return true;
                 }
             }
@@ -93,9 +93,9 @@ public struct Inventory : InventoryInterace {
     }
 
     private bool HasTwoWeapons() {
-        return p_Inventory.Count >= 2 &&
-            ItemManager.IsWeaponItem(p_Inventory[0]) &&
-            ItemManager.IsWeaponItem(p_Inventory[1]);
+        return m_Inventory.Count >= 2 &&
+            ItemManager.IsWeaponItem(m_Inventory[0]) &&
+            ItemManager.IsWeaponItem(m_Inventory[1]);
     }
     #endregion
 
@@ -105,19 +105,18 @@ public struct Inventory : InventoryInterace {
             throw new System.IndexOutOfRangeException($"Tried to drop item " +
                 $"in inventory position {index}. This is illegal.");
         }
-        if (p_Inventory.Count <= index) {
+        if (m_Inventory.Count <= index) {
             throw new System.IndexOutOfRangeException($"Tried to drop item " +
                 $"in inventory position {index} but inventory only has " +
-                $"{p_Inventory.Count} items.");
+                $"{m_Inventory.Count} items.");
         }
 
-        int itemID = p_Inventory[index];
-        p_Inventory.RemoveAt(index);
+        int itemID = m_Inventory[index];
+        m_Inventory.RemoveAt(index);
 
         if (ItemManager.IsPassiveItem(itemID)) {
-            p_NumPassives--;
+            m_NumPassives--;
         }
-
         return itemID;
     }
 
@@ -135,7 +134,7 @@ public struct Inventory : InventoryInterace {
         }
         if (ItemManager.IsPassiveItem(itemID)) {
             InsertPassiveItemIntoInv(itemID);
-            p_NumPassives++;
+            m_NumPassives++;
         }
     }
 
@@ -151,16 +150,16 @@ public struct Inventory : InventoryInterace {
                 "has two weapons in inventory.");
         }
 
-        if (p_Inventory.Count > 0) {
-            if (ItemManager.IsWeaponItem(p_Inventory[0])) {
-                p_Inventory.Insert(1, itemID);
+        if (m_Inventory.Count > 0) {
+            if (ItemManager.IsWeaponItem(m_Inventory[0])) {
+                m_Inventory.Insert(1, itemID);
             }
             else {
-                p_Inventory.Insert(0, itemID);
+                m_Inventory.Insert(0, itemID);
             }
         }
         else {
-            p_Inventory.Insert(0, itemID);
+            m_Inventory.Insert(0, itemID);
         }
     }
 
@@ -176,26 +175,26 @@ public struct Inventory : InventoryInterace {
                 "has an active in inventory.");
         }
 
-        if (p_Inventory.Count > 0) {
+        if (m_Inventory.Count > 0) {
             //  Inventory does not have any weapon items
-            if (ItemManager.IsPassiveItem(p_Inventory[0])) {
-                p_Inventory.Insert(0, itemID);
+            if (ItemManager.IsPassiveItem(m_Inventory[0])) {
+                m_Inventory.Insert(0, itemID);
             }
-            else if (p_Inventory.Count > 1) {
+            else if (m_Inventory.Count > 1) {
                 // Inventory has a single weapon item
-                if (ItemManager.IsPassiveItem(p_Inventory[1])) {
-                    p_Inventory.Insert(1, itemID);
+                if (ItemManager.IsPassiveItem(m_Inventory[1])) {
+                    m_Inventory.Insert(1, itemID);
                 }
                 else { // Inventory has two weapon items
-                    p_Inventory.Insert(2, itemID);
+                    m_Inventory.Insert(2, itemID);
                 }
             }
             else { // Inventory has a single item. It is a weapon
-                p_Inventory.Insert(1, itemID);
+                m_Inventory.Insert(1, itemID);
             }
         }
         else { // Inventory is empty
-            p_Inventory.Insert(0, itemID);
+            m_Inventory.Insert(0, itemID);
         }
     }
 
@@ -212,7 +211,7 @@ public struct Inventory : InventoryInterace {
         }
 
         // TODO: sort by rarity then alphabetically
-        p_Inventory.Add(itemID);
+        m_Inventory.Add(itemID);
     }
 
     private int ReplaceCurrentActive(int itemID) {
@@ -223,12 +222,12 @@ public struct Inventory : InventoryInterace {
         }
 
         int activeInd = Consts.NULL_ITEM_ID;
-        if (p_Inventory.Count > 0) {
-            if (ItemManager.IsActiveItem(p_Inventory[0])) {
+        if (m_Inventory.Count > 0) {
+            if (ItemManager.IsActiveItem(m_Inventory[0])) {
                 activeInd = 0;
             }
-            else if (p_Inventory.Count > 1) {
-                if (ItemManager.IsActiveItem(p_Inventory[1])) {
+            else if (m_Inventory.Count > 1) {
+                if (ItemManager.IsActiveItem(m_Inventory[1])) {
                     activeInd = 1;
                 }
                 else {
@@ -258,45 +257,45 @@ public struct Inventory : InventoryInterace {
 
     #region Inventory Control
     public void OpenInventory() {
-        p_IsOpen = true;
+        m_IsOpen = true;
     }
 
     public void CloseInventory() {
-        p_IsOpen = false;
+        m_IsOpen = false;
     }
 
     public void CycleLeft() {
-        if (IsEmpty() || !p_IsOpen) {
+        if (IsEmpty() || !m_IsOpen) {
             return;
         }
-        p_CurrentlySelectedItem--;
-        if (p_CurrentlySelectedItem <= -1) {
-            p_CurrentlySelectedItem = p_Inventory.Count - 1;
+        m_CurrentlySelectedItem--;
+        if (m_CurrentlySelectedItem <= -1) {
+            m_CurrentlySelectedItem = m_Inventory.Count - 1;
         }
     }
 
     public void CycleRight() {
-        if (IsEmpty() || !p_IsOpen) {
+        if (IsEmpty() || !m_IsOpen) {
             return;
         }
-        p_CurrentlySelectedItem++;
-        if (p_CurrentlySelectedItem >= p_Inventory.Count) {
-            p_CurrentlySelectedItem = 0;
+        m_CurrentlySelectedItem++;
+        if (m_CurrentlySelectedItem >= m_Inventory.Count) {
+            m_CurrentlySelectedItem = 0;
         }
     }
     #endregion
 
     #region Pickup and Drop
     public int DropCurrentWeapon() {
-        if (p_Inventory.Count > 0 && 
-            ItemManager.IsWeaponItem(p_Inventory[0])) {
+        if (m_Inventory.Count > 0 && 
+            ItemManager.IsWeaponItem(m_Inventory[0])) {
             return DropItemAtIndex(0);
         }
         return Consts.NULL_ITEM_ID;
     }
 
     public int DropSelectedItem() {
-        return DropItemAtIndex(p_CurrentlySelectedItem);
+        return DropItemAtIndex(m_CurrentlySelectedItem);
     }
 
     public int PickupItem(int itemID) {
@@ -316,9 +315,9 @@ public struct Inventory : InventoryInterace {
 
     #region Getters
     public int GetCurrentWeapon() {
-        if (p_Inventory.Count > 0 &&
-            ItemManager.IsWeaponItem(p_Inventory[0])) {
-            return p_Inventory[0];
+        if (m_Inventory.Count > 0 &&
+            ItemManager.IsWeaponItem(m_Inventory[0])) {
+            return m_Inventory[0];
         }
         return Consts.NULL_ITEM_ID;
     }
@@ -328,7 +327,7 @@ public struct Inventory : InventoryInterace {
             return Consts.NULL_ITEM_ID;
         }
 
-        return p_Inventory[1];
+        return m_Inventory[1];
     }
 
     public int GetCurrentActive() {
@@ -336,20 +335,20 @@ public struct Inventory : InventoryInterace {
             return Consts.NULL_ITEM_ID;
         }
 
-        if (ItemManager.IsActiveItem(p_Inventory[0])) {
-            return p_Inventory[0];
+        if (ItemManager.IsActiveItem(m_Inventory[0])) {
+            return m_Inventory[0];
         }
-        else if (ItemManager.IsActiveItem(p_Inventory[1])) {
-            return p_Inventory[1];
+        else if (ItemManager.IsActiveItem(m_Inventory[1])) {
+            return m_Inventory[1];
         }
-        return p_Inventory[2];
+        return m_Inventory[2];
     }
 
     public int GetSelectedItem() {
-        if (!p_IsOpen) {
+        if (!m_IsOpen) {
             return Consts.NULL_ITEM_ID;
         }
-        return p_Inventory[p_CurrentlySelectedItem];
+        return m_Inventory[m_CurrentlySelectedItem];
     }
 
     public int[] GetXNeighborsOfSelectedItem(int x) {
@@ -357,31 +356,31 @@ public struct Inventory : InventoryInterace {
         for (int i = 0; i < 2 * x; i++) {
             neighbors[i] = -1;
         }
-        if (IsEmpty() || !p_IsOpen) {
+        if (IsEmpty() || !m_IsOpen) {
             return neighbors;
         }
 
-        int inventoryInd = p_CurrentlySelectedItem - 1;
+        int inventoryInd = m_CurrentlySelectedItem - 1;
         int neighborsInd = x - 1;
         while (neighborsInd >= 0) {
             if (inventoryInd == -1) {
-                inventoryInd = p_Inventory.Count - 1;
+                inventoryInd = m_Inventory.Count - 1;
             }
-            if (inventoryInd == p_CurrentlySelectedItem) {
+            if (inventoryInd == m_CurrentlySelectedItem) {
                 break;
             }
-            neighbors[neighborsInd--] = p_Inventory[inventoryInd--];
+            neighbors[neighborsInd--] = m_Inventory[inventoryInd--];
         }
-        inventoryInd = p_CurrentlySelectedItem + 1;
+        inventoryInd = m_CurrentlySelectedItem + 1;
         neighborsInd = x + 1;
         while (neighborsInd < 2 * x) {
-            if (inventoryInd == p_Inventory.Count) {
+            if (inventoryInd == m_Inventory.Count) {
                 inventoryInd = 0;
             }
-            if (inventoryInd == p_CurrentlySelectedItem) {
+            if (inventoryInd == m_CurrentlySelectedItem) {
                 break;
             }
-            neighbors[neighborsInd++] = p_Inventory[inventoryInd++];
+            neighbors[neighborsInd++] = m_Inventory[inventoryInd++];
         }
         return neighbors;
     }
@@ -389,17 +388,17 @@ public struct Inventory : InventoryInterace {
 
     #region Misc
     public void SwitchWeapons() {
-        if (p_IsOpen) {
+        if (m_IsOpen) {
             return;
         }
-        if (p_Inventory.Count < 2) {
+        if (m_Inventory.Count < 2) {
             return;
         }
-        if (ItemManager.IsWeaponItem(p_Inventory[0]) &&
-            ItemManager.IsWeaponItem(p_Inventory[1])) {
-            int temp = p_Inventory[0];
-            p_Inventory[0] = p_Inventory[1];
-            p_Inventory[1] = temp;
+        if (ItemManager.IsWeaponItem(m_Inventory[0]) &&
+            ItemManager.IsWeaponItem(m_Inventory[1])) {
+            int temp = m_Inventory[0];
+            m_Inventory[0] = m_Inventory[1];
+            m_Inventory[1] = temp;
         }
     }
 
@@ -407,14 +406,14 @@ public struct Inventory : InventoryInterace {
         if (!HasActive()) {
             return;
         }
-        if (ItemManager.IsActiveItem(p_Inventory[0])) {
-            p_Inventory.RemoveAt(0);
+        if (ItemManager.IsActiveItem(m_Inventory[0])) {
+            m_Inventory.RemoveAt(0);
         }
-        else if (ItemManager.IsActiveItem(p_Inventory[1])) {
-            p_Inventory.RemoveAt(1);
+        else if (ItemManager.IsActiveItem(m_Inventory[1])) {
+            m_Inventory.RemoveAt(1);
         }
         else {
-            p_Inventory.RemoveAt(2);
+            m_Inventory.RemoveAt(2);
         }
     }
     #endregion

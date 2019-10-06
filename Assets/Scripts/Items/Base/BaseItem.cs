@@ -45,7 +45,7 @@ public abstract class BaseItem : ScriptableObject {
 
     #region Private Variables
     // Whether this item is a passive, active, or a weapon.
-    protected EItemType p_Type;
+    protected EItemType m_Type;
     #endregion
 
     #region Accessors

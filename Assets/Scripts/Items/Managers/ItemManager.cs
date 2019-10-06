@@ -12,26 +12,26 @@ public class ItemManager : MonoBehaviour {
     #endregion
 
     #region Private Variables
-    private static ItemManager p_Singleton;
+    private static ItemManager m_Singleton;
 
-    private BasePassiveItem[] p_PassiveItems;
-    private BaseActiveItem[] p_ActiveItems;
-    private BaseWeaponItem[] p_WeaponItems;
+    private BasePassiveItem[] m_PassiveItems;
+    private BaseActiveItem[] m_ActiveItems;
+    private BaseWeaponItem[] m_WeaponItems;
     #endregion
 
     #region Initialization
     private void Awake() {
-        if (!p_Singleton) {
-            p_Singleton = this;
+        if (!m_Singleton) {
+            m_Singleton = this;
         }
-        else if (p_Singleton != this) {
-            Destroy(p_Singleton.gameObject);
+        else if (m_Singleton != this) {
+            Destroy(m_Singleton.gameObject);
         }
     }
 
     private void Start() {
-        SetupItems(ref p_PassiveItems, Consts.PASSIVE_ITEM_BUNDLE_NAME);
-	    SetupItems(ref p_ActiveItems, Consts.ACTIVE_ITEM_BUNDLE_NAME);
+        SetupItems(ref m_PassiveItems, Consts.PASSIVE_ITEM_BUNDLE_NAME);
+	    SetupItems(ref m_ActiveItems, Consts.ACTIVE_ITEM_BUNDLE_NAME);
     }
     #endregion
 
@@ -83,17 +83,17 @@ public class ItemManager : MonoBehaviour {
     }
 
     public static BasePassiveItem GetPassiveItem(int ID) {
-        return GetItem(ID, p_Singleton.p_PassiveItems, IsPassiveItem,
+        return GetItem(ID, m_Singleton.m_PassiveItems, IsPassiveItem,
                 Consts.PASSIVE_ITEM_NAME, Consts.MIN_PASSIVE_ITEM_ID);
     }
 
     public static BaseActiveItem GetActiveItem(int ID) {
-        return GetItem(ID, p_Singleton.p_ActiveItems, IsActiveItem,
+        return GetItem(ID, m_Singleton.m_ActiveItems, IsActiveItem,
                 Consts.ACTIVE_ITEM_NAME, Consts.MIN_ACTIVE_ITEM_ID);
     }
 
     public static BaseWeaponItem GetWeaponItem(int ID) {
-        return GetItem(ID, p_Singleton.p_WeaponItems, IsWeaponItem,
+        return GetItem(ID, m_Singleton.m_WeaponItems, IsWeaponItem,
                 Consts.WEAPON_ITEM_NAME, Consts.MIN_WEAPON_ITEM_ID);
     }
 
@@ -134,7 +134,7 @@ public class ItemManager : MonoBehaviour {
     }
 
     private static void AssertItemManagerExists() {
-        if (p_Singleton == null) {
+        if (m_Singleton == null) {
             throw new System.AccessViolationException("There is no " +
                 "ItemManager in the scene.");
         }

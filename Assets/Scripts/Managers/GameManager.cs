@@ -12,28 +12,27 @@ public class GameManager : MonoBehaviour {
 
     [SerializeField]
     [Tooltip("The spawn locations for each player")]
-    private Vector2[] m_spawnPositions;
+    private Vector3[] m_spawnPositions;
     #endregion
 
     #region Private Variables
-    private static GameManager p_Singleton;
+    private static GameManager m_Singleton;
     public static GameManager getSingleton() {
-        return p_Singleton;
+        return m_Singleton;
     }
-    private int p_NumPlayers;
+    private int m_NumPlayers;
     #endregion
 
     #region Initialization
     private void Awake() {
-        if (!p_Singleton) {
-            p_Singleton = this;
-        } else if (p_Singleton != this) {
-            Destroy(p_Singleton.gameObject);
+        if (!m_Singleton) {
+            m_Singleton = this;
+        } else if (m_Singleton != this) {
+            Destroy(m_Singleton.gameObject);
         }
 
         m_Players = new PlayerManager[4];
-        m_spawnPositions = new Vector2[4];
-        p_NumPlayers = 0;
+        m_NumPlayers = 0;
     }
 
     private void OnEnable() {
@@ -52,20 +51,30 @@ public class GameManager : MonoBehaviour {
     #region Player Joining/Leaving
     private void OnPlayerJoined(PlayerInput input) {
         PlayerManager newPlayer = input.gameObject.GetComponent<PlayerManager>();
-        m_Players[p_NumPlayers] = newPlayer;
-        newPlayer.SetID(p_NumPlayers);
-        newPlayer.transform.position = m_spawnPositions[p_NumPlayers];
-        p_NumPlayers++;
+        m_Players[m_NumPlayers] = newPlayer;
+        newPlayer.SetID(m_NumPlayers);
+        newPlayer.transform.position = m_spawnPositions[m_NumPlayers];
+        m_NumPlayers++;
     }
 
     private void OnPlayerLeft(PlayerInput player) {
-        throw new System.NotImplementedException();
+        if (!(m_NumPlayers == 0)) {
+            m_NumPlayers--;
+        }
     }
     #endregion
 
     #region Respawn
-    private void Respawn(int playerID) {
+    private void Respawn(int playerID, int respawnTime) {
+        StartCoroutine(RespawnCoroutine(playerID, respawnTime));
+    }
 
+    private IEnumerator RespawnCoroutine(int playerID, int respawnTime) {
+        m_Players[playerID].enabled = false;
+        yield return new WaitForSeconds(respawnTime);
+        m_Players[playerID].transform.position = m_spawnPositions[playerID];
+        m_Players[playerID].enabled = true;
+        m_Players[playerID].Heal(100f);
     }
     #endregion
 

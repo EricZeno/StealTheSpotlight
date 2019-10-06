@@ -8,18 +8,27 @@ public class PlayerData : UnitStats {
     [SerializeField]
     [Tooltip("The interaction radius when a player presses the interact button.")]
     private float m_InteractionRadius;
+
+    [SerializeField]
+    [Tooltip("The amount of time it takes a player to respawn after dying.")]
+    private int m_RespawnTime;
     #endregion
 
     #region Resetters
     public override void ResetAllStatsDefault() {
         base.ResetAllStatsDefault();
-        p_Type = EUnitType.Player;
+        m_Type = EUnitType.Player;
     }
     #endregion
 
     #region Accessors
     public float GetInteractionRadius() {
         return m_InteractionRadius;
+    }
+
+    public int RespawnTime {
+        get { return m_RespawnTime; }
+        set { m_RespawnTime = value; }
     }
     #endregion
 }

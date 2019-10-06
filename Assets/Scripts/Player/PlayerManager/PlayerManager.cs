@@ -8,7 +8,7 @@ using System;
 public class PlayerManager : MonoBehaviour {
     #region Events and Delegates
     public delegate void EffectToApply(PlayerManager player);
-    public delegate void Death(int playerID);
+    public delegate void Death(int playerID, int respawnTime);
     public static event Death DeathEvent;
     #endregion
 
@@ -33,6 +33,8 @@ public class PlayerManager : MonoBehaviour {
     private Vector2 m_AimDir;
 
 	private int m_PlayerID;
+
+	private List<MonoBehaviour> m_ScriptsToDisable;
     #endregion
 
     #region Cached Components
@@ -40,12 +42,22 @@ public class PlayerManager : MonoBehaviour {
     private PlayerInput m_Input;
 
     private PlayerWeapon m_Weapon;
-    #endregion
 
-    #region Initialization
-    private void Awake() {
-        // Number of max passives subject to change based on item balancing
-        m_Data.ResetAllStatsDefault();
+    // Need to cache sprite renderer and collider in order to disable on death
+    private SpriteRenderer m_SpriteRenderer;
+    private Collider2D m_Collider;
+	#endregion
+
+	#region Initialization
+	private void Awake() {
+		// Number of max passives subject to change based on item balancing
+		m_Data.ResetAllStatsDefault();
+
+        //Debugging RespawnTime
+        m_Data.RespawnTime = Consts.BASE_RESPAWN_TIME;
+
+		m_Inventory = new Inventory(10);
+		m_TimedEffects = new Dictionary<int, List<IEnumerator>>();
 
         m_Inventory = new Inventory(Consts.NUM_MAX_PASSIVES_IN_INV);
 
@@ -61,6 +73,25 @@ public class PlayerManager : MonoBehaviour {
 
         m_Input = GetComponent<PlayerInput>();
         m_Weapon = GetComponent<PlayerWeapon>();
+
+        m_SpriteRenderer = GetComponent<SpriteRenderer>();
+        m_Collider = GetComponent<Collider2D>();
+
+        m_ScriptsToDisable = new List<MonoBehaviour>();
+        foreach (MonoBehaviour component in GetComponents(typeof(MonoBehaviour))) {
+            if (!(component == this || component is PlayerInput)) {
+                m_ScriptsToDisable.Add(component);
+            }
+        }
+    }
+
+    private void OnEnable() {
+        foreach (var component in m_ScriptsToDisable) {
+            component.enabled = true;
+        }
+
+        m_SpriteRenderer.enabled = true;
+        m_Collider.enabled = true;
     }
     #endregion
 
@@ -90,8 +121,10 @@ public class PlayerManager : MonoBehaviour {
 
     public void SetID(int ID) {
         m_PlayerID = ID;
-    }
-    #endregion
+        DeathCanvas deathCanvas = GetComponentInChildren<DeathCanvas>();
+        deathCanvas.PlayerID = ID;
+	}
+	#endregion
 
     #region Input Receivers
     private void OnCycle(InputValue value) {
@@ -210,7 +243,7 @@ public class PlayerManager : MonoBehaviour {
     public void TakeDamage(int damage) {
         m_Data.TakeDamage(damage);
         if (m_Data.CurrHealth <= 0) {
-            DeathEvent(m_PlayerID);
+            DeathEvent(m_PlayerID, m_Data.RespawnTime);
         }
     }
 
@@ -320,5 +353,16 @@ public class PlayerManager : MonoBehaviour {
         yield return new WaitForSeconds(effectLength);
         m_Data.RemoveStatus(status);
     }
-    #endregion
+	#endregion
+
+	#region OnDisable And Other Enders
+    private void OnDisable() {
+		foreach (var component in m_ScriptsToDisable) {
+				component.enabled = false;
+			}
+
+        m_SpriteRenderer.enabled = false;
+        m_Collider.enabled = false;
+    }
+	#endregion
 }

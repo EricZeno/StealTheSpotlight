@@ -23,7 +23,7 @@ public abstract class BasePassiveItem : BaseItem, IBasePassiveItem {
     
     #region Initialization
     private void Awake() {
-        p_Type = EItemType.PASSIVE;
+        m_Type = EItemType.PASSIVE;
     }
     #endregion
 

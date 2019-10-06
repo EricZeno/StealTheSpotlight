@@ -79,4 +79,8 @@
     public const string PASSIVE_ITEM_BUNDLE_NAME = "passiveitems";
     public const string ACTIVE_ITEM_BUNDLE_NAME = "activeitems";
     #endregion
+
+    #region Respawn
+    public const int BASE_RESPAWN_TIME = 10;
+    #endregion
 }

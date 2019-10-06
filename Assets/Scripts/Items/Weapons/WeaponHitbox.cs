@@ -7,21 +7,21 @@ using UnityEngine;
 public class WeaponHitbox : MonoBehaviour
 {
     #region Private Variables
-    private float p_Damage;
-    private float p_KnockbackPower;
+    private float m_Damage;
+    private float m_KnockbackPower;
 
-    private List<int> p_EnemiesHit;
+    private List<int> m_EnemiesHit;
     #endregion
 
     #region Initialization
     private void Awake() {
-        p_EnemiesHit = new List<int>();
+        m_EnemiesHit = new List<int>();
     }
     #endregion
 
     #region OnEnable and OnDisable
     private void OnDisable() {
-        p_EnemiesHit.Clear();
+        m_EnemiesHit.Clear();
     }
     #endregion
 
@@ -33,13 +33,13 @@ public class WeaponHitbox : MonoBehaviour
 
     private void SetDamage(float damage) {
         if (damage >= 0) {
-            p_Damage = damage;
+            m_Damage = damage;
         }
     }
 
     private void SetKnockbackPower(float knockbackPower) {
         if (knockbackPower >= 0) {
-            p_KnockbackPower = knockbackPower;
+            m_KnockbackPower = knockbackPower;
         }
     }
     #endregion

@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4978184246927012525}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.057994016, y: -0.731778, z: -2.884477}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -57,3 +57,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ItemGO: {fileID: 513880060694868754, guid: c5ae900ee8beca043a584073a8411832, type: 3}
+  m_BossDrops: 
+  m_MiniBossDrops: 
+  m_HardEnemyDrops: 
+  m_MedEnemyDrops: 
+  m_EasyEnemyDrops: 
+  m_SwarmEnemyDrops: 
+  m_EasyObjectiveDrops: 
+  m_MediumObjectiveDrops: 
+  m_HardObjectiveDrops: 
+  m_ChestDrops: 01000000030000000400000005000000060000000700000008000000060d0000070d0000080d00000b1a00000c1a00000d1a00000e1a00000f1a0000
+  m_BossDropRate: 0
+  m_MinibossDropRate: 0
+  m_HardEnemyDropRate: 0
+  m_MediumEnemyDropRate: 0
+  m_EasyEnemyDropRate: 0
+  m_SwarmEnemyDropRate: 0
+  m_ChestDropRate: 1
+  m_HardObjectiveDropRate: 0
+  m_MediumObjectiveDropRate: 0
+  m_EasyObjectiveDropRate: 0
+  m_CommonDropRate: 1
+  m_UncommonDropRate: 0
+  m_RareDropRate: 0
+  m_EpicDropRate: 0
+  m_LegendaryDropRate: 0

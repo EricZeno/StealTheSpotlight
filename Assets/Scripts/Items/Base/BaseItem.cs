@@ -12,7 +12,8 @@ public enum EItemRarity {
     COMMON,
     UNCOMMON,
     RARE,
-    SECRET
+    EPIC,
+    LEGENDARY
 }
 
 public abstract class BaseItem : ScriptableObject {
@@ -57,8 +58,8 @@ public abstract class BaseItem : ScriptableObject {
         return m_ID;
     }
 
-    public ERarityMert Rarity {
-        get { return ERarityMert.Common; }
+    public EItemRarity Rarity {
+        get { return m_Rarity; }
     }
 
     public Sprite GetIcon() {

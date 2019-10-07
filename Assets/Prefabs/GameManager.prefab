@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4822501508248935739}
   - component: {fileID: 4822501508248935738}
+  - component: {fileID: 817932753569047295}
   m_Layer: 0
-  m_Name: PlayerInputManager
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,3 +82,22 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &817932753569047295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4822501508248935733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8d28259c41ae4b26a9498d8dfdefb8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Players: []
+  m_spawnPositions:
+  - {x: -19, y: 0, z: 0}
+  - {x: 19, y: 0, z: 0}
+  - {x: 0, y: -19, z: 0}
+  - {x: 0, y: 19, z: 0}
+  m_RespawnTime: 3

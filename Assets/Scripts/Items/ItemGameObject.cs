@@ -12,12 +12,12 @@ public class ItemGameObject : MonoBehaviour {
     #endregion
 
     #region Cached Components
-    private SpriteRenderer cc_Renderer;
+    private SpriteRenderer m_Renderer;
     #endregion
 
     #region Initialization
     private void Awake() {
-        cc_Renderer = GetComponent<SpriteRenderer>();
+        m_Renderer = GetComponent<SpriteRenderer>();
     }
 
     private void Start() {
@@ -35,7 +35,7 @@ public class ItemGameObject : MonoBehaviour {
     public void SetupGameObject(int itemID) {
         m_ID = itemID;
         BaseItem item = ItemManager.GetItem(itemID);
-        cc_Renderer.sprite = item.GetIcon();
+        m_Renderer.sprite = item.GetIcon();
     }
     #endregion
 

@@ -7,18 +7,18 @@ using UnityEngine;
 public class PlayerMovementTesting : MonoBehaviour
 {
     #region Instance Variables
-    private Vector2 p_MoveDir;
+    private Vector2 m_MoveDir;
     #endregion
 
     #region Cached Components
-    private PlayerManager cc_Manager;
-    private Rigidbody2D cc_Rb;
+    private PlayerManager m_Manager;
+    private Rigidbody2D m_Rb;
     #endregion
 
     #region Initialization
     private void Awake() {
-        cc_Manager = GetComponent<PlayerManager>();
-        cc_Rb = GetComponent<Rigidbody2D>();
+        m_Manager = GetComponent<PlayerManager>();
+        m_Rb = GetComponent<Rigidbody2D>();
     }
     #endregion
 
@@ -37,14 +37,14 @@ public class PlayerMovementTesting : MonoBehaviour
     #region Movement Methods
     private void SetMoveDir(float x, float y) {
         // TODO: Error checking on x and y
-        p_MoveDir = new Vector2(x, y);
-        if (p_MoveDir.sqrMagnitude > 1) {
-            p_MoveDir.Normalize();
+        m_MoveDir = new Vector2(x, y);
+        if (m_MoveDir.sqrMagnitude > 1) {
+            m_MoveDir.Normalize();
         }
     }
 
     private void Move() {
-        cc_Rb.MovePosition(cc_Rb.position + p_MoveDir * cc_Manager.GetMoveSpeed() * Time.fixedDeltaTime);
+        m_Rb.MovePosition(m_Rb.position + m_MoveDir * m_Manager.GetMoveSpeed() * Time.fixedDeltaTime);
     }
     #endregion
 }

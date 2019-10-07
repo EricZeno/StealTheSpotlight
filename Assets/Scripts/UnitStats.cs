@@ -31,7 +31,7 @@ public abstract class UnitStats
     [Tooltip("The power of a unit determines the strength of a unit, including the base amount of damage it deals, before weapon bonuses, and any healing it does")]
     private int m_Power;
     public int GetPower() {
-            return m_Power;
+        return m_Power;
     }
 
     [SerializeField]
@@ -49,38 +49,38 @@ public abstract class UnitStats
     [SerializeField]
     [Tooltip("Tenacity multiplicatively reduces the duration of crowd control (stun, root...) applied to the unit")]
     [Range(0, 1)]
-    private int p_Tenacity;
+    private int m_Tenacity;
     public int Tenacity {
         get {
-            return p_Tenacity;
+            return m_Tenacity;
         }
         set {
-            p_Tenacity = value;
+            m_Tenacity = value;
         }
     }
     #endregion
 
     #region Private Variables
     //Determines the type of the unit for external use
-    protected EUnitType p_Type;
+    protected EUnitType m_Type;
 
     //The current movement speed of a unit
-    private float p_CurrMovementSpeed;
+    private float m_CurrMovementSpeed;
     public float CurrMovementSpeed {
         get {
-            return p_CurrMovementSpeed;
+            return m_CurrMovementSpeed;
         }
     }
 
     //Currently not in use. Exists for potential use for Enemy and class power/health calculation
-    private int p_Level;
+    private int m_Level;
     #endregion
 
     #region Resetters
     public virtual void ResetAllStatsDefault() {
-        p_CurrMovementSpeed = m_BaseMovementSpeed;
-        p_MaxHealth = m_BaseHealth;
-        p_CurrHealth = m_BaseHealth;
+        m_CurrMovementSpeed = m_BaseMovementSpeed;
+        m_MaxHealth = m_BaseHealth;
+        m_CurrHealth = m_BaseHealth;
 
         m_StatusEffects = new Dictionary<Status, bool>();
         foreach (Status s in System.Enum.GetValues(typeof(Status))) {
@@ -89,25 +89,26 @@ public abstract class UnitStats
     }
 #endregion
 
+
 #region Checkers
-public bool IsPlayer() {
-        return p_Type == EUnitType.Player;
+    public bool IsPlayer() {
+        return m_Type == EUnitType.Player;
     }
     public bool IsEnemy() {
-        return p_Type == EUnitType.Enemy;
+        return m_Type == EUnitType.Enemy;
     }
     public bool IsBoss() {
-        return p_Type == EUnitType.Boss;
+        return m_Type == EUnitType.Boss;
     }
 
     public bool IsStunned() {
-        return p_IsStunned;
+        return m_IsStunned;
     }
     public bool IsRooted() {
-        return p_IsRooted;
+        return m_IsRooted;
     }
     public bool CanAttack() {
-        return p_CanAttack;
+        return m_CanAttack;
     }
     public bool IsInvuln() {
         return m_StatusEffects[Status.Invulnerable];
@@ -130,51 +131,54 @@ public bool IsPlayer() {
     }
 
     private bool IsAlive() {
-        return p_CurrHealth > 0;
+        return m_CurrHealth > 0;
     }
     #endregion
 
     #region Crowd Control
     //Stunned units cannot input movement, attack, ability, or inventory commands
-    private bool p_IsStunned = false;
+    private bool m_IsStunned = false;
     public void Stun(float duration = -1) {
-        p_IsStunned = true;
+        m_IsStunned = true;
 
         //Replace this to instead call UnitManager.RemoveEffect, which should start this coroutine
         if (duration != -1) {
             //StartCoroutine(EffectDuration(duration, true, UnStun, EStatus.Burn));
         }
     }
+
     public void UnStun(Status status) {
-        p_IsStunned = false;
+        m_IsStunned = false;
     }
 
     //Rooted units cannot input movement commands
-    private bool p_IsRooted = false;
+    private bool m_IsRooted = false;
     public void Root(float duration = -1) {
-        p_IsRooted = true;
+        m_IsRooted = true;
 
         //Replace this to instead call UnitManager.RemoveEffect, which should start this coroutine
         if (duration != -1) {
             //StartCoroutine(EffectDuration(duration, true, UnRoot, EStatus.Burn));
         }
     }
+
     public void UnRoot(Status status) {
-        p_IsRooted = false;
+        m_IsRooted = false;
     }
 
     //Determines whether a unit has attacks enabled
-    private bool p_CanAttack = true;
+    private bool m_CanAttack = true;
     public void Disarm(float duration = -1) {
-        p_CanAttack = false;
+        m_CanAttack = false;
 
         //Replace this to instead call UnitManager.RemoveEffect, which should start this coroutine
         if (duration != -1) {
             //StartCoroutine(EffectDuration(duration, true, Rearm, EStatus.Burn));
         }
     }
+
     public void Rearm(Status status) {
-        p_CanAttack = true;
+        m_CanAttack = true;
     }
     #endregion
 
@@ -184,18 +188,18 @@ public bool IsPlayer() {
     private int m_BaseHealth;
 
     //Max health is after all modifiers. This is the effective health.
-    private int p_MaxHealth;
+    private int m_MaxHealth;
     public int MaxHealth {
         get {
-            return p_MaxHealth;
+            return m_MaxHealth;
         }
     }
 
     //The current amount of hitpoints the unit has
-    private int p_CurrHealth;
+    private int m_CurrHealth;
     public int CurrHealth {
         get {
-            return p_CurrHealth;
+            return m_CurrHealth;
         }
     }
 
@@ -208,9 +212,9 @@ public bool IsPlayer() {
             return;
         }
 
-        p_CurrHealth -= damage;
-        if (p_CurrHealth <= 0) {
-            p_CurrHealth = 0;
+        m_CurrHealth -= damage;
+        if (m_CurrHealth <= 0) {
+            m_CurrHealth = 0;
             //Call UnitManager.KillUnit here.
         }
     }
@@ -220,9 +224,9 @@ public bool IsPlayer() {
             throw new System.ArgumentException("Healing cannot be negative.");
         }
 
-        p_CurrHealth += healing;
-        if (p_CurrHealth > MaxHealth) {
-            p_CurrHealth = MaxHealth;
+        m_CurrHealth += healing;
+        if (m_CurrHealth > MaxHealth) {
+            m_CurrHealth = MaxHealth;
         }
     }
 
@@ -231,9 +235,9 @@ public bool IsPlayer() {
             throw new System.ArgumentException("Percent must be larger than or equal to 0.");
         }
 
-        int tempMaxHealth = p_MaxHealth;
-        p_MaxHealth += (int)(m_BaseHealth * (multiplier - 1));
-        p_CurrHealth = p_CurrHealth * p_MaxHealth / tempMaxHealth;
+        int tempMaxHealth = m_MaxHealth;
+        m_MaxHealth += (int)(m_BaseHealth * (multiplier - 1));
+        m_CurrHealth = m_CurrHealth * m_MaxHealth / tempMaxHealth;
     }
 
     public void SubtractXPercBaseHealth(float multiplier) {
@@ -241,9 +245,9 @@ public bool IsPlayer() {
             throw new System.ArgumentException("Percent must be larger than or equal to 0.");
         }
 
-        int tempMaxHealth = p_MaxHealth;
-        p_MaxHealth -= (int)(m_BaseHealth * (multiplier - 1));
-        p_CurrHealth = p_CurrHealth * p_MaxHealth / tempMaxHealth;
+        int tempMaxHealth = m_MaxHealth;
+        m_MaxHealth -= (int)(m_BaseHealth * (multiplier - 1));
+        m_CurrHealth = m_CurrHealth * m_MaxHealth / tempMaxHealth;
     }
     #endregion
 
@@ -265,7 +269,7 @@ public bool IsPlayer() {
             throw new System.ArgumentException("Percent must be larger than or equal to 0.");
         }
 
-        p_CurrMovementSpeed += m_BaseMovementSpeed * multiplier;
+        m_CurrMovementSpeed += m_BaseMovementSpeed * multiplier;
     }
 
     public void SubtractXPercBaseSpeed(float multiplier) {
@@ -273,7 +277,7 @@ public bool IsPlayer() {
             throw new System.ArgumentException("Percent must be larger than or equal to 0.");
         }
 
-        p_CurrMovementSpeed -= m_BaseMovementSpeed * multiplier;
+        m_CurrMovementSpeed -= m_BaseMovementSpeed * multiplier;
     }
     #endregion
 

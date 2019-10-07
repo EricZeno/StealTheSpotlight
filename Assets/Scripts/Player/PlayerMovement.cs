@@ -17,7 +17,6 @@ public class PlayerMovement : MonoBehaviour {
     #region Cached Components
     // The player's rigidbody
     private Rigidbody2D m_Rb;
-
     private PlayerManager m_Manager;
 
     private Animator m_Animator;

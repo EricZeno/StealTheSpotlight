@@ -14,32 +14,32 @@ public enum ERarityMert {
 public class DropManagerMert : MonoBehaviour
 {
     public void Awake() {
-        p_Random = new Random();
+        m_Random = new Random();
     }
 
     #region Editor Variables
 
     //List of items available for a particular item drop source
     //TODO: Add a dictionary to encompass all drop lists and an enumerator
-    public int[] p_BossDrops;
-    public int[] p_HardEnemyDrops;
-    public int[] p_MedEnemyDrops;
-    public int[] p_EasyEnemyDrops;
-    public int[] p_ObjectiveDrops;
+    public int[] m_BossDrops;
+    public int[] m_HardEnemyDrops;
+    public int[] m_MedEnemyDrops;
+    public int[] m_EasyEnemyDrops;
+    public int[] m_ObjectiveDrops;
     #endregion
 
     #region Private Variables
-    Random p_Random;
-    private int p_Floor = 0;
+    Random m_Random;
+    private int m_Floor = 0;
 
     //Maps rarities to the drop chances of each rarity for the current
-    private Dictionary<ERarityMert, float> p_RarityValues;
+    private Dictionary<ERarityMert, float> m_RarityValues;
 
     //Maps unique items to the remaining number of times they can drop
-    private Dictionary<int, int> p_UniqueItemCount;
+    private Dictionary<int, int> m_UniqueItemCount;
 
     //Maps Drop Category item lists to item drop chance for each category
-    private Dictionary<int, float> p_DropCatDropRates;
+    private Dictionary<int, float> m_DropCatDropRates;
     #endregion
 
     #region Methods
@@ -47,7 +47,7 @@ public class DropManagerMert : MonoBehaviour
     public int GetDrop(Dictionary<int, float> specialItems, bool useDefault, int category) {
 
         //Determine whether an item drops
-        float dropRate = p_DropCatDropRates[category];
+        float dropRate = m_DropCatDropRates[category];
         int randomPointer = Random.Range(0, 100);
         if(randomPointer <= (dropRate * 100)) {
             return -1;
@@ -68,22 +68,22 @@ public class DropManagerMert : MonoBehaviour
             int[] categoryItems;
             switch (category) {
                 case 0:
-                    categoryItems = p_BossDrops;
+                    categoryItems = m_BossDrops;
                     break;
                 case 1:
-                    categoryItems = p_HardEnemyDrops;
+                    categoryItems = m_HardEnemyDrops;
                     break;
                 case 2:
-                    categoryItems = p_MedEnemyDrops;
+                    categoryItems = m_MedEnemyDrops;
                     break;
                 case 3:
-                    categoryItems = p_EasyEnemyDrops;
+                    categoryItems = m_EasyEnemyDrops;
                     break;
                 case 4:
-                    categoryItems = p_ObjectiveDrops;
+                    categoryItems = m_ObjectiveDrops;
                     break;
                 default:
-                    categoryItems = p_EasyEnemyDrops;
+                    categoryItems = m_EasyEnemyDrops;
                     break;
             }
 
@@ -97,13 +97,13 @@ public class DropManagerMert : MonoBehaviour
                 foreach (int item in categoryItems) {
                     if (ItemManager.IsPassiveItem(item)) {
                         ERarityMert rarity = ItemManager.GetPassiveItem(item).Rarity;
-                        dropChance += p_RarityValues[rarity];
+                        dropChance += m_RarityValues[rarity];
                     } else if (ItemManager.IsWeaponItem(item)) {
                         ERarityMert rarity = ItemManager.GetWeaponItem(item).Rarity;
-                        dropChance += p_RarityValues[rarity];
+                        dropChance += m_RarityValues[rarity];
                     } else {
                         ERarityMert rarity = ItemManager.GetActiveItem(item).Rarity;
-                        dropChance += p_RarityValues[rarity];
+                        dropChance += m_RarityValues[rarity];
                     }
                     selectionList.Add(dropChance);
                     itemList.Add(item);
@@ -123,13 +123,13 @@ public class DropManagerMert : MonoBehaviour
                 foreach (int item in categoryItems) {
                     if (ItemManager.IsPassiveItem(item)) {
                         ERarityMert rarity = ItemManager.GetPassiveItem(item).Rarity;
-                        dropChance += p_RarityValues[rarity] * (1-specialTotalWeight);
+                        dropChance += m_RarityValues[rarity] * (1-specialTotalWeight);
                     } else if (ItemManager.IsWeaponItem(item)) {
                         ERarityMert rarity = ItemManager.GetWeaponItem(item).Rarity;
-                        dropChance += p_RarityValues[rarity] * (1 - specialTotalWeight);
+                        dropChance += m_RarityValues[rarity] * (1 - specialTotalWeight);
                     } else {
                         ERarityMert rarity = ItemManager.GetActiveItem(item).Rarity;
-                        dropChance += p_RarityValues[rarity] * (1 - specialTotalWeight);
+                        dropChance += m_RarityValues[rarity] * (1 - specialTotalWeight);
                     }
                     selectionList.Add(dropChance);
                     itemList.Add(item);
@@ -161,11 +161,11 @@ public class DropManagerMert : MonoBehaviour
         if(common + uncommon + rare + epic + legendary != 1) {
             Debug.Log("Total rarity droprate does not add up to 1");
         }
-        p_RarityValues[ERarityMert.Common] = common;
-        p_RarityValues[ERarityMert.Uncommon] = uncommon;
-        p_RarityValues[ERarityMert.Rare] = rare;
-        p_RarityValues[ERarityMert.Epic] = epic;
-        p_RarityValues[ERarityMert.Legendary] = legendary;
+        m_RarityValues[ERarityMert.Common] = common;
+        m_RarityValues[ERarityMert.Uncommon] = uncommon;
+        m_RarityValues[ERarityMert.Rare] = rare;
+        m_RarityValues[ERarityMert.Epic] = epic;
+        m_RarityValues[ERarityMert.Legendary] = legendary;
     }
     #endregion
 
@@ -184,10 +184,10 @@ public class DropManagerMert : MonoBehaviour
         //    allItems.Add(item);
         //}
 
-        //p_BossDrops = allItems;
-        //p_HardEnemyDrops = allItems;
-        //p_MedEnemyDrops = allItems;
-        //p_EasyEnemyDrops = allItems;
-        //p_ObjectiveDrops = allItems;
+        //m_BossDrops = allItems;
+        //m_HardEnemyDrops = allItems;
+        //m_MedEnemyDrops = allItems;
+        //m_EasyEnemyDrops = allItems;
+        //m_ObjectiveDrops = allItems;
     }
 }

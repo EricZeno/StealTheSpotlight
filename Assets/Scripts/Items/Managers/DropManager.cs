@@ -24,20 +24,20 @@ public class DropManager : MonoBehaviour {
     #endregion
 
     #region Private Variables
-    private static DropManager p_Singleton;
+    private static DropManager m_Singleton;
 
-    private Dictionary<EItemRarity, float> p_RarityToDropRateMap;
-    private Dictionary<EDropSourceCategory, BaseItem> p_DropCategoryLists;
-    private Dictionary<EDropSourceCategory, float> p_DropCategoryDropRates;
-    private Dictionary<int, int> p_UniqueItemsLeft;
+    private Dictionary<EItemRarity, float> m_RarityToDropRateMap;
+    private Dictionary<EDropSourceCategory, BaseItem> m_DropCategoryLists;
+    private Dictionary<EDropSourceCategory, float> m_DropCategoryDropRates;
+    private Dictionary<int, int> m_UniqueItemsLeft;
     #endregion
 
     #region Initialization
     private void Awake() {
-        if (p_Singleton == null) {
-            p_Singleton = this;
+        if (m_Singleton == null) {
+            m_Singleton = this;
         }
-        else if (p_Singleton != this) {
+        else if (m_Singleton != this) {
             Destroy(this.gameObject);
         }
     }
@@ -51,7 +51,7 @@ public class DropManager : MonoBehaviour {
 
     #region Dropping Methods
     public static void DropItem(int itemID, Vector3 position) {
-        GameObject item = Instantiate(p_Singleton.m_ItemGO, position, Quaternion.identity);
+        GameObject item = Instantiate(m_Singleton.m_ItemGO, position, Quaternion.identity);
         item.GetComponent<ItemGameObject>().SetupGameObject(itemID);
     }
     #endregion

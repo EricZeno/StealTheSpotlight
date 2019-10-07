@@ -100,9 +100,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Data:
-    p_Power: 0
+    m_Power: 0
     m_BaseMovementSpeed: 5
-    p_Tenacity: 0
+    m_Tenacity: 0
     m_BaseHealth: 1000
     m_InteractionRadius: 2
 --- !u!114 &1544037880152640488

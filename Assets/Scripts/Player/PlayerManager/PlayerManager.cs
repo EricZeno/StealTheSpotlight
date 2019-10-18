@@ -201,6 +201,16 @@ public class PlayerManager : MonoBehaviour {
     }
     #endregion
 
+    #region For Matthew
+    private void OnSwapToMatthew() {
+        m_Input.SwitchCurrentActionMap("MatthewGameplay");
+    }
+
+    private void OnSwapToRegular() {
+        m_Input.SwitchCurrentActionMap(Consts.GAMEPLAY_INPUT_ACTION_MAP_NAME);
+    }
+    #endregion
+
     #region Picking up and Dropping Items
     private void PickUpItem(ItemGameObject item) {
         int itemID = item.GetID();

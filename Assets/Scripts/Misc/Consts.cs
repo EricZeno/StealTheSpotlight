@@ -36,6 +36,8 @@
     public const float TIME_INV_CYCLE_PAUSED = 0.2f;
 
     public const string WEAPON_OBJECT_NAME = "Weapon";
+
+    public const float EXTERNAL_FORCE_REDUCTION_RATE = 0.8f;
     #endregion
 
     #region Bounding Consts

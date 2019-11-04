@@ -92,10 +92,9 @@ public abstract class UnitStats
             m_StatusImmunities[s] = false;
         }
     }
-#endregion
+    #endregion
 
-
-#region Checkers
+    #region Checkers
     public bool IsPlayer() {
         return m_Type == EUnitType.Player;
     }

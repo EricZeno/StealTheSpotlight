@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine.InputSystem.PlayerInput;
 using UnityEngine;
-using UnityEngine.UI;
 using System;
 
 [DisallowMultipleComponent]
@@ -36,8 +35,6 @@ public class PlayerManager : MonoBehaviour {
 	private int m_PlayerID;
 
 	private List<MonoBehaviour> m_ScriptsToDisable;
-
-    private Slider m_HealthSlider;
     #endregion
 
     #region Cached Components
@@ -80,8 +77,6 @@ public class PlayerManager : MonoBehaviour {
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_Collider = GetComponent<Collider2D>();
 
-        m_HealthSlider = transform.GetChild(0).GetChild(2).GetComponent<Slider>();
-
         m_ScriptsToDisable = new List<MonoBehaviour>();
         foreach (MonoBehaviour component in GetComponents(typeof(MonoBehaviour))) {
             if (!(component == this || component is PlayerInput)) {
@@ -97,8 +92,6 @@ public class PlayerManager : MonoBehaviour {
 
         m_SpriteRenderer.enabled = true;
         m_Collider.enabled = true;
-        m_HealthSlider.maxValue = m_Data.MaxHealth;
-        m_HealthSlider.value = m_Data.MaxHealth;
     }
     #endregion
 
@@ -128,7 +121,7 @@ public class PlayerManager : MonoBehaviour {
 
     public void SetID(int ID) {
         m_PlayerID = ID;
-        PlayerCanvas deathCanvas = GetComponentInChildren<PlayerCanvas>();
+        DeathCanvas deathCanvas = GetComponentInChildren<DeathCanvas>();
         deathCanvas.PlayerID = ID;
 	}
 	#endregion
@@ -259,7 +252,6 @@ public class PlayerManager : MonoBehaviour {
     #region Health Methods
     public void TakeDamage(int damage) {
         m_Data.TakeDamage(damage);
-        m_HealthSlider.value -= damage;
         if (m_Data.CurrHealth <= 0) {
             DeathEvent(m_PlayerID, m_Data.RespawnTime);
         }

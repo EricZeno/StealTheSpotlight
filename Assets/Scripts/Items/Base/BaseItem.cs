@@ -64,5 +64,7 @@ public abstract class BaseItem : ScriptableObject {
     public Sprite GetIcon() {
         return m_Icon;
     }
+
+
     #endregion
 }

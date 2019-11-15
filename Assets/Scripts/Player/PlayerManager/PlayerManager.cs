@@ -10,6 +10,8 @@ public class PlayerManager : MonoBehaviour {
     public delegate void EffectToApply(PlayerManager player);
     public delegate void Death(int playerID, int respawnTime);
     public static event Death DeathEvent;
+    public delegate void PlayerReady(int playerID, bool ready);
+    public static event PlayerReady PlayerReadyEvent;
     #endregion
 
     #region Editor Variables
@@ -86,6 +88,7 @@ public class PlayerManager : MonoBehaviour {
     }
 
     private void OnEnable() {
+        GameManager.StartGameEvent += SwitchToGameplayActions;
         foreach (var component in m_ScriptsToDisable) {
             component.enabled = true;
         }
@@ -124,7 +127,7 @@ public class PlayerManager : MonoBehaviour {
         DeathCanvas deathCanvas = GetComponentInChildren<DeathCanvas>();
         deathCanvas.PlayerID = ID;
 	}
-	#endregion
+    #endregion
 
     #region Input Receivers
     private void OnCycle(InputValue value) {
@@ -198,6 +201,14 @@ public class PlayerManager : MonoBehaviour {
         if (dir.sqrMagnitude > Consts.SQR_MAG_CLOSE_TO_ZERO_HIGH) {
             m_AimDir = dir;
         }
+    }
+
+    private void OnReady() {
+        PlayerReadyEvent(m_PlayerID, true);
+    }
+
+    private void OnUnready() {
+        PlayerReadyEvent(m_PlayerID, false);
     }
     #endregion
 
@@ -367,12 +378,19 @@ public class PlayerManager : MonoBehaviour {
 
 	#region OnDisable And Other Enders
     private void OnDisable() {
-		foreach (var component in m_ScriptsToDisable) {
+        GameManager.StartGameEvent -= SwitchToGameplayActions;
+        foreach (var component in m_ScriptsToDisable) {
 				component.enabled = false;
 			}
 
         m_SpriteRenderer.enabled = false;
         m_Collider.enabled = false;
     }
-	#endregion
+    #endregion
+
+    #region Game Start Methods
+    private void SwitchToGameplayActions() {
+        m_Input.SwitchCurrentActionMap(Consts.GAMEPLAY_INPUT_ACTION_MAP_NAME);
+    }
+    #endregion
 }

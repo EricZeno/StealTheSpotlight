@@ -45,7 +45,6 @@ public class PlayerMovement : MonoBehaviour {
     private void OnMove(InputValue value) {
         m_MoveDir = value.Get<Vector2>();
         m_MoveDir.Normalize();
-        Debug.Log(m_MoveDir);
     }
     #endregion
 

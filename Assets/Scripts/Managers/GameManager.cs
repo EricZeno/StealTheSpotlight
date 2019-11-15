@@ -5,6 +5,11 @@ using UnityEngine.InputSystem.PlayerInput;
 
 [DisallowMultipleComponent]
 public class GameManager : MonoBehaviour {
+    #region Events and Delegates
+    public delegate void StartGame();
+    public static event StartGame StartGameEvent;
+    #endregion
+
     #region Editor Variables
     [SerializeField]
     [Tooltip("Each of the players currently in the game.")]
@@ -17,10 +22,15 @@ public class GameManager : MonoBehaviour {
 
     #region Private Variables
     private static GameManager m_Singleton;
-    public static GameManager getSingleton() {
+    public static GameManager GetSingleton() {
         return m_Singleton;
     }
+
+    private bool[] m_PlayersReady;
+
     private int m_NumPlayers;
+    private int m_NumReady;
+    private bool m_GameInProgress;
     #endregion
 
     #region Initialization
@@ -32,11 +42,14 @@ public class GameManager : MonoBehaviour {
         }
 
         m_Players = new PlayerManager[4];
+        m_PlayersReady = new bool[4];
         m_NumPlayers = 0;
+        m_GameInProgress = false;
     }
 
     private void OnEnable() {
         PlayerManager.DeathEvent += Respawn;
+        PlayerManager.PlayerReadyEvent += PlayerReady;
     }
     #endregion
 
@@ -44,22 +57,39 @@ public class GameManager : MonoBehaviour {
     public PlayerManager getPlayer(int playerID) {
         return m_Players[playerID];
     }
-
-    public int NumPlayers { get; private set; }
     #endregion
 
     #region Player Joining/Leaving
     private void OnPlayerJoined(PlayerInput input) {
         PlayerManager newPlayer = input.gameObject.GetComponent<PlayerManager>();
-        m_Players[m_NumPlayers] = newPlayer;
-        newPlayer.SetID(m_NumPlayers);
-        newPlayer.transform.position = m_spawnPositions[m_NumPlayers];
-        m_NumPlayers++;
+        if (m_GameInProgress) {
+            Destroy(newPlayer.gameObject);
+            m_NumPlayers++;
+            return;
+        }
+        AddPlayer(newPlayer);
     }
 
     private void OnPlayerLeft(PlayerInput player) {
         if (!(m_NumPlayers == 0)) {
             m_NumPlayers--;
+        }
+    }
+
+    private void PlayerReady(int playerID, bool ready) {
+        PlayerManager player = m_Players[playerID];
+        if (m_PlayersReady[playerID]) {
+            if (!ready) {
+                m_PlayersReady[playerID] = false;
+                m_NumReady--;
+            }
+        } else if (ready) {
+            m_PlayersReady[playerID] = true;
+            m_NumReady++;
+            if (m_NumPlayers == m_NumReady) {
+                m_GameInProgress = true;
+                StartGameEvent();
+            }  
         }
     }
     #endregion
@@ -78,9 +108,24 @@ public class GameManager : MonoBehaviour {
     }
     #endregion
 
+    #region Adding Players
+    private void AddPlayer(PlayerManager player) {
+        for (int i = 0; i < m_Players.Length; i++) {
+            if (m_Players[i] == null) {
+                m_Players[i] = player;
+                player.SetID(i);
+                player.transform.position = m_spawnPositions[i];
+                m_NumPlayers++;
+                break;
+            }
+        }
+    }
+    #endregion
+
     #region Disable/Enders
     private void OnDisable() {
         PlayerManager.DeathEvent -= Respawn;
+        PlayerManager.PlayerReadyEvent -= PlayerReady;
     }
     #endregion
 }

@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5789364479186723852
 RectTransform:
   m_ObjectHideFlags: 0
@@ -823,7 +823,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 23}
+  m_AnchoredPosition: {x: 0, y: 19.54}
   m_SizeDelta: {x: 50, y: 15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &781857363770274255
@@ -1615,7 +1615,7 @@ Canvas:
   m_GameObject: {fileID: 5154305542958178673}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 4462817945306814932}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -1639,7 +1639,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
+  m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -1680,13 +1680,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_DeathPanel: {fileID: 5267920595870449085}
   m_CountdownText: {fileID: 9193720926575299909}
-  m_HealthSlider: {fileID: 781857363770274255}
-  m_InventoryParent: {fileID: 5789364479186723852}
-  m_WedgeParent: {fileID: 4406163854849872805}
-  m_WedgeUnHighlighted: {fileID: 21300000, guid: d3983058c26323b429ea52671246a000,
-    type: 3}
-  m_WedgeHighlighted: {fileID: 21300000, guid: 200225c5256da6443b95ba772d6f8fb3, type: 3}
-  m_InventoryText: {fileID: 591691810971300889}
+  m_InventoryParent: {fileID: 0}
+  m_WedgeParent: {fileID: 0}
+  m_WedgeUnHighlighted: {fileID: 0}
+  m_WedgeHighlighted: {fileID: 0}
+  m_InventoryText: {fileID: 0}
 --- !u!1 &5629994834515093333
 GameObject:
   m_ObjectHideFlags: 0
@@ -1800,8 +1798,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0000076293945, y: 0}
-  m_SizeDelta: {x: 710.9, y: 368.7}
+  m_AnchoredPosition: {x: 0.000015258789, y: -0.0000038146973}
+  m_SizeDelta: {x: 515.21, y: 244.91}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &630366108334601669
 CanvasRenderer:

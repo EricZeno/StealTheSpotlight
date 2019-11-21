@@ -7,6 +7,7 @@
 
     #region Layers
     public const string ITEM_PHYSICS_LAYER = "Item";
+    public const string NO_ID_PLAYER_LAYER = "Player";
     #endregion
 
     #region Player Animator Triggers
@@ -26,6 +27,8 @@
     public const int NUM_MAX_WEAPONS_IN_INV = 1;
 
     public const float TIME_INV_CYCLE_PAUSED = 0.2f;
+
+    public const string WEAPON_OBJECT_NAME = "Weapon";
     #endregion
 
     #region Bounding Consts
@@ -34,6 +37,8 @@
     public const float SQR_MAG_CLOSE_TO_ONE_LOW = 0.95f;
     public const float SQR_MAG_CLOSE_TO_ONE_HIGH = 1.05f;
     public const float SQR_MAG_CLOSE_TO_ZERO_HIGH = 0.05f;
+
+    public const float ALMOST_ZERO_THRESHOLD = 0.05f;
     #endregion
 
     #region Buttons

@@ -21,5 +21,8 @@ MonoBehaviour:
   m_Damage: 3
   m_AttackSpeed: 8
   m_AttackRange: 2
-  m_ArcHalfAngle: 30
+  m_HasArcAttack: 1
+  m_ArcAngle: 60
+  m_AttackStartPosition: {x: 0, y: 0}
+  m_AttackFinalPosition: {x: 0, y: 0}
   m_KnockbackPower: 10

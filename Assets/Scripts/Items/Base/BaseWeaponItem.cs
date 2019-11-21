@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum WeaponTypes {
     DAGGER,
-    HEAVY
+    POLEARM
 }
 
 public abstract class BaseWeaponItem : BaseItem {
@@ -25,8 +25,22 @@ public abstract class BaseWeaponItem : BaseItem {
     private float m_AttackRange;
 
     [SerializeField]
-    [Tooltip("Half of the total arc angle that the weapon will move across.")]
-    private float m_ArcHalfAngle;
+    [Tooltip("Whether this weapon's animation is an arc attack or a stab attack.")]
+    private bool m_HasArcAttack;
+
+    [SerializeField]
+    [Tooltip("The arc angle that the weapon will move across if it arcs. This is used " +
+        "everywhere by the weapons to decide the range that they hit.")]
+    private float m_ArcAngle;
+
+    [SerializeField]
+    [Tooltip("The starting position of where the weapon will be if it stabs. During the wind " +
+        "up, the weapon moves here before the actual attack.")]
+    private Vector2 m_AttackStartPosition;
+
+    [SerializeField]
+    [Tooltip("The final position of where the the weapon will be if it stabs.")]
+    private Vector2 m_AttackFinalPosition;
 
     [SerializeField]
     [Tooltip("How much an enemy is pushed back when hit with this weapon.")]
@@ -89,9 +103,27 @@ public abstract class BaseWeaponItem : BaseItem {
         }
     }
 
+    public bool HasArcAttack {
+        get {
+            return m_HasArcAttack;
+        }
+    }
+
     public float ArcHalfAngle {
         get {
-            return m_ArcHalfAngle;
+            return m_ArcAngle / 2;
+        }
+    }
+
+    public Vector2 AttackStartPosition {
+        get {
+            return m_AttackStartPosition;
+        }
+    }
+
+    public Vector2 AttackFinalPosition {
+        get {
+            return m_AttackFinalPosition;
         }
     }
 

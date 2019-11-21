@@ -115,7 +115,7 @@ public class Inventory : InventoryInterface {
         return false;
     }
 
-    private bool HasTwoWeapons() {
+    public bool HasTwoWeapons() {
         return (m_Inventory[m_WeaponStartingIndex] != Consts.NULL_ITEM_ID
                 && m_Inventory[m_WeaponStartingIndex + 1] != Consts.NULL_ITEM_ID);
     }
@@ -248,9 +248,6 @@ public class Inventory : InventoryInterface {
     private int ReplaceCurrentWeapon(int itemID) {
         int currentWeaponID = DropCurrentWeapon();
         InsertItemIntoInventory(itemID);
-        if (HasTwoWeapons()) {
-            SwitchWeapons();
-        }
         return currentWeaponID;
     }
     #endregion
@@ -361,15 +358,14 @@ public class Inventory : InventoryInterface {
         if (m_IsOpen) {
             return;
         }
-        if (m_ItemCount < 2) {
+        if (m_Inventory[m_WeaponStartingIndex] == Consts.NULL_ITEM_ID &&
+            m_Inventory[m_WeaponStartingIndex + 1] == Consts.NULL_ITEM_ID) {
             return;
         }
-        if (ItemManager.IsWeaponItem(m_Inventory[0]) &&
-            ItemManager.IsWeaponItem(m_Inventory[1])) {
-            int temp = m_Inventory[0];
-            m_Inventory[0] = m_Inventory[1];
-            m_Inventory[1] = temp;
-        }
+        
+        int temp = m_Inventory[m_WeaponStartingIndex];
+        m_Inventory[m_WeaponStartingIndex] = m_Inventory[m_WeaponStartingIndex + 1];
+        m_Inventory[m_WeaponStartingIndex + 1] = temp;
     }
 
     public void RemoveActive() {

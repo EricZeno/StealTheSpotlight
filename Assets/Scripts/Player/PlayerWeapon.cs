@@ -1,59 +1,91 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.PlayerInput;
+
+public struct WeaponBaseData {
+    #region Someone else decide on a name for this region
+    public int Damage;
+    public float KnockbackPower;
+    #endregion
+
+    #region Constructors
+    public WeaponBaseData(int damage, float knockbackPower) {
+        Damage = damage;
+        KnockbackPower = knockbackPower;
+    }
+    #endregion
+}
 
 public interface PlayerWeaponInterface {
     void Unequip();
-    void Equip(int weaponID);
+    bool Equip(int weaponID);
 
     void Use();
     void StopUse();
 }
 
 [DisallowMultipleComponent]
+[RequireComponent(typeof(PlayerManager))]
 [RequireComponent(typeof(Animator))]
 public class PlayerWeapon : MonoBehaviour, PlayerWeaponInterface {
+    #region Delegates
+    public delegate WeaponBaseData OnAttackEffect(WeaponBaseData origData);
+    #endregion
+
+    #region Variables
     #region Private Variables
-    private bool m_HasWeaponEquipped;
     private int m_WeaponID;
+    private BaseWeaponItem m_WeaponData;
+
+    private bool m_HasWeaponEquipped;
     private bool m_IsInUse;
+    private bool m_IsAttacking;
     private float m_CooldownTimer;
 
-    private bool m_IsInAnimation;
-    private float m_WindupTime;
-    private float m_AttackTime;
-    private float m_AnimationLength;
+    private Vector2 m_CurrentDirection;
+    private Vector2 m_AttackDirection;
 
-    private WeaponBaseData m_WeaponBaseData;
     private List<ItemAndEffect> m_OnAttackEffects;
+
+    private GameObject[] m_HitEnemies;
     #endregion
 
     #region Cached Components
-    private Animator m_Animator;
+    private PlayerManager m_Manager;
     #endregion
 
     #region Cached References
-    private WeaponInterface m_Weapon;
+    private GameObject m_Weapon;
+    private SpriteRenderer m_WeaponSprite;
+    #endregion
     #endregion
 
     #region Initialization
     private void Awake() {
-        m_Animator = GetComponent<Animator>();
+        m_WeaponID = Consts.NULL_ITEM_ID;
+        m_WeaponData = null;
 
         m_HasWeaponEquipped = false;
-        m_WeaponID = Consts.NULL_ITEM_ID;
         m_IsInUse = false;
-        m_IsInAnimation = false;
+        m_IsAttacking = false;
+        m_CooldownTimer = 0;
+
+        m_CurrentDirection = Vector2.right;
 
         m_OnAttackEffects = new List<ItemAndEffect>();
+
+        m_HitEnemies = null;
+
+        m_Manager = GetComponent<PlayerManager>();
     }
 
     private void Start() {
-        m_Weapon = GetComponentInChildren<WeaponInterface>();
+        m_Weapon = transform.Find(Consts.WEAPON_OBJECT_NAME).gameObject;
         if (m_Weapon == null) {
-            Debug.LogError("Could not find WeaponBase.");
+            Debug.LogError("Could not find weapon.");
         }
-        Invoke("DeactivateWeapon", 0.2f);
+        m_WeaponSprite = m_Weapon.GetComponent<SpriteRenderer>();
     }
     #endregion
 
@@ -71,20 +103,31 @@ public class PlayerWeapon : MonoBehaviour, PlayerWeaponInterface {
     }
     #endregion
 
+    #region Accessors
+    public bool IsAttacking {
+        get {
+            return m_IsAttacking;
+        }
+    }
+    #endregion
+
     #region Resetters
     private void ResetCooldown() {
-        m_CooldownTimer = Consts.ATTACK_SPEED_MULTIPLIER * 1 / m_WeaponBaseData.GetAttackSpeed();
+        m_CooldownTimer = 1 / m_WeaponData.AttackSpeed;
     }
     #endregion
 
     #region Checkers
     private bool CanUse() {
-        if (!m_HasWeaponEquipped)
+        if (!m_HasWeaponEquipped) {
             return false;
-        if (m_IsInAnimation)
+        }
+        if (m_IsAttacking) {
             return false;
-        if (m_CooldownTimer > 0)
+        }
+        if (m_CooldownTimer > 0) {
             return false;
+        }
 
         return true;
     }
@@ -96,81 +139,225 @@ public class PlayerWeapon : MonoBehaviour, PlayerWeaponInterface {
 
     #region Equip Helper Methods
     private void SetWeaponData() {
-        string type = "ShortBlade";
-        m_WindupTime = WeaponTypeDataManager.singleton.WindupTime(type);
-        m_AttackTime = WeaponTypeDataManager.singleton.AttackTime(type);
-        m_AnimationLength = WeaponTypeDataManager.singleton.AnimationTime(type);
+        m_WeaponData = ItemManager.GetWeaponItem(m_WeaponID);
 
-        // TODO: set rest of data
-        if (m_WeaponID == 0) {
-            m_WeaponBaseData = new WeaponBaseData(0, 0, 1, Utility.LoadSpriteFile(Consts.TEST_SWORD_1_SPRITE_PATH));
-        }
-        else if (m_WeaponID == 1) {
-            m_WeaponBaseData = new WeaponBaseData(0, 0, 1, Utility.LoadSpriteFile(Consts.TEST_SWORD_2_SPRITE_PATH));
-        }
+        m_HitEnemies = new GameObject[m_WeaponData.NumRaycasts];
+        ResetHitEnemies();
     }
 
     private void ApplyWeaponData() {
-        m_Weapon.UpdateGraphics(m_WeaponBaseData);
+        m_WeaponSprite.sprite = m_WeaponData.GetIcon();
     }
     #endregion
 
     #region Use Methods
     private IEnumerator UseWeapon() {
-        StartAnimations();
+        m_IsAttacking = true;
 
-        yield return new WaitForSeconds(m_WindupTime);
-
-        ActivateWeapon();
-
-        yield return new WaitForSeconds(m_AttackTime - m_WindupTime);
-
-        DeactivateWeapon();
-
-        yield return new WaitForSeconds(m_AnimationLength - m_AttackTime);
-
-        EndAnimations();
-
+        float totalAttackTime = 1 / m_WeaponData.AttackSpeed;
         ResetCooldown();
-    }
 
-    private void StartAnimations() {
-        m_IsInAnimation = true;
-
-        m_Animator.SetTrigger(Consts.USE_WEAPON_ANIMATOR_TRIGGER);
-    }
-
-    private void EndAnimations() {
-        m_IsInAnimation = false;
-    }
-
-    private void ActivateWeapon() {
-        WeaponBase.OnAttackEffect[] effects = new WeaponBase.OnAttackEffect[m_OnAttackEffects.Count];
-        for (int i = 0; i < m_OnAttackEffects.Count; i++) {
-            effects[i] = m_OnAttackEffects[i].Effect;
+        if (m_WeaponData.HasArcAttack) {
+            StartCoroutine(AnimateWeaponArc());
         }
-        m_Weapon.Activate(m_WeaponBaseData, effects);
+        else {
+            StartCoroutine(AnimateWeaponStab());
+        }
+        yield return new WaitForSeconds(totalAttackTime * m_WeaponData.WindupPercent);
+
+        StartCoroutine(Attack());
     }
 
-    private void DeactivateWeapon() {
-        m_Weapon.Deactivate();
+    private IEnumerator Attack() {
+        // Find starting and ending angle
+        float dirAngle = Vector2.SignedAngle(Vector2.right, m_CurrentDirection); // in DEGREES
+        float startingAngle = (dirAngle - m_WeaponData.ArcHalfAngle) * Mathf.Deg2Rad;
+        float endingAngle = (dirAngle + m_WeaponData.ArcHalfAngle) * Mathf.Deg2Rad;
+
+        //Raycast information
+        float range = m_WeaponData.AttackRange;
+        float currentAngle = startingAngle;
+        LayerMask layerMask = GameManager.GetSingleton().HittableLayers;
+        layerMask ^= (1 << gameObject.layer);
+
+        int numCasts = m_WeaponData.NumRaycasts;
+        float angleIncrement = (endingAngle - startingAngle) / numCasts;
+        float timeBtwnRays = (1 / m_WeaponData.AttackSpeed);
+        timeBtwnRays *= m_WeaponData.AttackAnimationPercent;
+        timeBtwnRays /= numCasts;
+
+        for (int i = 0; i < numCasts; i++) {
+            Vector2 dir = new Vector2(Mathf.Cos(currentAngle), Mathf.Sin(currentAngle));
+            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, dir, range, layerMask);
+            foreach (var hit in hits) {
+                if (hit.collider.CompareTag(Consts.PLAYER_TAG)) {
+                    HitEnemy(hit.collider.gameObject);
+                }
+            }
+
+            yield return new WaitForSeconds(timeBtwnRays);
+            currentAngle += angleIncrement;
+        }
+
+        ResetHitEnemies();
+    }
+
+    private void HitEnemy(GameObject enemy) {
+        for (int i = 0; i < m_HitEnemies.Length; i++) {
+            if (m_HitEnemies[i] == enemy) {
+                return;
+            }
+            if (m_HitEnemies[i] == null) {
+                m_HitEnemies[i] = enemy;
+                break;
+            }
+        }
+
+        WeaponBaseData data = new WeaponBaseData(
+            m_Manager.GetPlayerData().GetPower() + m_WeaponData.Damage,
+            m_WeaponData.KnockbackPower);
+        data = ApplyOnAttackEffects(data);
+        if (enemy.CompareTag(Consts.PLAYER_TAG)) {
+            PlayerManager other = enemy.GetComponent<PlayerManager>();
+            other.TakeDamage(data.Damage);
+            Vector2 dir = (other.transform.position - transform.position).normalized;
+            other.GetComponent<PlayerMovement>().ApplyKnockback(dir * data.KnockbackPower);
+        }
+    }
+
+    private void ResetHitEnemies() {
+        for (int i = 0; i < m_HitEnemies.Length; i++) {
+            m_HitEnemies[i] = null;
+        }
+    }
+
+    private WeaponBaseData ApplyOnAttackEffects(WeaponBaseData origValues) {
+        WeaponBaseData result = origValues;
+        foreach (var itemAndEffect in m_OnAttackEffects) {
+            result = itemAndEffect.Effect(result);
+        }
+        return result;
+    }
+    #endregion
+
+    #region Animating Weapon
+    private IEnumerator AnimateWeaponArc() {
+        float totalAttackTime = 1 / m_WeaponData.AttackSpeed;
+
+        float dirAngle = Vector2.SignedAngle(Vector2.right, m_CurrentDirection); // in DEGREES
+        float theta = Vector2.SignedAngle(Vector2.right, m_WeaponData.RightOffset);
+
+        // The wind up animation
+        float time = totalAttackTime * m_WeaponData.WindupPercent;
+        float startAnimationAngle = dirAngle + theta;
+        float startAttackAnimationAngle = -m_WeaponData.ArcHalfAngle + dirAngle;
+        StartCoroutine(AnimateWeaponMoveArc(
+            startAnimationAngle,
+	        startAttackAnimationAngle,
+            time));
+        yield return new WaitForSeconds(time);
+
+        // The attack animation
+        time = totalAttackTime * m_WeaponData.AttackAnimationPercent;
+        float endAttackAnimationAngle = m_WeaponData.ArcHalfAngle + dirAngle;
+        StartCoroutine(AnimateWeaponMoveArc(
+            startAttackAnimationAngle,
+            endAttackAnimationAngle,
+            time));
+        yield return new WaitForSeconds(time);
+
+        // Resetting position animation
+        time = totalAttackTime * m_WeaponData.AnimationResetPercent;
+        StartCoroutine(AnimateWeaponMoveArc(
+            endAttackAnimationAngle,
+            startAnimationAngle,
+            time));
+        yield return new WaitForSeconds(time);
+
+        m_IsAttacking = false;
+    }
+
+    private IEnumerator AnimateWeaponMoveArc(float startingAngle, float endingAngle, float time) {
+        float currentAngle = startingAngle;
+
+        int dir = (endingAngle > currentAngle) ? 1 : -1;
+        float speed = dir * (endingAngle - currentAngle) / time;
+
+        while (dir * (endingAngle - currentAngle) > 0) {
+            UpdatePositionAndRotation(currentAngle, false);
+            yield return null;
+            currentAngle += dir * speed * Time.deltaTime;
+        }
+    }
+
+    private IEnumerator AnimateWeaponStab() {
+        m_AttackDirection = m_CurrentDirection;
+        float theta = Vector2.SignedAngle(Vector2.right, m_AttackDirection); // in DEGREES
+        RotateWeapon(theta, true);
+        float totalAttackTime = 1 / m_WeaponData.AttackSpeed;
+        
+        // The wind up animation
+        float time = totalAttackTime * m_WeaponData.WindupPercent;
+        Vector2 startAnimationPosition = m_WeaponData.RightOffset;
+        Vector2 startAttackAnimationPosition = m_WeaponData.AttackStartPosition;
+        StartCoroutine(AnimateWeaponMoveStab(
+            startAnimationPosition,
+            startAttackAnimationPosition,
+            time));
+        yield return new WaitForSeconds(time);
+
+        // The attack animation
+        time = totalAttackTime * m_WeaponData.AttackAnimationPercent;
+        Vector2 endAttackAnimationPosition = m_WeaponData.AttackFinalPosition;
+        StartCoroutine(AnimateWeaponMoveStab(
+            startAttackAnimationPosition,
+            endAttackAnimationPosition,
+            time));
+        yield return new WaitForSeconds(time);
+
+        // Resetting position animation
+        time = totalAttackTime * m_WeaponData.AnimationResetPercent;
+        StartCoroutine(AnimateWeaponMoveStab(
+            endAttackAnimationPosition,
+            startAnimationPosition,
+            time));
+        yield return new WaitForSeconds(time);
+
+        m_IsAttacking = false;
+    }
+
+    private IEnumerator AnimateWeaponMoveStab(Vector2 startingPosition, Vector2 endingPosition, float time) {
+        float currentTime = 0;
+
+        while (currentTime < time) {
+            RepositionWeapon(Vector2.Lerp(startingPosition, endingPosition, currentTime / time));
+            yield return null;
+            currentTime += Time.deltaTime;
+        }
     }
     #endregion
 
     #region Interface Required Methods
-    public void Equip(int weaponID) {
+    public bool Equip(int weaponID) {
+        if (m_IsAttacking) {
+            return false;
+        }
+
         m_WeaponID = weaponID;
 
-        // TODO: Get weapon data
-        // TODO: Set weapon data
         SetWeaponData();
         ApplyWeaponData();
-        
+
         m_HasWeaponEquipped = true;
+
+        UpdatePositionAndRotation();
+
+        return true;
     }
 
     public void Unequip() {
         m_HasWeaponEquipped = false;
+        m_WeaponSprite.sprite = null;
     }
 
     public void Use() {
@@ -183,14 +370,90 @@ public class PlayerWeapon : MonoBehaviour, PlayerWeaponInterface {
     #endregion
 
     #region Input Receivers
+    private void OnAim(InputValue value) {
+        Vector2 dir = value.Get<Vector2>();
+        // Ensure aim was not just released (at (0, 0))
+        if (dir.sqrMagnitude < Consts.ALMOST_ZERO_THRESHOLD) {
+            return;
+        }
+
+        m_CurrentDirection = dir;
+
+        if (m_IsAttacking) {
+            return;
+        }
+        if (m_WeaponID == Consts.NULL_ITEM_ID) {
+            return;
+        }
+
+        UpdatePositionAndRotation();
+    }
+
     // Executes attack functionality when player attack input is received
-    private void OnAttack() {
-        Debug.Log("Detected attack input");
+    private void OnAttack(InputValue value) {
+        if (value.isPressed && m_IsInUse) {
+            return;
+        }
+        else if (value.isPressed) {
+            Use();
+        }
+        else {
+            StopUse();
+        }
+    }
+    #endregion
+
+    #region Weapon Positioning
+    private void UpdatePositionAndRotation(bool isIdle = true) {
+        float theta = Vector2.SignedAngle(Vector2.right, m_CurrentDirection); // in DEGREES
+        UpdatePositionAndRotation(theta, isIdle);
+    }
+
+    private void UpdatePositionAndRotation(float theta, bool isIdle) {
+        RotateWeapon(theta, isIdle);
+        RepositionWeapon(theta, isIdle);
+    }
+
+    private void RotateWeapon(float theta, bool isIdle) {
+        float angleOffset = 0;
+        if (isIdle) {
+            angleOffset = ItemManager.GetWeaponItem(m_WeaponID).IdleAngleOffset;
+        }
+        else {
+            angleOffset = ItemManager.GetWeaponItem(m_WeaponID).AttackAngleOffset;
+        }
+        m_Weapon.transform.rotation = Quaternion.Euler(0, 0, theta + angleOffset);
+    }
+
+    private void RepositionWeapon(float theta, bool isIdle) {
+        // At the correct relative position given weapon type and aim direction
+        Vector2 offset = Vector2.right;
+        if (isIdle) {
+            offset = ItemManager.GetWeaponItem(m_WeaponID).RightOffset;
+        }
+        else {
+            offset *= ItemManager.GetWeaponItem(m_WeaponID).RightOffset.magnitude;
+        }
+        float oldX = offset.x;
+        float oldY = offset.y;
+
+        theta *= Mathf.Deg2Rad; // in RADIANS
+        float newX = oldX * Mathf.Cos(theta) - oldY * Mathf.Sin(theta);
+        float newY = oldX * Mathf.Sin(theta) + oldY * Mathf.Cos(theta);
+        m_Weapon.transform.localPosition = new Vector2(newX, newY);
+    }
+
+    private void RepositionWeapon(Vector2 position) {
+        float theta = Vector2.SignedAngle(Vector2.right, m_AttackDirection); // in DEGREES
+        theta *= Mathf.Deg2Rad;
+        float newX = position.x * Mathf.Cos(theta) - position.y * Mathf.Sin(theta);
+        float newY = position.x * Mathf.Sin(theta) + position.y * Mathf.Cos(theta);
+        m_Weapon.transform.localPosition = new Vector2(newX, newY);
     }
     #endregion
 
     #region On Attack Effect
-    public void AddItemEffect(int itemID, WeaponBase.OnAttackEffect effect) {
+    public void AddItemEffect(int itemID, OnAttackEffect effect) {
         m_OnAttackEffects.Add(new ItemAndEffect(itemID, effect));
     }
 
@@ -204,13 +467,17 @@ public class PlayerWeapon : MonoBehaviour, PlayerWeaponInterface {
     }
 
     private struct ItemAndEffect {
+        #region Someone else decide on a name for this region
         public int ItemID;
-        public WeaponBase.OnAttackEffect Effect;
+        public OnAttackEffect Effect;
+        #endregion
 
-        public ItemAndEffect(int itemID, WeaponBase.OnAttackEffect effect) {
+        #region Constructors
+        public ItemAndEffect(int itemID, OnAttackEffect effect) {
             ItemID = itemID;
             Effect = effect;
         }
+        #endregion
     }
     #endregion
 }

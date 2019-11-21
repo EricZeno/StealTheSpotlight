@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.InputSystem.PlayerInput;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 
 [DisallowMultipleComponent]
@@ -14,6 +15,7 @@ public class PlayerManager : MonoBehaviour {
     public static event PlayerReady PlayerReadyEvent;
     #endregion
 
+    #region Variables
     #region Editor Variables
     [SerializeField]
     [Tooltip("The starting data for the player.")]
@@ -38,6 +40,7 @@ public class PlayerManager : MonoBehaviour {
 
 	private List<MonoBehaviour> m_ScriptsToDisable;
     #endregion
+    #endregion
 
     #region Cached Components
     // A reference to the Player Input component to swap action maps
@@ -48,6 +51,7 @@ public class PlayerManager : MonoBehaviour {
     // Need to cache sprite renderer and collider in order to disable on death
     private SpriteRenderer m_SpriteRenderer;
     private Collider2D m_Collider;
+    private PlayerCanvas m_PlayerCanvas;
 	#endregion
 
 	#region Initialization
@@ -79,6 +83,8 @@ public class PlayerManager : MonoBehaviour {
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_Collider = GetComponent<Collider2D>();
 
+        m_PlayerCanvas = transform.GetChild(0).GetComponent<PlayerCanvas>();
+
         m_ScriptsToDisable = new List<MonoBehaviour>();
         foreach (MonoBehaviour component in GetComponents(typeof(MonoBehaviour))) {
             if (!(component == this || component is PlayerInput)) {
@@ -95,6 +101,7 @@ public class PlayerManager : MonoBehaviour {
 
         m_SpriteRenderer.enabled = true;
         m_Collider.enabled = true;
+        m_PlayerCanvas.SetSlider(m_Data.MaxHealth);
     }
     #endregion
 
@@ -124,7 +131,7 @@ public class PlayerManager : MonoBehaviour {
 
     public void SetID(int ID) {
         m_PlayerID = ID;
-        DeathCanvas deathCanvas = GetComponentInChildren<DeathCanvas>();
+        PlayerCanvas deathCanvas = GetComponentInChildren<PlayerCanvas>();
         deathCanvas.PlayerID = ID;
 	}
     #endregion
@@ -149,11 +156,13 @@ public class PlayerManager : MonoBehaviour {
 
     private void OnOpenInventory() {
         m_Input.SwitchCurrentActionMap(Consts.INVENTORY_INPUT_ACTION_MAP_NAME);
+        m_PlayerCanvas.EnableInventoryUI(m_PlayerID, m_Inventory.GetInventoryList());
         m_Inventory.OpenInventory();
     }
 
     private void OnCloseInventory() {
         m_Inventory.CloseInventory();
+        m_PlayerCanvas.DisableInventoryUI(m_PlayerID);
         m_Input.SwitchCurrentActionMap(Consts.GAMEPLAY_INPUT_ACTION_MAP_NAME);
     }
 
@@ -263,6 +272,7 @@ public class PlayerManager : MonoBehaviour {
     #region Health Methods
     public void TakeDamage(int damage) {
         m_Data.TakeDamage(damage);
+        m_PlayerCanvas.SliderDamage(damage);
         if (m_Data.CurrHealth <= 0) {
             DeathEvent(m_PlayerID, m_Data.RespawnTime);
         }
@@ -271,6 +281,7 @@ public class PlayerManager : MonoBehaviour {
     public void Heal(float m_HealPercent) {
         int healing = (int)(m_HealPercent * m_Data.MaxHealth);
         m_Data.Heal(healing);
+        m_PlayerCanvas.SliderHeal(healing);
     }
     #endregion
 

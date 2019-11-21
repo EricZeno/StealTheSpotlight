@@ -314,6 +314,10 @@ public struct Inventory : InventoryInterace {
     #endregion
 
     #region Getters
+    public List<int> GetInventoryList() { 
+        return m_Inventory;
+    }
+
     public int GetCurrentWeapon() {
         if (m_Inventory.Count > 0 &&
             ItemManager.IsWeaponItem(m_Inventory[0])) {

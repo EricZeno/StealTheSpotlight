@@ -10,7 +10,7 @@ public class Polearm : BaseWeaponItem {
 
         m_NumRaycasts = 5;
 
-        m_RightOffset = new Vector2(.4f, -.2f);
+        m_RightOffset = new Vector2(1f, -.6f);
         m_IdleAngleOffset = -90;
 
         m_AttackAngleOffset = 0;

@@ -19,9 +19,6 @@
     #endregion
 
     #region General Player
-    public const string INVENTORY_INPUT_ACTION_MAP_NAME = "Inventory";
-    public const string GAMEPLAY_INPUT_ACTION_MAP_NAME = "Gameplay";
-
     public const int NUM_MAX_PASSIVES_IN_INV = 5;
     public const int NUM_MAX_ACTIVES_IN_INV = 2;
     public const int NUM_MAX_WEAPONS_IN_INV = 1;

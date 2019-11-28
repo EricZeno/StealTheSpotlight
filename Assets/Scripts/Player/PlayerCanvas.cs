@@ -45,7 +45,8 @@ public class PlayerCanvas : MonoBehaviour {
     #region Private Variables
     private int m_CurrHighlighted = 0;
     private int m_PlayerID;
-    private List<int> m_InventoryTracker;
+    private Inventory m_Inventory;
+    private int[] m_InventoryTracker;
     private Image[] m_WedgeImageArray;
     private Image[] m_InventoryImage;
     private const int m_InventorySize = 8;
@@ -73,17 +74,17 @@ public class PlayerCanvas : MonoBehaviour {
     #endregion
 
     #region OnDisable and other Enders
-    private void OnDisable()
-    {
+    private void OnDisable() {
         PlayerManager.DeathEvent -= EnableDeathCanvas;
     }
     #endregion
 
     #region InventoryUI
-    public void EnableInventoryUI(int playerID, List<int> itemList) {
+    public void EnableInventoryUI(int playerID, Inventory inventory) {
         if (m_InventoryParent != null && playerID == m_PlayerID) {
             m_InventoryParent.gameObject.SetActive(true);
-            m_InventoryTracker = itemList;
+            m_Inventory = inventory;
+            m_InventoryTracker = inventory.GetInventoryList();
             ClearImages();
             SetInventoryImages(m_InventoryTracker);
             HighlightWedge(0);
@@ -92,6 +93,7 @@ public class PlayerCanvas : MonoBehaviour {
 
     public void DisableInventoryUI(int playerID) {
         if (m_InventoryParent != null && playerID == m_PlayerID) {
+            DehighlightWedges();
             m_CurrHighlighted = 0;
             ClearImages();
             m_InventoryParent.gameObject.SetActive(false);
@@ -99,19 +101,23 @@ public class PlayerCanvas : MonoBehaviour {
     }
 
     private void DisplayFlavorText(int wedgeNumber) {
-        if (m_InventoryTracker.Count == 0 || wedgeNumber > m_InventoryTracker.Count) {
-            m_InventoryText.text = "";
-        }
-        else {
+        int itemID = m_InventoryTracker[wedgeNumber];
+        if (itemID != Consts.NULL_ITEM_ID) {
             string itemText = ItemManager.GetItem(m_InventoryTracker[wedgeNumber]).GetDescription();
             m_InventoryText.text = itemText;
         }
+        else {
+            m_InventoryText.text = "";
+        }
     }
 
-    private void SetInventoryImages(List<int> itemList) {
-        for (int i = 0; i < itemList.Count; i++) {
-            m_InventoryImage[i].sprite = ItemManager.GetItem(itemList[i]).GetIcon();
-            m_InventoryImage[i].enabled = true;
+    private void SetInventoryImages(int[] itemList) {
+        for (int i = 0; i < m_Inventory.GetInventoryCapacity(); i++) {
+            int itemID = itemList[i];
+            if (itemID != Consts.NULL_ITEM_ID) {
+                m_InventoryImage[i].sprite = ItemManager.GetItem(itemID).GetIcon();
+                m_InventoryImage[i].enabled = true;
+            }
         }
     }
 
@@ -125,11 +131,22 @@ public class PlayerCanvas : MonoBehaviour {
         }
     }
 
+    public void ClearImageAtIndex(int index) {
+        m_InventoryImage[index].enabled = false;
+    }
+
     public void HighlightWedge(int wedgeNumber) {
+        if (wedgeNumber >= m_Inventory.GetInventoryCapacity() || wedgeNumber < 0) {
+            throw new System.IndexOutOfRangeException($"Tried to highlight wedge at index {wedgeNumber}.");
+        }
         m_WedgeImageArray[m_CurrHighlighted].sprite = m_WedgeUnHighlighted;
         m_WedgeImageArray[wedgeNumber].sprite = m_WedgeHighlighted;
         DisplayFlavorText(wedgeNumber);
         m_CurrHighlighted = wedgeNumber;
+    }
+
+    public void DehighlightWedges() {
+        m_WedgeImageArray[m_CurrHighlighted].sprite = m_WedgeUnHighlighted;
     }
     #endregion
 
@@ -150,12 +167,12 @@ public class PlayerCanvas : MonoBehaviour {
     #endregion
 
     #region Respawn
-    private void EnableDeathCanvas (int playerID, int respawnTime) {
+    private void EnableDeathCanvas(int playerID, int respawnTime) {
         if (m_DeathPanel != null && playerID == m_PlayerID) {
             m_DeathPanel.gameObject.SetActive(true);
             m_CountdownText.gameObject.SetActive(true);
             DisableHealthSlider();
-            DisableInventoryUI(playerID);   
+            DisableInventoryUI(playerID);
             StartCoroutine(TextUpdate(respawnTime));
         }
     }

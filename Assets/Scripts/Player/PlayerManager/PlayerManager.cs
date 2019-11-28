@@ -36,9 +36,9 @@ public class PlayerManager : MonoBehaviour {
 
     private Vector2 m_AimDir;
 
-	private int m_PlayerID;
+    private int m_PlayerID;
 
-	private List<MonoBehaviour> m_ScriptsToDisable;
+    private List<MonoBehaviour> m_ScriptsToDisable;
     #endregion
     #endregion
 
@@ -52,20 +52,18 @@ public class PlayerManager : MonoBehaviour {
     private SpriteRenderer m_SpriteRenderer;
     private Collider2D m_Collider;
     private PlayerCanvas m_PlayerCanvas;
-	#endregion
+    #endregion
 
-	#region Initialization
-	private void Awake() {
-		// Number of max passives subject to change based on item balancing
-		m_Data.ResetAllStatsDefault();
+    #region Initialization
+    private void Awake() {
+        // Number of max passives subject to change based on item balancing
+        m_Data.ResetAllStatsDefault();
 
         //Debugging RespawnTime
         m_Data.RespawnTime = Consts.BASE_RESPAWN_TIME;
 
-		m_Inventory = new Inventory(10);
-		m_TimedEffects = new Dictionary<int, List<IEnumerator>>();
-
-        m_Inventory = new Inventory(Consts.NUM_MAX_PASSIVES_IN_INV);
+        m_Inventory = new Inventory();
+        m_TimedEffects = new Dictionary<int, List<IEnumerator>>();
 
         m_CycleInvRight = false;
         m_CycleInvLeft = false;
@@ -107,13 +105,12 @@ public class PlayerManager : MonoBehaviour {
 
     #region Main Updates
     private void Update() {
-        CycleInventory();
         ReduceActiveItemCooldown();
     }
-	#endregion
+    #endregion
 
-	#region Accessors and Setters
-	public float GetMoveSpeed() {
+    #region Accessors and Setters
+    public float GetMoveSpeed() {
         return m_Data.CurrMovementSpeed;
     }
 
@@ -133,30 +130,13 @@ public class PlayerManager : MonoBehaviour {
         m_PlayerID = ID;
         PlayerCanvas deathCanvas = GetComponentInChildren<PlayerCanvas>();
         deathCanvas.PlayerID = ID;
-	}
+    }
     #endregion
 
     #region Input Receivers
-    private void OnCycle(InputValue value) {
-        // TODO: first two items cycle slowly but then it cycles really fast
-        float dir = value.Get<Vector2>().x;
-        if (dir > Consts.INV_CYCLE_THRESHOLD) {
-            m_CycleInvRight = true;
-            m_CycleInvLeft = false;
-        }
-        else if (dir < -Consts.INV_CYCLE_THRESHOLD) {
-            m_CycleInvRight = false;
-            m_CycleInvLeft = true;
-        }
-        else {
-            m_CycleInvRight = false;
-            m_CycleInvLeft = false;
-        }
-    }
-
     private void OnOpenInventory() {
         m_Input.SwitchCurrentActionMap(Consts.INVENTORY_INPUT_ACTION_MAP_NAME);
-        m_PlayerCanvas.EnableInventoryUI(m_PlayerID, m_Inventory.GetInventoryList());
+        m_PlayerCanvas.EnableInventoryUI(m_PlayerID, m_Inventory);
         m_Inventory.OpenInventory();
     }
 
@@ -173,9 +153,15 @@ public class PlayerManager : MonoBehaviour {
     private void OnDropItem() {
         try {
             int itemID = m_Inventory.DropSelectedItem();
-            DropItem(itemID);
+            if (itemID != Consts.NULL_ITEM_ID) {
+                DropItem(itemID);
+                m_PlayerCanvas.ClearImageAtIndex(m_Inventory.GetSelectedItemIndex());
+                m_PlayerCanvas.HighlightWedge(m_Inventory.GetSelectedItemIndex());
+            }
         }
-        catch (System.IndexOutOfRangeException) { }
+        catch (System.IndexOutOfRangeException) {
+            Debug.LogWarning("No item at selected item index");
+        }
     }
 
     private void OnDropWeapon() {
@@ -212,6 +198,48 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
+    private void OnSelect(InputValue value) {
+        // Get aim vector
+        Vector2 aimVector = value.Get<Vector2>();
+
+        // Don't do anything on release; aim vector will be (0, 0)
+        if (Math.Abs(aimVector.x) < Mathf.Epsilon && Math.Abs(aimVector.y) < Mathf.Epsilon) {
+            return;
+        }
+
+        // Calculate angle (flip if aim vector points to the right)
+        float angle = Vector2.Angle(Vector2.up, aimVector);
+        if (aimVector.x > 0) {
+            angle = 360 - angle;
+        }
+
+        // Set up variables
+        int selectIndex = 0;
+        float wedgeAngle = 360 / m_Inventory.GetInventoryCapacity();
+
+        // Special case: selectIndex is 0 (top wedge wraps around between 337.5 and 22.5 degrees)
+
+        if (angle > 360 - wedgeAngle / 2 || angle <= wedgeAngle / 2) {
+            selectIndex = 0;
+        }
+
+        // Calculate selectIndex
+        else {
+            for (int i = 1; i < m_Inventory.GetInventoryCapacity(); i++) {
+                if (angle <= wedgeAngle / 2 + wedgeAngle * i) {
+                    selectIndex = i;
+                    break;
+                }
+            }
+        }
+
+        // Select that item
+        m_Inventory.SelectItemAtIndex(selectIndex);
+
+        // Highlight the corresponding wedge
+        m_PlayerCanvas.HighlightWedge(m_Inventory.GetSelectedItemIndex());
+    }
+
     private void OnReady() {
         PlayerReadyEvent(m_PlayerID, true);
     }
@@ -242,14 +270,13 @@ public class PlayerManager : MonoBehaviour {
         if (retItem == Consts.NULL_ITEM_ID) {
             return;
         }
-        else if (retItem != itemID) {
+
+        if (retItem != itemID) {
             DropItem(retItem);
         }
-
         if (ItemManager.IsPassiveItem(itemID)) {
             PickUpPassiveItem(itemID);
         }
-
         Destroy(item.gameObject);
     }
 
@@ -314,14 +341,13 @@ public class PlayerManager : MonoBehaviour {
     private IEnumerator TimedEffect(EffectToApply effect, float repeatTime) {
         while (true) {
             yield return new WaitForSeconds(repeatTime);
-
             effect(this);
         }
     }
     #endregion
 
     #region On Attack Effects
-    public void AddOnAttackEffect(int itemID, 
+    public void AddOnAttackEffect(int itemID,
         WeaponBase.OnAttackEffect effect) {
         m_Weapon.AddItemEffect(itemID, effect);
     }
@@ -330,40 +356,16 @@ public class PlayerManager : MonoBehaviour {
         m_Weapon.SubtractItemEffect(itemID);
     }
 
-    public void AddOnAttackEffectForXSec(int itemID, 
+    public void AddOnAttackEffectForXSec(int itemID,
         WeaponBase.OnAttackEffect effect, float effectLength) {
         StartCoroutine(AddTempOnAttackEffect(itemID, effect, effectLength));
     }
 
-    private IEnumerator AddTempOnAttackEffect(int itemID, 
+    private IEnumerator AddTempOnAttackEffect(int itemID,
         WeaponBase.OnAttackEffect effect, float effectLength) {
         AddOnAttackEffect(itemID, effect);
         yield return new WaitForSeconds(effectLength);
         SubtractOnAttackEffect(itemID);
-    }
-    #endregion
-
-    #region Inventory Cycling
-    private void CycleInventory() {
-        if (m_CycleInvLeft && m_CycleInvRight) {
-            throw new System.InvalidProgramException("The player is trying " +
-                "to cycle left and right at the same time.");
-        }
-
-        if (m_InvCyclePauseTimer > 0) {
-            m_InvCyclePauseTimer -= Time.deltaTime;
-            return;
-        }
-        if (m_CycleInvRight) {
-            m_Inventory.CycleRight();
-        }
-        else if (m_CycleInvLeft) {
-            m_Inventory.CycleLeft();
-        }
-        else {
-            return;
-        }
-        m_InvCyclePauseTimer = Consts.TIME_INV_CYCLE_PAUSED;
     }
     #endregion
 
@@ -385,15 +387,14 @@ public class PlayerManager : MonoBehaviour {
         yield return new WaitForSeconds(effectLength);
         m_Data.RemoveStatus(status);
     }
-	#endregion
+    #endregion
 
-	#region OnDisable And Other Enders
+    #region OnDisable And Other Enders
     private void OnDisable() {
         GameManager.StartGameEvent -= SwitchToGameplayActions;
         foreach (var component in m_ScriptsToDisable) {
-				component.enabled = false;
-			}
-
+            component.enabled = false;
+        }
         m_SpriteRenderer.enabled = false;
         m_Collider.enabled = false;
     }

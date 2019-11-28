@@ -8,43 +8,51 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 
-public interface InventoryInterace {
+public interface InventoryInterface {
+    // Inventory Control
     void OpenInventory();
     void CloseInventory();
-    void CycleLeft();
-    void CycleRight();
+    void SelectItemAtIndex(int index);
 
+    // Item Picking/Dropping
     int DropSelectedItem();
     int DropCurrentWeapon();
     int PickupItem(int itemID);
 
-    int GetSelectedItem();
-    int[] GetXNeighborsOfSelectedItem(int x);
+    // Getters
+    int[] GetInventoryList();
+    int GetInventoryCapacity();
+    int GetInventoryItemCount();
+    int GetNumPassives();
     int GetCurrentWeapon();
     int GetSecondaryWeapon();
     int GetCurrentActive();
+    int GetSelectedItem();
+    int GetSelectedItemIndex();
 
+    // Misc.
     void SwitchWeapons();
     void RemoveActive();
 }
 
 [System.Serializable]
-public struct Inventory : InventoryInterace {
+public class Inventory : InventoryInterface {
     #region Private Variables
     // All of the items in the inventory. The items are stored using their IDs.
     // Under the hood, the zeroth position will usually be for the current
     // weapon, the first position will be for the secondary weapon, the second
     // position will be for the active item and the rest of the positions are
     // for all of the passive items.
-    private List<int> m_Inventory;
+    private int[] m_Inventory;
 
     // The current number of passive items being carried
     private int m_NumPassives;
 
-    // The maximum number of passive items allowed to be carried
-    private int m_MaxPassives;
+    // The number of items currently in the inventory.
+    private int m_ItemCount;
 
     // If the inventory is open, this is set to true. Certain things will not
     // work unless the inventory is open (cycling).
@@ -53,21 +61,47 @@ public struct Inventory : InventoryInterace {
     // When the inventory is open, this is the position in the inventory array
     // of the currently selected item.
     private int m_CurrentlySelectedItem;
+
+    // The index of the current passive item.
+    private int m_CurrPassiveItemIndex;
+    #endregion
+
+    #region Constants
+    // The maximum number of passive items allowed to be carried
+    private const int m_MaxPassives = Consts.NUM_MAX_PASSIVES_IN_INV;
+
+    // The maximum number of active items allowed to be carried
+    private const int m_MaxActives = Consts.NUM_MAX_ACTIVES_IN_INV;
+
+    // The maximum number of weapons allowed to be carried
+    private const int m_MaxWeapons = Consts.NUM_MAX_WEAPONS_IN_INV;
+
+    // The index of the first weapon.
+    private const int m_WeaponStartingIndex = 0;
+
+    // The index of the active item (if contained).
+    private const int m_ActiveItemIndex = 2;
+
+    // The index of the first passive item.
+    private const int m_PassiveItemsStartingIndex = 3;
     #endregion
 
     #region Constructor
-    public Inventory(int maxPassives) {
-        m_Inventory = new List<int>();
+    public Inventory() {
         m_NumPassives = 0;
-        m_MaxPassives = maxPassives;
         m_IsOpen = false;
         m_CurrentlySelectedItem = 0;
+        m_Inventory = new int[m_MaxActives + m_MaxPassives + m_MaxWeapons];
+        for (int i = 0; i < m_Inventory.Length; i++) {
+            m_Inventory[i] = Consts.NULL_ITEM_ID;
+        }
+        m_ItemCount = 0;
     }
     #endregion
-    
+
     #region Checkers
     private bool IsEmpty() {
-        return m_Inventory.Count == 0;
+        return m_ItemCount == 0;
     }
 
     private bool HasPassiveRoom() {
@@ -75,27 +109,15 @@ public struct Inventory : InventoryInterace {
     }
 
     private bool HasActive() {
-        if (m_Inventory.Count > 0) {
-            if (ItemManager.IsActiveItem(m_Inventory[0])) {
-                return true;
-            }
-            else if (m_Inventory.Count > 1) {
-                if (ItemManager.IsActiveItem(m_Inventory[1])) {
-                    return true;
-                }
-                else if (m_Inventory.Count > 2 &&
-                    ItemManager.IsActiveItem(m_Inventory[2])) {
-                    return true;
-                }
-            }
+        if (m_Inventory[m_ActiveItemIndex] != Consts.NULL_ITEM_ID) {
+            return true;
         }
         return false;
     }
 
     private bool HasTwoWeapons() {
-        return m_Inventory.Count >= 2 &&
-            ItemManager.IsWeaponItem(m_Inventory[0]) &&
-            ItemManager.IsWeaponItem(m_Inventory[1]);
+        return (m_Inventory[m_WeaponStartingIndex] != Consts.NULL_ITEM_ID
+                && m_Inventory[m_WeaponStartingIndex + 1] != Consts.NULL_ITEM_ID);
     }
     #endregion
 
@@ -105,18 +127,29 @@ public struct Inventory : InventoryInterace {
             throw new System.IndexOutOfRangeException($"Tried to drop item " +
                 $"in inventory position {index}. This is illegal.");
         }
-        if (m_Inventory.Count <= index) {
+        if (m_Inventory.Length <= index) {
             throw new System.IndexOutOfRangeException($"Tried to drop item " +
-                $"in inventory position {index} but inventory only has " +
-                $"{m_Inventory.Count} items.");
+                $"in inventory position {index} but inventory only has a capacity of " +
+                $"{m_Inventory.Length}.");
         }
 
+        // Get item ID
         int itemID = m_Inventory[index];
-        m_Inventory.RemoveAt(index);
 
+        // If no item at this index, do nothing
+        if (itemID == Consts.NULL_ITEM_ID) {
+            throw new System.InvalidOperationException($"No item at index {index}.");
+        }
+
+        // Otherwise, remove the item at that index
+        m_Inventory[index] = Consts.NULL_ITEM_ID;
+        m_ItemCount -= 1;
+
+        // If the item was a passive, decrement the number of passives
         if (ItemManager.IsPassiveItem(itemID)) {
             m_NumPassives--;
         }
+
         return itemID;
     }
 
@@ -126,6 +159,9 @@ public struct Inventory : InventoryInterace {
                 "provided for the item ID");
         }
 
+        // Increase the item count
+        m_ItemCount += 1;
+
         if (ItemManager.IsWeaponItem(itemID)) {
             InsertWeaponItemIntoInv(itemID);
         }
@@ -134,7 +170,6 @@ public struct Inventory : InventoryInterace {
         }
         if (ItemManager.IsPassiveItem(itemID)) {
             InsertPassiveItemIntoInv(itemID);
-            m_NumPassives++;
         }
     }
 
@@ -150,16 +185,14 @@ public struct Inventory : InventoryInterace {
                 "has two weapons in inventory.");
         }
 
-        if (m_Inventory.Count > 0) {
-            if (ItemManager.IsWeaponItem(m_Inventory[0])) {
-                m_Inventory.Insert(1, itemID);
-            }
-            else {
-                m_Inventory.Insert(0, itemID);
-            }
+        // Inserting into first weapon slot
+        if (m_Inventory[m_WeaponStartingIndex] == Consts.NULL_ITEM_ID) {
+            m_Inventory[m_WeaponStartingIndex] = itemID;
         }
+
+        // Inserting into second weapon slot
         else {
-            m_Inventory.Insert(0, itemID);
+            m_Inventory[m_WeaponStartingIndex + 1] = itemID;
         }
     }
 
@@ -175,27 +208,8 @@ public struct Inventory : InventoryInterace {
                 "has an active in inventory.");
         }
 
-        if (m_Inventory.Count > 0) {
-            //  Inventory does not have any weapon items
-            if (ItemManager.IsPassiveItem(m_Inventory[0])) {
-                m_Inventory.Insert(0, itemID);
-            }
-            else if (m_Inventory.Count > 1) {
-                // Inventory has a single weapon item
-                if (ItemManager.IsPassiveItem(m_Inventory[1])) {
-                    m_Inventory.Insert(1, itemID);
-                }
-                else { // Inventory has two weapon items
-                    m_Inventory.Insert(2, itemID);
-                }
-            }
-            else { // Inventory has a single item. It is a weapon
-                m_Inventory.Insert(1, itemID);
-            }
-        }
-        else { // Inventory is empty
-            m_Inventory.Insert(0, itemID);
-        }
+        // Insert active item into active item slot
+        m_Inventory[m_ActiveItemIndex] = itemID;
     }
 
     private void InsertPassiveItemIntoInv(int itemID) {
@@ -210,8 +224,14 @@ public struct Inventory : InventoryInterace {
                 "has maximum passives in inventory.");
         }
 
-        // TODO: sort by rarity then alphabetically
-        m_Inventory.Add(itemID);
+        // Insert into the first available passive space
+        for (int i = 0; i < m_MaxPassives; i++) {
+            if (m_Inventory[m_PassiveItemsStartingIndex + i] == Consts.NULL_ITEM_ID) {
+                m_Inventory[m_PassiveItemsStartingIndex + i] = itemID;
+                break;
+            }
+        }
+        m_NumPassives++;
     }
 
     private int ReplaceCurrentActive(int itemID) {
@@ -220,23 +240,7 @@ public struct Inventory : InventoryInterace {
                 "replace the current active item but this inventory does " +
                 "not have any active items.");
         }
-
-        int activeInd = Consts.NULL_ITEM_ID;
-        if (m_Inventory.Count > 0) {
-            if (ItemManager.IsActiveItem(m_Inventory[0])) {
-                activeInd = 0;
-            }
-            else if (m_Inventory.Count > 1) {
-                if (ItemManager.IsActiveItem(m_Inventory[1])) {
-                    activeInd = 1;
-                }
-                else {
-                    activeInd = 2;
-                }
-            }
-        }
-        
-        int currentActiveID = DropItemAtIndex(activeInd);
+        int currentActiveID = DropItemAtIndex(m_ActiveItemIndex);
         InsertItemIntoInventory(itemID);
         return currentActiveID;
     }
@@ -257,6 +261,7 @@ public struct Inventory : InventoryInterace {
 
     #region Inventory Control
     public void OpenInventory() {
+        m_CurrentlySelectedItem = 0;
         m_IsOpen = true;
     }
 
@@ -264,31 +269,17 @@ public struct Inventory : InventoryInterace {
         m_IsOpen = false;
     }
 
-    public void CycleLeft() {
-        if (IsEmpty() || !m_IsOpen) {
+    public void SelectItemAtIndex(int index) {
+        if (!m_IsOpen) {
             return;
         }
-        m_CurrentlySelectedItem--;
-        if (m_CurrentlySelectedItem <= -1) {
-            m_CurrentlySelectedItem = m_Inventory.Count - 1;
-        }
-    }
-
-    public void CycleRight() {
-        if (IsEmpty() || !m_IsOpen) {
-            return;
-        }
-        m_CurrentlySelectedItem++;
-        if (m_CurrentlySelectedItem >= m_Inventory.Count) {
-            m_CurrentlySelectedItem = 0;
-        }
+        m_CurrentlySelectedItem = index;
     }
     #endregion
 
     #region Pickup and Drop
     public int DropCurrentWeapon() {
-        if (m_Inventory.Count > 0 && 
-            ItemManager.IsWeaponItem(m_Inventory[0])) {
+        if (m_ItemCount > 0 && m_Inventory[m_WeaponStartingIndex] != Consts.NULL_ITEM_ID) {
             return DropItemAtIndex(0);
         }
         return Consts.NULL_ITEM_ID;
@@ -302,7 +293,7 @@ public struct Inventory : InventoryInterace {
         if (ItemManager.IsActiveItem(itemID) && HasActive()) {
             return ReplaceCurrentActive(itemID);
         }
-        else if(ItemManager.IsWeaponItem(itemID) && HasTwoWeapons()) {
+        else if (ItemManager.IsWeaponItem(itemID) && HasTwoWeapons()) {
             return ReplaceCurrentWeapon(itemID);
         }
         else if (ItemManager.IsPassiveItem(itemID) && !HasPassiveRoom()) {
@@ -314,12 +305,24 @@ public struct Inventory : InventoryInterace {
     #endregion
 
     #region Getters
-    public List<int> GetInventoryList() { 
+    public int[] GetInventoryList() {
         return m_Inventory;
     }
 
+    public int GetInventoryCapacity() {
+        return m_Inventory.Length;
+    }
+
+    public int GetInventoryItemCount() {
+        return m_ItemCount;
+    }
+
+    public int GetNumPassives() {
+        return m_NumPassives;
+    }
+
     public int GetCurrentWeapon() {
-        if (m_Inventory.Count > 0 &&
+        if (m_ItemCount > 0 &&
             ItemManager.IsWeaponItem(m_Inventory[0])) {
             return m_Inventory[0];
         }
@@ -338,14 +341,7 @@ public struct Inventory : InventoryInterace {
         if (!HasActive()) {
             return Consts.NULL_ITEM_ID;
         }
-
-        if (ItemManager.IsActiveItem(m_Inventory[0])) {
-            return m_Inventory[0];
-        }
-        else if (ItemManager.IsActiveItem(m_Inventory[1])) {
-            return m_Inventory[1];
-        }
-        return m_Inventory[2];
+        return m_Inventory[m_ActiveItemIndex];
     }
 
     public int GetSelectedItem() {
@@ -355,38 +351,8 @@ public struct Inventory : InventoryInterace {
         return m_Inventory[m_CurrentlySelectedItem];
     }
 
-    public int[] GetXNeighborsOfSelectedItem(int x) {
-        int[] neighbors = new int[2 * x];
-        for (int i = 0; i < 2 * x; i++) {
-            neighbors[i] = -1;
-        }
-        if (IsEmpty() || !m_IsOpen) {
-            return neighbors;
-        }
-
-        int inventoryInd = m_CurrentlySelectedItem - 1;
-        int neighborsInd = x - 1;
-        while (neighborsInd >= 0) {
-            if (inventoryInd == -1) {
-                inventoryInd = m_Inventory.Count - 1;
-            }
-            if (inventoryInd == m_CurrentlySelectedItem) {
-                break;
-            }
-            neighbors[neighborsInd--] = m_Inventory[inventoryInd--];
-        }
-        inventoryInd = m_CurrentlySelectedItem + 1;
-        neighborsInd = x + 1;
-        while (neighborsInd < 2 * x) {
-            if (inventoryInd == m_Inventory.Count) {
-                inventoryInd = 0;
-            }
-            if (inventoryInd == m_CurrentlySelectedItem) {
-                break;
-            }
-            neighbors[neighborsInd++] = m_Inventory[inventoryInd++];
-        }
-        return neighbors;
+    public int GetSelectedItemIndex() {
+        return m_CurrentlySelectedItem;
     }
     #endregion
 
@@ -395,7 +361,7 @@ public struct Inventory : InventoryInterace {
         if (m_IsOpen) {
             return;
         }
-        if (m_Inventory.Count < 2) {
+        if (m_ItemCount < 2) {
             return;
         }
         if (ItemManager.IsWeaponItem(m_Inventory[0]) &&
@@ -410,15 +376,8 @@ public struct Inventory : InventoryInterace {
         if (!HasActive()) {
             return;
         }
-        if (ItemManager.IsActiveItem(m_Inventory[0])) {
-            m_Inventory.RemoveAt(0);
-        }
-        else if (ItemManager.IsActiveItem(m_Inventory[1])) {
-            m_Inventory.RemoveAt(1);
-        }
-        else {
-            m_Inventory.RemoveAt(2);
-        }
+        m_ItemCount--;
+        m_Inventory[m_ActiveItemIndex] = Consts.NULL_ITEM_ID;
     }
     #endregion
 }

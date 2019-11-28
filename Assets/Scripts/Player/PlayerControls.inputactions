@@ -321,7 +321,7 @@
                     "name": "",
                     "id": "21f84aae-0948-4050-a049-bc48b523211d",
                     "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
+                    "interactions": "Press(behavior=2)",
                     "processors": "",
                     "groups": "",
                     "action": "Attack",

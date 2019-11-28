@@ -1,0 +1,26 @@
+ManifestFileVersion: 0
+CRC: 1578109039
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: dc4adf642e50d14b3caf225e4b8b96ba
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 7e13afc533aeb33991914f9f884f3763
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7163d21bd7b6e7d4e82fe55a22f5ef53, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b9f067b51b1e95448b6cdfcc8a64a432, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Items/WeaponItems/Polearm/TheBasicSpear.asset
+- Assets/Items/WeaponItems/Dagger/MustardDagger.asset
+- Assets/Items/WeaponItems/Dagger/KetchupDagger.asset
+Dependencies: []

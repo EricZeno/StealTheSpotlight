@@ -32,6 +32,7 @@ public class ItemManager : MonoBehaviour {
     private void Start() {
         SetupItems(ref m_PassiveItems, Consts.PASSIVE_ITEM_BUNDLE_NAME);
 	    SetupItems(ref m_ActiveItems, Consts.ACTIVE_ITEM_BUNDLE_NAME);
+        SetupItems(ref m_WeaponItems, Consts.WEAPON_ITEM_BUNDLE_NAME);
     }
     #endregion
 

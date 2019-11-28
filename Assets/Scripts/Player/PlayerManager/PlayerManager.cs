@@ -40,7 +40,6 @@ public class PlayerManager : MonoBehaviour {
 
     private List<MonoBehaviour> m_ScriptsToDisable;
     #endregion
-    #endregion
 
     #region Cached Components
     // A reference to the Player Input component to swap action maps
@@ -52,6 +51,11 @@ public class PlayerManager : MonoBehaviour {
     private SpriteRenderer m_SpriteRenderer;
     private Collider2D m_Collider;
     private PlayerCanvas m_PlayerCanvas;
+    #endregion
+
+    #region Cached References
+    private GameObject m_WeaponObject;
+    #endregion
     #endregion
 
     #region Initialization
@@ -83,6 +87,8 @@ public class PlayerManager : MonoBehaviour {
 
         m_PlayerCanvas = transform.GetChild(0).GetComponent<PlayerCanvas>();
 
+        m_WeaponObject = transform.Find(Consts.WEAPON_OBJECT_NAME).gameObject;
+
         m_ScriptsToDisable = new List<MonoBehaviour>();
         foreach (MonoBehaviour component in GetComponents(typeof(MonoBehaviour))) {
             if (!(component == this || component is PlayerInput)) {
@@ -97,6 +103,7 @@ public class PlayerManager : MonoBehaviour {
             component.enabled = true;
         }
 
+        m_WeaponObject.SetActive(true);
         m_SpriteRenderer.enabled = true;
         m_Collider.enabled = true;
         m_PlayerCanvas.SetSlider(m_Data.MaxHealth);
@@ -147,16 +154,36 @@ public class PlayerManager : MonoBehaviour {
     }
 
     private void OnSwitchWeapons() {
+        if (m_Weapon.IsAttacking) {
+            return;
+        }
+        int curWeapon = m_Inventory.GetCurrentWeapon();
         m_Inventory.SwitchWeapons();
+        if (curWeapon != m_Inventory.GetCurrentWeapon()) {
+            if (m_Inventory.GetCurrentWeapon() != Consts.NULL_ITEM_ID) {
+                EquipWeaponItem(m_Inventory.GetCurrentWeapon());
+            }
+            else {
+                UnEquipWeaponItem();
+            }
+        }
     }
 
     private void OnDropItem() {
         try {
+            bool hasWeaponEquipped = (m_Inventory.GetCurrentWeapon() != Consts.NULL_ITEM_ID);
             int itemID = m_Inventory.DropSelectedItem();
             if (itemID != Consts.NULL_ITEM_ID) {
                 DropItem(itemID);
                 m_PlayerCanvas.ClearImageAtIndex(m_Inventory.GetSelectedItemIndex());
                 m_PlayerCanvas.HighlightWedge(m_Inventory.GetSelectedItemIndex());
+
+                if (ItemManager.IsWeaponItem(itemID)) {
+                    int curWeapon = m_Inventory.GetCurrentWeapon();
+                    if (hasWeaponEquipped && curWeapon == Consts.NULL_ITEM_ID) {
+                        UnEquipWeaponItem();
+                    }
+                }
             }
         }
         catch (System.IndexOutOfRangeException) {
@@ -165,7 +192,24 @@ public class PlayerManager : MonoBehaviour {
     }
 
     private void OnDropWeapon() {
-        m_Inventory.DropCurrentWeapon();
+        if (m_Weapon.IsAttacking) {
+            return;
+        }
+        try {
+            int itemID = m_Inventory.DropCurrentWeapon();
+            if (itemID == Consts.NULL_ITEM_ID) {
+                return;
+            }
+            DropItem(itemID);
+            int curWeapon = m_Inventory.GetCurrentWeapon();
+            if (curWeapon != Consts.NULL_ITEM_ID) {
+                EquipWeaponItem(curWeapon);
+            }
+            else {
+                UnEquipWeaponItem();
+            }
+        }
+        catch (System.IndexOutOfRangeException) { }
     }
 
     private void OnInteract() {
@@ -261,9 +305,17 @@ public class PlayerManager : MonoBehaviour {
 
     #region Picking up and Dropping Items
     private void PickUpItem(ItemGameObject item) {
+        int curWeaponItem = m_Inventory.GetCurrentWeapon();
+        bool hasWeapon = curWeaponItem != Consts.NULL_ITEM_ID;
+
         int itemID = item.GetID();
         if (ItemManager.IsActiveItem(itemID) &&
             itemID == m_Inventory.GetCurrentActive()) {
+            return;
+        }
+        else if (m_Inventory.HasTwoWeapons() &&
+            ItemManager.IsWeaponItem(itemID) &&
+            itemID == m_Inventory.GetCurrentWeapon()) {
             return;
         }
         int retItem = m_Inventory.PickupItem(itemID);
@@ -275,14 +327,36 @@ public class PlayerManager : MonoBehaviour {
             DropItem(retItem);
         }
         if (ItemManager.IsPassiveItem(itemID)) {
-            PickUpPassiveItem(itemID);
+            ApplyPassiveItemEffect(itemID);
+        }
+        else if (ItemManager.IsWeaponItem(itemID) && 
+            curWeaponItem != m_Inventory.GetCurrentWeapon()) {
+            EquipWeaponItem(itemID);
         }
         Destroy(item.gameObject);
     }
 
-    private void PickUpPassiveItem(int itemID) {
+    private void ApplyPassiveItemEffect(int itemID) {
+        if (!ItemManager.IsPassiveItem(itemID)) {
+            throw new System.ArgumentException("This function requires a " +
+                $"passive item. The provided item ID is {itemID}.");
+        }
+
         BasePassiveItem item = ItemManager.GetPassiveItem(itemID);
         item.ApplyEffect(this);
+    }
+
+    private void EquipWeaponItem(int weaponID) {
+        if (!ItemManager.IsWeaponItem(weaponID)) {
+            throw new System.ArgumentException("This function requires a " +
+                $"weapon item. The provided item ID is {weaponID}.");
+        }
+
+        m_Weapon.Equip(weaponID);
+    }
+
+    private void UnEquipWeaponItem() {
+        m_Weapon.Unequip();
     }
 
     private void DropItem(int itemID) {
@@ -347,8 +421,7 @@ public class PlayerManager : MonoBehaviour {
     #endregion
 
     #region On Attack Effects
-    public void AddOnAttackEffect(int itemID,
-        WeaponBase.OnAttackEffect effect) {
+    public void AddOnAttackEffect(int itemID, PlayerWeapon.OnAttackEffect effect) {
         m_Weapon.AddItemEffect(itemID, effect);
     }
 
@@ -357,12 +430,12 @@ public class PlayerManager : MonoBehaviour {
     }
 
     public void AddOnAttackEffectForXSec(int itemID,
-        WeaponBase.OnAttackEffect effect, float effectLength) {
+        PlayerWeapon.OnAttackEffect effect, float effectLength) {
         StartCoroutine(AddTempOnAttackEffect(itemID, effect, effectLength));
     }
 
-    private IEnumerator AddTempOnAttackEffect(int itemID,
-        WeaponBase.OnAttackEffect effect, float effectLength) {
+    private IEnumerator AddTempOnAttackEffect(int itemID, 
+        PlayerWeapon.OnAttackEffect effect, float effectLength) {
         AddOnAttackEffect(itemID, effect);
         yield return new WaitForSeconds(effectLength);
         SubtractOnAttackEffect(itemID);
@@ -395,6 +468,8 @@ public class PlayerManager : MonoBehaviour {
         foreach (var component in m_ScriptsToDisable) {
             component.enabled = false;
         }
+
+        m_WeaponObject.SetActive(false);
         m_SpriteRenderer.enabled = false;
         m_Collider.enabled = false;
     }

@@ -18,6 +18,10 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     [Tooltip("The spawn locations for each player")]
     private Vector3[] m_spawnPositions;
+
+    [SerializeField]
+    [Tooltip("All of the layers that can be hit.")]
+    private LayerMask m_HittableLayers;
     #endregion
 
     #region Private Variables
@@ -56,6 +60,12 @@ public class GameManager : MonoBehaviour {
     #region Accessors
     public PlayerManager getPlayer(int playerID) {
         return m_Players[playerID];
+    }
+
+    public LayerMask HittableLayers {
+        get {
+            return m_HittableLayers;
+        }
     }
     #endregion
 
@@ -115,6 +125,8 @@ public class GameManager : MonoBehaviour {
                 m_Players[i] = player;
                 player.SetID(i);
                 player.transform.position = m_spawnPositions[i];
+                string playerLayer = Consts.NO_ID_PLAYER_LAYER + (i + 1).ToString();
+                player.gameObject.layer = LayerMask.NameToLayer(playerLayer);
                 m_NumPlayers++;
                 break;
             }

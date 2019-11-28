@@ -100,4 +100,6 @@ MonoBehaviour:
   - {x: 19, y: 0, z: 0}
   - {x: 0, y: -19, z: 0}
   - {x: 0, y: 19, z: 0}
-  m_RespawnTime: 3
+  m_HittableLayers:
+    serializedVersion: 2
+    m_Bits: 7680

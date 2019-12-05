@@ -4,7 +4,8 @@ using UnityEngine;
 
 public enum WeaponTypes {
     DAGGER,
-    POLEARM
+    POLEARM,
+    HEAVY
 }
 
 public abstract class BaseWeaponItem : BaseItem {

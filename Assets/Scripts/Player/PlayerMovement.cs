@@ -6,10 +6,10 @@ using UnityEngine;
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(PlayerManager))]
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(PlayerGraphics))]
 public class PlayerMovement : MonoBehaviour {
     #region Constants
-    private const float KNOCKBACK_REDUCTION_RATE = 0.8f;
+    private const float EXTERNAL_FORCE_REDUCTION_RATE = 0.8f;
     #endregion
 
     #region Variables
@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour {
     // translated to the rigidbody
     private Vector2 m_MoveDir;
 
-    private Vector2 m_KnockbackForce;
+    private Vector2 m_ExternalForce;
     #endregion
 
     #region Cached Components
@@ -26,25 +26,27 @@ public class PlayerMovement : MonoBehaviour {
     private Rigidbody2D m_Rb;
     private PlayerManager m_Manager;
 
-    private Animator m_Animator;
+    private PlayerGraphics m_Graphics;
     #endregion
     #endregion
 
     #region Initialization
     private void Awake() {
-        m_KnockbackForce = Vector2.zero;
+        m_ExternalForce = Vector2.zero;
+        SetupCachedComponents();
+    }
 
+    private void SetupCachedComponents() {
         m_Rb = GetComponent<Rigidbody2D>();
         m_Manager = GetComponent<PlayerManager>();
-        m_Animator = GetComponent<Animator>();
+        m_Graphics = GetComponent<PlayerGraphics>();
     }
     #endregion
 
     #region Main Updates
     private void Update() {
-        UpdateKnockbackForce();
-        // TODO: fix this
-        //UpdateGFX(); Current weapon system does not work with player animations
+        UpdateExternalForce();
+        UpdateGFX();
     }
 
     private void FixedUpdate() {
@@ -63,26 +65,26 @@ public class PlayerMovement : MonoBehaviour {
     #region Movement
     private void Move() {
         Vector2 delta = m_MoveDir * m_Manager.GetPlayerData().CurrMovementSpeed;
-        delta += m_KnockbackForce;
+        delta += m_ExternalForce;
         delta *= Time.fixedDeltaTime;
         m_Rb.MovePosition(m_Rb.position + delta);
     }
     #endregion
 
-    #region Knockback
-    public void ApplyKnockback(Vector2 initialForce) {
-        m_KnockbackForce = initialForce;
+    #region External Forces
+    public void ApplyExternalForce(Vector2 initialForce) {
+        m_ExternalForce += initialForce;
     }
 
-    private void UpdateKnockbackForce() {
-        m_KnockbackForce = Vector2.Lerp(m_KnockbackForce, Vector2.zero, KNOCKBACK_REDUCTION_RATE);
+    private void UpdateExternalForce() {
+        m_ExternalForce = Vector2.Lerp(m_ExternalForce, Vector2.zero, EXTERNAL_FORCE_REDUCTION_RATE);
     }
     #endregion
 
     #region Graphics
     private void UpdateGFX() {
-        m_Animator.SetFloat("Horizontal", m_Manager.GetAimDir().x);
-        m_Animator.SetFloat("Vertical", m_Manager.GetAimDir().y);
+        m_Graphics.Move(m_MoveDir);
+        m_Graphics.FacingDirection(m_Manager.GetAimDir());
     }
     #endregion
 }

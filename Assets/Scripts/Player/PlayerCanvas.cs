@@ -4,7 +4,39 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [DisallowMultipleComponent]
+[RequireComponent(typeof(PlayerManager))]
+[RequireComponent(typeof(PlayerInventoryController))]
 public class PlayerCanvas : MonoBehaviour {
+    #region Interface
+    public void OpenInventoryUI() {
+        EnableInventoryUI();
+        HighlightWedge(m_InventoryController.SelectedItemIndex);
+    }
+
+    public void CloseInventoryUI() {
+        DisableInventoryUI();
+    }
+
+    public void UpdateUI() {
+        SetInventoryImages();
+        SelectItem();
+    }
+
+    public void DropSelectedItem() {
+        int selected = m_InventoryController.SelectedItemIndex;
+        DropSelected(selected);
+        DisplayFlavorText(selected);
+    }
+
+    public void SelectItem() {
+        HighlightWedge(m_InventoryController.SelectedItemIndex);
+    }
+
+    public void StartDeath(int respawnTime) {
+        EnableDeathCanvas(respawnTime);
+    }
+    #endregion
+
     #region Variables
     #region Editor Variables
     //Combat UI
@@ -44,60 +76,84 @@ public class PlayerCanvas : MonoBehaviour {
 
     #region Private Variables
     private int m_CurrHighlighted = 0;
-    private int m_PlayerID;
-    private Inventory m_Inventory;
     private int[] m_InventoryTracker;
     private Image[] m_WedgeImageArray;
     private Image[] m_InventoryImage;
-    private const int m_InventorySize = 8;
     private int m_MaxHealth;
+    #endregion
+
+    #region Cached Components
+    private PlayerManager m_Manager;
+    private PlayerInventoryController m_InventoryController;
     #endregion
     #endregion
 
     #region Initialization
-    private void OnEnable() {
-        PlayerManager.DeathEvent += EnableDeathCanvas;
-        m_WedgeImageArray = new Image[m_InventorySize];
-        m_InventoryImage = new Image[m_InventorySize];
-        for (int i = 0; i < m_InventorySize; i++) {
+    private void Awake() {
+        SetupCachedComponents();
+        SetupBasicVariables();
+        SetupCachedReferences();
+    }
+
+    private void SetupCachedComponents() {
+        m_Manager = GetComponent<PlayerManager>();
+        m_InventoryController = GetComponent<PlayerInventoryController>();
+    }
+
+    private void SetupBasicVariables() {
+        m_WedgeImageArray = new Image[m_InventoryController.MaxInventoryCapacity];
+        m_InventoryImage = new Image[m_InventoryController.MaxInventoryCapacity];
+    }
+
+    private void SetupCachedReferences() {
+        for (int i = 0; i < m_InventoryController.MaxInventoryCapacity; i++) {
             m_WedgeImageArray[i] = m_WedgeParent.GetChild(i).GetComponent<Image>();
             m_InventoryImage[i] = m_WedgeParent.GetChild(i).GetChild(0).GetComponent<Image>();
         }
     }
     #endregion
 
-    #region Accessors and Setters
-    public int PlayerID {
-        get { return m_PlayerID; }
-        set { m_PlayerID = value; }
-    }
-    #endregion
-
-    #region OnDisable and other Enders
-    private void OnDisable() {
-        PlayerManager.DeathEvent -= EnableDeathCanvas;
-    }
-    #endregion
-
     #region InventoryUI
-    public void EnableInventoryUI(int playerID, Inventory inventory) {
-        if (m_InventoryParent != null && playerID == m_PlayerID) {
-            m_InventoryParent.gameObject.SetActive(true);
-            m_Inventory = inventory;
-            m_InventoryTracker = inventory.GetInventoryList();
-            ClearImages();
-            SetInventoryImages(m_InventoryTracker);
-            HighlightWedge(0);
+    #region Opening/Closing
+    private void EnableInventoryUI() {
+        m_InventoryParent.gameObject.SetActive(true);
+        m_InventoryTracker = m_InventoryController.AllInventoryItems;
+        ClearImages();
+        SetInventoryImages();
+    }
+
+    private void DisableInventoryUI() {
+        DehighlightWedges();
+        ClearImages();
+        m_InventoryParent.gameObject.SetActive(false);
+    }
+
+    private void ClearImages() {
+        for (int i = 0; i < m_InventoryController.MaxInventoryCapacity; i++) {
+            m_InventoryImage[i].enabled = false;
         }
     }
 
-    public void DisableInventoryUI(int playerID) {
-        if (m_InventoryParent != null && playerID == m_PlayerID) {
-            DehighlightWedges();
-            m_CurrHighlighted = 0;
-            ClearImages();
-            m_InventoryParent.gameObject.SetActive(false);
+    private void SetInventoryImages() {
+        for (int i = 0; i < m_InventoryController.MaxInventoryCapacity; i++) {
+            int itemID = m_InventoryTracker[i];
+            if (itemID != Consts.NULL_ITEM_ID) {
+                m_InventoryImage[i].sprite = ItemManager.GetItem(itemID).GetIcon();
+                m_InventoryImage[i].enabled = true;
+            }
         }
+    }
+    #endregion
+
+    #region Selection
+    private void HighlightWedge(int wedgeNumber) {
+        if (wedgeNumber >= m_InventoryController.MaxInventoryCapacity || wedgeNumber < 0) {
+            throw new System.IndexOutOfRangeException($"Tried to highlight wedge at index {wedgeNumber}.");
+        }
+        DehighlightWedges();
+        m_WedgeImageArray[wedgeNumber].sprite = m_WedgeHighlighted;
+        DisplayFlavorText(wedgeNumber);
+        m_CurrHighlighted = wedgeNumber;
     }
 
     private void DisplayFlavorText(int wedgeNumber) {
@@ -111,43 +167,14 @@ public class PlayerCanvas : MonoBehaviour {
         }
     }
 
-    private void SetInventoryImages(int[] itemList) {
-        for (int i = 0; i < m_Inventory.GetInventoryCapacity(); i++) {
-            int itemID = itemList[i];
-            if (itemID != Consts.NULL_ITEM_ID) {
-                m_InventoryImage[i].sprite = ItemManager.GetItem(itemID).GetIcon();
-                m_InventoryImage[i].enabled = true;
-            }
-        }
+    private void DehighlightWedges() {
+        m_WedgeImageArray[m_CurrHighlighted].sprite = m_WedgeUnHighlighted;
     }
 
-    public void DropSelected(int wedgeNumber) {
+    private void DropSelected(int wedgeNumber) {
         m_InventoryImage[wedgeNumber].enabled = false;
     }
-
-    private void ClearImages() {
-        for (int i = 0; i < m_InventorySize; i++) {
-            m_InventoryImage[i].enabled = false;
-        }
-    }
-
-    public void ClearImageAtIndex(int index) {
-        m_InventoryImage[index].enabled = false;
-    }
-
-    public void HighlightWedge(int wedgeNumber) {
-        if (wedgeNumber >= m_Inventory.GetInventoryCapacity() || wedgeNumber < 0) {
-            throw new System.IndexOutOfRangeException($"Tried to highlight wedge at index {wedgeNumber}.");
-        }
-        m_WedgeImageArray[m_CurrHighlighted].sprite = m_WedgeUnHighlighted;
-        m_WedgeImageArray[wedgeNumber].sprite = m_WedgeHighlighted;
-        DisplayFlavorText(wedgeNumber);
-        m_CurrHighlighted = wedgeNumber;
-    }
-
-    public void DehighlightWedges() {
-        m_WedgeImageArray[m_CurrHighlighted].sprite = m_WedgeUnHighlighted;
-    }
+    #endregion
     #endregion
 
     #region CombatUI
@@ -167,12 +194,12 @@ public class PlayerCanvas : MonoBehaviour {
     #endregion
 
     #region Respawn
-    private void EnableDeathCanvas(int playerID, int respawnTime) {
-        if (m_DeathPanel != null && playerID == m_PlayerID) {
+    private void EnableDeathCanvas(int respawnTime) {
+        if (m_DeathPanel != null) {
             m_DeathPanel.gameObject.SetActive(true);
             m_CountdownText.gameObject.SetActive(true);
             DisableHealthSlider();
-            DisableInventoryUI(playerID);
+            DisableInventoryUI();
             StartCoroutine(TextUpdate(respawnTime));
         }
     }

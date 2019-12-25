@@ -23,6 +23,6 @@ MonoBehaviour:
   m_AttackRange: 3
   m_HasArcAttack: 0
   m_ArcAngle: 20
-  m_AttackStartPosition: {x: 0.1, y: -0.2}
-  m_AttackFinalPosition: {x: 1, y: -0.1}
+  m_AttackStartPosition: {x: 0.5, y: -0.3}
+  m_AttackFinalPosition: {x: 1.5, y: -0.1}
   m_KnockbackPower: 5

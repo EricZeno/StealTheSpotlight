@@ -1,7 +1,16 @@
 fileFormatVersion: 2
-guid: c0aa7c3b1c379ce4bb8e0155cff72be7
+guid: f2bc1f30e5ec5414a9d8080c19d50d66
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -6245907786405937765
+    second: orange_template_0
+  - first:
+      213: -3904387762387675012
+    second: orange_template_1
+  - first:
+      213: 2744216982289079020
+    second: orange_template_2
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -31,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: -1
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -40,12 +49,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 150
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -80,24 +89,76 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: orange_template_0
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 1
+        width: 43
+        height: 78
+      alignment: 9
+      pivot: {x: 0.74324775, y: 0.8762198}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0543c82dded6a164b894eaf96a61cb4b
+      internalID: -6245907786405937765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: orange_template_1
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 74
+        width: 129
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b796ba89943cf814fa585520a3efa624
+      internalID: -3904387762387675012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: orange_template_2
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 5
+        width: 44
+        height: 87
+      alignment: 9
+      pivot: {x: 0.7509256, y: 0.8773757}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2dd451d744110604f94df387bacf95d9
+      internalID: 2744216982289079020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5aa9d0dee678d264590fb075072bdf8c
+    spriteID: e3e3f816e9e296649b29e5872b575dd7
     internalID: 0
     vertices: []
     indices: 

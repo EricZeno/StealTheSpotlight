@@ -17,18 +17,10 @@ public struct WeaponBaseData {
     #endregion
 }
 
-public interface PlayerWeaponInterface {
-    void Unequip();
-    bool Equip(int weaponID);
-
-    void Use();
-    void StopUse();
-}
-
 [DisallowMultipleComponent]
 [RequireComponent(typeof(PlayerManager))]
 [RequireComponent(typeof(Animator))]
-public class PlayerWeapon : MonoBehaviour, PlayerWeaponInterface {
+public class PlayerWeapon : MonoBehaviour {
     #region Delegates
     public delegate WeaponBaseData OnAttackEffect(WeaponBaseData origData);
     #endregion
@@ -221,7 +213,7 @@ public class PlayerWeapon : MonoBehaviour, PlayerWeaponInterface {
             PlayerManager other = enemy.GetComponent<PlayerManager>();
             other.TakeDamage(data.Damage);
             Vector2 dir = (other.transform.position - transform.position).normalized;
-            other.GetComponent<PlayerMovement>().ApplyKnockback(dir * data.KnockbackPower);
+            other.GetComponent<PlayerMovement>().ApplyExternalForce(dir * data.KnockbackPower);
         }
     }
 

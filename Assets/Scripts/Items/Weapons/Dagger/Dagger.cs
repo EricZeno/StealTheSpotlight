@@ -10,7 +10,7 @@ public class Dagger : BaseWeaponItem {
 
         m_NumRaycasts = 20;
 
-        m_RightOffset = new Vector2(.4f, -.2f);
+        m_RightOffset = new Vector2(1f, -.5f);
         m_IdleAngleOffset = -90;
 
         m_AttackAngleOffset = -70;

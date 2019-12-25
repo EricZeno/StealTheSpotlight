@@ -3,8 +3,49 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.PlayerInput;
 
+[System.Serializable]
+public struct PlayerSprites {
+    #region Editor Variables
+    [SerializeField]
+    [Tooltip("The body of the player.")]
+    private Sprite m_Body;
+
+    [SerializeField]
+    [Tooltip("The leg of the player that should be in the foreground.")]
+    private Sprite m_FrontLeg;
+
+    [SerializeField]
+    [Tooltip("The leg of the player that should be in the background.")]
+    private Sprite m_BackLeg;
+    #endregion
+
+    #region Accessors
+    public Sprite Body {
+        get {
+            return m_Body;
+        }
+    }
+
+    public Sprite FrontLeg {
+        get {
+            return m_FrontLeg;
+        }
+    }
+
+    public Sprite BackLeg {
+        get {
+            return m_BackLeg;
+        }
+    }
+    #endregion
+}
+
 [DisallowMultipleComponent]
 public class GameManager : MonoBehaviour {
+    #region Constants
+    private const float TIME_TO_WAIT_BEFORE_PLAYER_SETUP = .2f;
+    #endregion
+
     #region Events and Delegates
     public delegate void StartGame();
     public static event StartGame StartGameEvent;
@@ -22,6 +63,10 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     [Tooltip("All of the layers that can be hit.")]
     private LayerMask m_HittableLayers;
+
+    [SerializeField]
+    [Tooltip("The sprites corresponding to each player.")]
+    private PlayerSprites[] m_PlayerSprites;
     #endregion
 
     #region Private Variables
@@ -122,15 +167,21 @@ public class GameManager : MonoBehaviour {
     private void AddPlayer(PlayerManager player) {
         for (int i = 0; i < m_Players.Length; i++) {
             if (m_Players[i] == null) {
-                m_Players[i] = player;
-                player.SetID(i);
-                player.transform.position = m_spawnPositions[i];
-                string playerLayer = Consts.NO_ID_PLAYER_LAYER + (i + 1).ToString();
-                player.gameObject.layer = LayerMask.NameToLayer(playerLayer);
+                StartCoroutine(SetupPlayer(player, i));
                 m_NumPlayers++;
                 break;
             }
         }
+    }
+
+    private IEnumerator SetupPlayer(PlayerManager player, int index) {
+        yield return new WaitForSeconds(TIME_TO_WAIT_BEFORE_PLAYER_SETUP);
+        m_Players[index] = player;
+        player.SetID(index);
+        player.transform.position = m_spawnPositions[index];
+        string playerLayer = Consts.NO_ID_PLAYER_LAYER + (index + 1).ToString();
+        player.gameObject.layer = LayerMask.NameToLayer(playerLayer);
+        player.InitialSetup(m_PlayerSprites[index]);
     }
     #endregion
 

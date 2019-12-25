@@ -1,7 +1,16 @@
 fileFormatVersion: 2
-guid: c0aa7c3b1c379ce4bb8e0155cff72be7
+guid: 30b950466e860c64cb6cd84fc615b8ce
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -1554091803409064086
+    second: mint_template_0
+  - first:
+      213: -1624966033272146146
+    second: mint_template_1
+  - first:
+      213: -4433656585021795512
+    second: mint_template_2
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -31,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: -1
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -40,12 +49,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 150
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -80,24 +89,76 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: mint_template_0
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 3
+        width: 42
+        height: 73
+      alignment: 9
+      pivot: {x: 0.7075329, y: 0.8980083}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4f64c696fbb6784094256c8ec945db2
+      internalID: -1554091803409064086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mint_template_1
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 58
+        width: 129
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1966180825c3b2a4ca773d870e612574
+      internalID: -1624966033272146146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mint_template_2
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 2
+        width: 44
+        height: 81
+      alignment: 9
+      pivot: {x: 0.6518763, y: 0.8766337}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30aae1a358b30804c937affe5e855b32
+      internalID: -4433656585021795512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5aa9d0dee678d264590fb075072bdf8c
+    spriteID: fb8d98812f116d8438c508f22b806844
     internalID: 0
     vertices: []
     indices: 

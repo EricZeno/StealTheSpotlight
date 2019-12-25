@@ -1,7 +1,16 @@
 fileFormatVersion: 2
-guid: c0aa7c3b1c379ce4bb8e0155cff72be7
+guid: dee79e17c9bdf7c4a89d7f0136a3f04d
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 3076507176171165903
+    second: violet_template_0
+  - first:
+      213: -2253152059789895653
+    second: violet_template_1
+  - first:
+      213: -3976944033501616264
+    second: violet_template_2
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -31,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: -1
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -40,12 +49,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 150
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -80,24 +89,76 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: violet_template_0
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 11
+        width: 44
+        height: 79
+      alignment: 9
+      pivot: {x: 0.77733934, y: 0.8935243}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a12395716593a4d4a97674239146040d
+      internalID: 3076507176171165903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: violet_template_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 76
+        width: 129
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e30a63f007f6eef42a4b6908f5ff562c
+      internalID: -2253152059789895653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: violet_template_2
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 9
+        width: 44
+        height: 86
+      alignment: 9
+      pivot: {x: 0.7575295, y: 0.9020346}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32e62b1bd62aa23468d00851404605be
+      internalID: -3976944033501616264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5aa9d0dee678d264590fb075072bdf8c
+    spriteID: 27f673705c10e77498969dc8c3379dfc
     internalID: 0
     vertices: []
     indices: 

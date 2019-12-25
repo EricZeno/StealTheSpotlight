@@ -21,12 +21,12 @@ public class ItemManager : MonoBehaviour {
 
     #region Initialization
     private void Awake() {
-        if (!m_Singleton) {
-            m_Singleton = this;
+        if (m_Singleton != null) {
+            Destroy(gameObject);
+            return;
         }
-        else if (m_Singleton != this) {
-            Destroy(m_Singleton.gameObject);
-        }
+        m_Singleton = this;
+        DontDestroyOnLoad(this);
     }
 
     private void Start() {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.PlayerInput;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public struct PlayerSprites {
@@ -53,10 +54,6 @@ public class GameManager : MonoBehaviour {
 
     #region Editor Variables
     [SerializeField]
-    [Tooltip("Each of the players currently in the game.")]
-    private PlayerManager[] m_Players;
-
-    [SerializeField]
     [Tooltip("The spawn locations for each player")]
     private Vector3[] m_spawnPositions;
 
@@ -76,29 +73,35 @@ public class GameManager : MonoBehaviour {
     }
 
     private bool[] m_PlayersReady;
-
     private int m_NumPlayers;
     private int m_NumReady;
     private bool m_GameInProgress;
+
+    private PlayerManager[] m_Players;
+    private GameObject[] m_PlayerObjs;
     #endregion
 
     #region Initialization
     private void Awake() {
-        if (!m_Singleton) {
-            m_Singleton = this;
-        } else if (m_Singleton != this) {
-            Destroy(m_Singleton.gameObject);
+        if (m_Singleton != null) {
+            Destroy(gameObject);
+            return;
         }
+        m_Singleton = this;
 
         m_Players = new PlayerManager[4];
+        m_PlayerObjs = new GameObject[4];
         m_PlayersReady = new bool[4];
         m_NumPlayers = 0;
         m_GameInProgress = false;
+
+        DontDestroyOnLoad(this);
     }
 
     private void OnEnable() {
         PlayerManager.DeathEvent += Respawn;
         PlayerManager.PlayerReadyEvent += PlayerReady;
+        CollisionTrigger.SceneChangeEvent += ResetPlayerLocation;
     }
     #endregion
 
@@ -168,7 +171,9 @@ public class GameManager : MonoBehaviour {
         for (int i = 0; i < m_Players.Length; i++) {
             if (m_Players[i] == null) {
                 StartCoroutine(SetupPlayer(player, i));
+                m_PlayerObjs[i] = player.gameObject;
                 m_NumPlayers++;
+                DontDestroyOnLoad(m_PlayerObjs[i]);
                 break;
             }
         }
@@ -185,10 +190,21 @@ public class GameManager : MonoBehaviour {
     }
     #endregion
 
+    #region Changing Floors
+    private void ResetPlayerLocation() {
+        for (int i = 0; i < m_Players.Length; i++) {
+            if (m_Players[i]) {
+                m_Players[i].transform.position = m_spawnPositions[i];
+            }
+        }
+    }
+    #endregion
+
     #region Disable/Enders
     private void OnDisable() {
         PlayerManager.DeathEvent -= Respawn;
         PlayerManager.PlayerReadyEvent -= PlayerReady;
+        CollisionTrigger.SceneChangeEvent -= ResetPlayerLocation;
     }
     #endregion
 }

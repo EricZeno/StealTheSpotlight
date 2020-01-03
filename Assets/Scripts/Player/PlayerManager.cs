@@ -166,7 +166,7 @@ public class PlayerManager : MonoBehaviour {
     public void SetID(int ID) {
         m_PlayerID = ID;
     }
-    
+
     public float InteractionRadius {
         get {
             return m_Data.GetInteractionRadius();
@@ -211,8 +211,7 @@ public class PlayerManager : MonoBehaviour {
         IEnumerator effectFunction = TimedEffect(effect, repeatTime);
         if (m_TimedEffects.ContainsKey(itemID)) {
             m_TimedEffects[itemID].Add(effectFunction);
-        }
-        else {
+        } else {
             List<IEnumerator> functionEffects = new List<IEnumerator>();
             functionEffects.Add(effectFunction);
             m_TimedEffects.Add(itemID, functionEffects);
@@ -220,7 +219,7 @@ public class PlayerManager : MonoBehaviour {
         StartCoroutine(effectFunction);
     }
 
-    public void SubtractTimedEffect(int itemID) {
+    public void RemoveTimedEffect(int itemID) {
         if (!m_TimedEffects.ContainsKey(itemID)) {
             throw new System.ArgumentException($"Trying to subtract timed effect based on item ID {itemID} even though player {name} doesn't have that item.");
         }

@@ -29,6 +29,9 @@ public abstract class UnitStats
     #region Editor Variables
     [SerializeField]
     [Tooltip("The power of a unit determines the strength of a unit, including the base amount of damage it deals, before weapon bonuses, and any healing it does")]
+    private float m_BasePower;
+
+    //Power after modifiers
     private int m_Power;
     public int GetPower() {
         return m_Power;
@@ -83,8 +86,10 @@ public abstract class UnitStats
         m_CurrHealth = m_BaseHealth;
 
         m_StatusEffects = new Dictionary<Status, bool>();
+        m_StatusImmunities = new Dictionary<Status, bool>();
         foreach (Status s in System.Enum.GetValues(typeof(Status))) {
             m_StatusEffects[s] = false;
+            m_StatusImmunities[s] = false;
         }
     }
 #endregion
@@ -128,6 +133,9 @@ public abstract class UnitStats
     }
     public bool HasSlow() {
         return m_StatusEffects[Status.Slow];
+    }
+    public bool HasPoisonImmunity() {
+        return m_StatusImmunities[Status.Poison];
     }
 
     private bool IsAlive() {
@@ -230,6 +238,24 @@ public abstract class UnitStats
         }
     }
 
+    public void AddXMaxHealth(int amount) {
+        float healthPercentage = m_CurrHealth * 1f / m_MaxHealth;
+
+        m_MaxHealth += amount;
+        m_CurrHealth = (int)(healthPercentage * m_MaxHealth);
+    }
+
+    public void SubtractXMaxHealth(int amount) {
+        if (amount >= m_MaxHealth) {
+            throw new System.ArgumentException("Max health cannot be less than 0.");
+        }
+
+        float healthPercentage = m_CurrHealth * 1f / m_MaxHealth;
+
+        m_MaxHealth -= amount;
+        m_CurrHealth = (int)(healthPercentage * m_MaxHealth);
+    }
+
     public void AddXPercBaseHealth(float multiplier) {
         if (multiplier < 0) {
             throw new System.ArgumentException("Percent must be larger than or equal to 0.");
@@ -253,13 +279,27 @@ public abstract class UnitStats
 
     #region Status Effects
     private Dictionary<Status, bool> m_StatusEffects;
+    private Dictionary<Status, bool> m_StatusImmunities;
 
     public void AddStatus(Status status) {
+        if (m_StatusImmunities[status]) {
+            return;
+        }
+
         m_StatusEffects[status] = true;
     }
 
     public void RemoveStatus(Status status) {
         m_StatusEffects[status] = false;
+    }
+
+    public void AddStatusImmunity(Status immunity) {
+        m_StatusImmunities[immunity] = true;
+        m_StatusEffects[immunity] = false;
+    }
+
+    public void RemoveStatusImmunity(Status immunity) {
+        m_StatusImmunities[immunity] = false;
     }
     #endregion
 
@@ -278,6 +318,22 @@ public abstract class UnitStats
         }
 
         m_CurrMovementSpeed -= m_BaseMovementSpeed * multiplier;
+    }
+
+    public void AddXPercBasePower(float multiplier) {
+        if (multiplier < 0) {
+            throw new System.ArgumentException("Percent must be larger than or equal to 0.");
+        }
+
+        m_Power += (int)(m_BasePower * multiplier);
+    }
+
+    public void SubtractXPercBasePower(float multiplier) {
+        if (multiplier < 0) {
+            throw new System.ArgumentException("Percent must be larger than or equal to 0.");
+        }
+
+        m_Power -= (int)(m_BasePower * multiplier);
     }
     #endregion
 

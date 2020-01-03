@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1080508761
+CRC: 3763944289
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: items/passiveitems
+      Name: items/activeitems
       Dependencies: {}
     Info_1:
-      Name: items/activeitems
+      Name: items/passiveitems
       Dependencies: {}
     Info_2:
       Name: items/weaponitems

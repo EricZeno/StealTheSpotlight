@@ -1,0 +1,1277 @@
+fileFormatVersion: 2
+guid: 20443dae55511134180153749068d0e3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 642572249415952113
+    second: beige_tileset_0
+  - first:
+      213: -2167075864626566054
+    second: beige_tileset_1
+  - first:
+      213: -1341117182860559432
+    second: beige_tileset_2
+  - first:
+      213: 6095402231189942217
+    second: beige_tileset_3
+  - first:
+      213: -6138418904002696234
+    second: beige_tileset_4
+  - first:
+      213: 6671886275073567000
+    second: beige_tileset_5
+  - first:
+      213: 1187730664956033647
+    second: beige_tileset_6
+  - first:
+      213: -8292356994503068441
+    second: beige_tileset_7
+  - first:
+      213: 350726870667913977
+    second: beige_tileset_8
+  - first:
+      213: 612965520211562243
+    second: beige_tileset_9
+  - first:
+      213: -1943985213762471720
+    second: beige_tileset_10
+  - first:
+      213: 1428175038846029542
+    second: beige_tileset_11
+  - first:
+      213: 1374574497373212305
+    second: beige_tileset_12
+  - first:
+      213: -1631437685660430753
+    second: beige_tileset_13
+  - first:
+      213: -4186141779824747519
+    second: beige_tileset_14
+  - first:
+      213: 8996345867861916259
+    second: beige_tileset_15
+  - first:
+      213: -1524593917835841058
+    second: beige_tileset_16
+  - first:
+      213: -3789286590595226196
+    second: beige_tileset_17
+  - first:
+      213: 6015789882229511725
+    second: beige_tileset_18
+  - first:
+      213: -3697342814668796739
+    second: beige_tileset_19
+  - first:
+      213: -7560257720282935530
+    second: beige_tileset_20
+  - first:
+      213: -6285246469005429230
+    second: beige_tileset_21
+  - first:
+      213: 3835700994648094537
+    second: beige_tileset_22
+  - first:
+      213: -3099129699960967883
+    second: beige_tileset_23
+  - first:
+      213: 908943989646584884
+    second: beige_tileset_24
+  - first:
+      213: -895885416351228676
+    second: beige_tileset_25
+  - first:
+      213: 414523952772856219
+    second: beige_tileset_26
+  - first:
+      213: 3542538193806932779
+    second: beige_tileset_27
+  - first:
+      213: -3966212720011476361
+    second: beige_tileset_28
+  - first:
+      213: 2775730699173679234
+    second: beige_tileset_29
+  - first:
+      213: 6659124824382027041
+    second: beige_tileset_30
+  - first:
+      213: -5374865676921764974
+    second: beige_tileset_31
+  - first:
+      213: -3527466449299525039
+    second: beige_tileset_32
+  - first:
+      213: -2057055085499325971
+    second: beige_tileset_33
+  - first:
+      213: -1204641521552361791
+    second: beige_tileset_34
+  - first:
+      213: 8230986795354021499
+    second: beige_tileset_35
+  - first:
+      213: 2639747979647769943
+    second: beige_tileset_36
+  - first:
+      213: -6492593579182981775
+    second: beige_tileset_37
+  - first:
+      213: -5674104443684860207
+    second: beige_tileset_38
+  - first:
+      213: 1427495961236095289
+    second: beige_tileset_39
+  - first:
+      213: 3097179145730433943
+    second: beige_tileset_40
+  - first:
+      213: 2815546885411845168
+    second: beige_tileset_41
+  - first:
+      213: -7930129140084987975
+    second: beige_tileset_42
+  - first:
+      213: 3680206616448325906
+    second: beige_tileset_43
+  - first:
+      213: 3824710877844772246
+    second: beige_tileset_44
+  - first:
+      213: -2221331394203689436
+    second: beige_tileset_45
+  - first:
+      213: -8813300860191319263
+    second: beige_tileset_46
+  - first:
+      213: 4672974685166836687
+    second: beige_tileset_47
+  - first:
+      213: -2335722584036660866
+    second: beige_tileset_48
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 60
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: beige_tileset_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 549
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 020c1e2dcfa990f4cac1c7d45d4db119
+      internalID: 642572249415952113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_1
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 549
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ac96a7e55e5e4542a398488000731ca
+      internalID: -2167075864626566054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_2
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 549
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa15cce712b40c2459e1c6a2d9488eeb
+      internalID: -1341117182860559432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_3
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 549
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2e7ad7593f60614db81ae426d00096d
+      internalID: 6095402231189942217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_4
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 549
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04e95ea8c3f39d146820c721f5255186
+      internalID: -6138418904002696234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_5
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 549
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 351792940abb7d242abb16b97767ce36
+      internalID: 6671886275073567000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 488
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 271519058eea9794dbb5030e9a633beb
+      internalID: 1187730664956033647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_7
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 488
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 472f1691e08cc9b4ea7452ead12e1445
+      internalID: -8292356994503068441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_8
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 488
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d88e1372988877b4aaf03120c34ef480
+      internalID: 350726870667913977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_9
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 488
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50ed83e74c2f0184b929088331851967
+      internalID: 612965520211562243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_10
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 488
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d853febc37a98c04dad3d718f0683298
+      internalID: -1943985213762471720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 427
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6361e6e0b681f0545816140e7304335d
+      internalID: 1428175038846029542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_12
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 427
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ac5cc90793bbff43995e3789abfc783
+      internalID: 1374574497373212305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_13
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 427
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f01279764ce7f58489c532a28a77a0f2
+      internalID: -1631437685660430753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_14
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 427
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cfc0d1c9c413e54da3dec6b44eeeff1
+      internalID: -4186141779824747519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_15
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 427
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57d424953e194c040ba35bb5614b1608
+      internalID: 8996345867861916259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_16
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 427
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 340d56fe3babecb4ebcc5871782c6de2
+      internalID: -1524593917835841058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_17
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 366
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e34c5336b9fdce3418c41cb295182f99
+      internalID: -3789286590595226196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_18
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 366
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ff1a31a328b862429c9a806812b2ceb
+      internalID: 6015789882229511725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_19
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 366
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdf512acd90d01b43976e341c4c1ceb5
+      internalID: -3697342814668796739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_20
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 366
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e559c8d619c722d4e8cb7fd3ea628eed
+      internalID: -7560257720282935530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_21
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 366
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37900237ab3e9c64798248845260056a
+      internalID: -6285246469005429230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_22
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 305
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4f32227435a2c74c85b3279bea67c86
+      internalID: 3835700994648094537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_23
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 305
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b75f68c465eab6846a6b07e23645ad1a
+      internalID: -3099129699960967883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_24
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 305
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d16e6569a418254bb5aaade9cdcdbbc
+      internalID: 908943989646584884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_25
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 305
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2da8b4ce7ee8b5045a1ab705efbcfa42
+      internalID: -895885416351228676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_26
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 305
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d4b524bbcfeeae44a20d9828e861ca0
+      internalID: 414523952772856219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_27
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 305
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48becd42aa6ebca4592a86d366007f17
+      internalID: 3542538193806932779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_28
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 305
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c59c565ad2b73d24ea1235f6165c244d
+      internalID: -3966212720011476361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_29
+      rect:
+        serializedVersion: 2
+        x: 427
+        y: 305
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e39050c643d2cdb4a905d5f0f572552b
+      internalID: 2775730699173679234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 244
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa239b050e96b6c408feb1833115888e
+      internalID: 6659124824382027041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_31
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 244
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa3ffcb47b1a7a14580cb020e4e1668c
+      internalID: -5374865676921764974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_32
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 244
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f6c5bcf39980b140a08269b14a951be
+      internalID: -3527466449299525039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_33
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 244
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f631713abd61df4dbfb1f707f85caf0
+      internalID: -2057055085499325971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_34
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 244
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a09b79e368bac3241b1145257464875b
+      internalID: -1204641521552361791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_35
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 244
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8984c4a7a694fbb478cfd5ea14ab5609
+      internalID: 8230986795354021499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_36
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 244
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a29ebee27a657d4a917d40984b61835
+      internalID: 2639747979647769943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_37
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 183
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e482978341a0d848b0c34e3b1a12392
+      internalID: -6492593579182981775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_38
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 183
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd6fc245e30855f4f869d3af87fd056c
+      internalID: -5674104443684860207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_39
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 183
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a81f7b0d8b7e9e846b775ed4fff3e695
+      internalID: 1427495961236095289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 122
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 376b1466c24d29f49a83d7f8011e79e9
+      internalID: 3097179145730433943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_41
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 122
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ce4a30641060e644b69673daaf3dd3f
+      internalID: 2815546885411845168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_42
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 122
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52c6d3afb4b71a244a235eee16e810aa
+      internalID: -7930129140084987975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_43
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 61
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4ee7bfddbd7cef49bc12d0a4619a419
+      internalID: 3680206616448325906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_44
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 61
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6130b6044e423094a86de62d50b180e8
+      internalID: 3824710877844772246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_45
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 61
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 474365fb75d201c44bb5619b923a8443
+      internalID: -2221331394203689436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_46
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 526dae964f45fa0459ad216b13d7670f
+      internalID: -8813300860191319263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_47
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 0
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a614be4d4c2320469611f0b8aa2692f
+      internalID: 4672974685166836687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beige_tileset_48
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 0
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d75f0b3c5a9b9849868089e2097974a
+      internalID: -2335722584036660866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 26b30d4b45d5bbe4bbd7c856bedd805a
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -279,8 +279,7 @@ public class PlayerManager : MonoBehaviour {
         m_Data.TakeDamage(damage);
         m_PlayerCanvas.SliderDamage(damage);
         if (m_Data.CurrHealth <= 0) {
-            m_UI.StartDeath(m_Data.RespawnTime);
-            DeathEvent(m_PlayerID, m_Data.RespawnTime);
+            Die();
         }
     }
 
@@ -288,6 +287,11 @@ public class PlayerManager : MonoBehaviour {
         int healing = (int)(m_HealPercent * m_Data.MaxHealth);
         m_Data.Heal(healing);
         m_PlayerCanvas.SliderHeal(healing);
+    }
+
+    public void Die() {
+        m_UI.StartDeath(m_Data.RespawnTime);
+        DeathEvent(m_PlayerID, m_Data.RespawnTime);
     }
     #endregion
 

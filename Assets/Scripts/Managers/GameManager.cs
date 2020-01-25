@@ -50,12 +50,14 @@ public class GameManager : MonoBehaviour {
     #region Events and Delegates
     public delegate void StartGame();
     public static event StartGame StartGameEvent;
+    public delegate void NewFloor();
+    public static event NewFloor NewFloorEvent;
     #endregion
 
     #region Editor Variables
     [SerializeField]
     [Tooltip("The spawn locations for each player")]
-    private Vector3[] m_spawnPositions;
+    private Vector3[] m_SpawnPositions;
 
     [SerializeField]
     [Tooltip("All of the layers that can be hit.")]
@@ -89,9 +91,9 @@ public class GameManager : MonoBehaviour {
         }
         m_Singleton = this;
 
-        m_Players = new PlayerManager[4];
-        m_PlayerObjs = new GameObject[4];
-        m_PlayersReady = new bool[4];
+        m_Players = new PlayerManager[Consts.MAX_NUM_PLAYERS];
+        m_PlayerObjs = new GameObject[Consts.MAX_NUM_PLAYERS];
+        m_PlayersReady = new bool[Consts.MAX_NUM_PLAYERS];
         m_NumPlayers = 0;
         m_GameInProgress = false;
 
@@ -102,6 +104,8 @@ public class GameManager : MonoBehaviour {
         PlayerManager.DeathEvent += Respawn;
         PlayerManager.PlayerReadyEvent += PlayerReady;
         CollisionTrigger.SceneChangeEvent += ResetPlayerLocation;
+        CollisionTrigger.LoadDungeonEvent += DisablePlayers;
+        DungeonGenerator.DungeonLoadedEvent += StartFloor;
     }
     #endregion
 
@@ -141,13 +145,14 @@ public class GameManager : MonoBehaviour {
                 m_PlayersReady[playerID] = false;
                 m_NumReady--;
             }
-        } else if (ready) {
+        }
+        else if (ready) {
             m_PlayersReady[playerID] = true;
             m_NumReady++;
             if (m_NumPlayers == m_NumReady) {
                 m_GameInProgress = true;
                 StartGameEvent();
-            }  
+            }
         }
     }
     #endregion
@@ -160,7 +165,7 @@ public class GameManager : MonoBehaviour {
     private IEnumerator RespawnCoroutine(int playerID, int respawnTime) {
         m_Players[playerID].enabled = false;
         yield return new WaitForSeconds(respawnTime);
-        m_Players[playerID].transform.position = m_spawnPositions[playerID];
+        m_Players[playerID].transform.position = m_SpawnPositions[playerID];
         m_Players[playerID].enabled = true;
         m_Players[playerID].Heal(100f);
     }
@@ -183,7 +188,7 @@ public class GameManager : MonoBehaviour {
         yield return new WaitForSeconds(TIME_TO_WAIT_BEFORE_PLAYER_SETUP);
         m_Players[index] = player;
         player.SetID(index);
-        player.transform.position = m_spawnPositions[index];
+        player.transform.position = m_SpawnPositions[index];
         string playerLayer = Consts.NO_ID_PLAYER_LAYER + (index + 1).ToString();
         player.gameObject.layer = LayerMask.NameToLayer(playerLayer);
         player.InitialSetup(m_PlayerSprites[index]);
@@ -191,10 +196,32 @@ public class GameManager : MonoBehaviour {
     #endregion
 
     #region Changing Floors
+    private void StartFloor(Vector3[] spawnPositions) {
+        m_SpawnPositions = spawnPositions;
+        ResetPlayerLocation();
+        EnablePlayers();
+    }
+
     private void ResetPlayerLocation() {
         for (int i = 0; i < m_Players.Length; i++) {
             if (m_Players[i]) {
-                m_Players[i].transform.position = m_spawnPositions[i];
+                m_Players[i].transform.position = m_SpawnPositions[i];
+            }
+        }
+    }
+
+    private void DisablePlayers() {
+        for (int i = 0; i < m_Players.Length; i++) {
+            if (m_Players[i]) {
+                m_Players[i].enabled = false;
+            }
+        }
+    }
+
+    private void EnablePlayers() {
+        for (int i = 0; i < m_Players.Length; i++) {
+            if (m_Players[i]) {
+                m_Players[i].enabled = true;
             }
         }
     }
@@ -205,6 +232,8 @@ public class GameManager : MonoBehaviour {
         PlayerManager.DeathEvent -= Respawn;
         PlayerManager.PlayerReadyEvent -= PlayerReady;
         CollisionTrigger.SceneChangeEvent -= ResetPlayerLocation;
+        CollisionTrigger.LoadDungeonEvent -= DisablePlayers;
+        DungeonGenerator.DungeonLoadedEvent -= StartFloor;
     }
     #endregion
 }

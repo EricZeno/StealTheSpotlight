@@ -1,7 +1,14 @@
 ﻿public struct Consts {
+    #region Game Invariants
+    public const int MAX_NUM_PLAYERS = 4;
+    #endregion
+
+    #region Scene Names
+    public const string DUNGEON_SCENE_NAME = "Dungeon";
+    #endregion
+
     #region Tags
     public const string GENERAL_ENEMY_TAG = "Enemy";
-
     public const string PLAYER_TAG = "Player";
     #endregion
 
@@ -85,6 +92,6 @@
     #endregion
 
     #region Respawn
-    public const int BASE_RESPAWN_TIME = 10;
+    public const int BASE_RESPAWN_TIME = 3;
     #endregion
 }

@@ -211,7 +211,7 @@ public class PlayerWeapon : MonoBehaviour {
         data = ApplyOnAttackEffects(data);
         if (enemy.CompareTag(Consts.PLAYER_TAG)) {
             PlayerManager other = enemy.GetComponent<PlayerManager>();
-            other.TakeDamage(data.Damage);
+            other.TakeDamage(data.Damage, m_Manager);
             Vector2 dir = (other.transform.position - transform.position).normalized;
             other.GetComponent<PlayerMovement>().ApplyExternalForce(dir * data.KnockbackPower);
         }

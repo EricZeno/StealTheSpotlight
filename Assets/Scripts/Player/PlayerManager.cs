@@ -16,6 +16,8 @@ public class PlayerManager : MonoBehaviour {
     public delegate void EffectToApply(PlayerManager player);
     public delegate void Death(int playerID, int respawnTime);
     public static event Death DeathEvent;
+    public delegate void PK(int player);
+    public static event PK PKEvent;
     public delegate void PlayerReady(int playerID, bool ready);
     public static event PlayerReady PlayerReadyEvent;
     #endregion
@@ -275,11 +277,14 @@ public class PlayerManager : MonoBehaviour {
     #endregion
 
     #region Health Methods
-    public void TakeDamage(int damage) {
+    public void TakeDamage(int damage, PlayerManager from = null) {
         m_Data.TakeDamage(damage);
         m_PlayerCanvas.SliderDamage(damage);
         if (m_Data.CurrHealth <= 0) {
             Die();
+            if (from != null) {
+                PKEvent(from.GetID());
+            }
         }
     }
 

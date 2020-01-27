@@ -30,6 +30,8 @@
     public const int NUM_MAX_ACTIVES_IN_INV = 2;
     public const int NUM_MAX_WEAPONS_IN_INV = 1;
 
+    public const int NUM_MAX_PLAYERS = 4;
+
     public const float TIME_INV_CYCLE_PAUSED = 0.2f;
 
     public const string WEAPON_OBJECT_NAME = "Weapon";
@@ -93,5 +95,35 @@
 
     #region Respawn
     public const int BASE_RESPAWN_TIME = 3;
+    #endregion
+
+    #region Points/Objectives
+    public const string BOSS_NAME = "boss";
+    public const string OBJROOM_NAME = "obj";
+    public const string PK_GOLD_NAME = "pk_gold";
+    public const string PK_SILVER_NAME = "pk_silver";
+    public const string PK_BRONZE_NAME = "pk_bronze";
+    public const string MONEY_GOLD_NAME = "money_gold";
+    public const string MONEY_SILVER_NAME = "money_silver";
+    public const string MONEY_BRONZE_NAME = "money_bronze";
+    public const string ROOMS_GOLD_NAME = "rooms_gold";
+    public const string ROOMS_SILVER_NAME = "rooms_silver";
+    public const string ROOMS_BRONZE_NAME = "rooms_bronze";
+
+    public const string BOSS_OBJECTIVE_TYPE = "boss";
+    public const string OBJROOM_OBJECTIVE_TYPE = "obj";
+    public const string MEDAL_PK_OBJECTIVE_TYPE = "medal_pk";
+    public const string MEDAL_MONEY_OBJECTIVE_TYPE = "medal_money";
+    public const string MEDAL_ROOMS_OBJECTIVE_TYPE = "medal_rooms";
+
+    public const int BOSS_OBJECTIVE_POINTS = 10;
+    public const int OBJROOM_OBJECTIVE_POINTS = 5;
+    public const int MEDAL_GOLD_OBJECTIVE_POINTS = 3;
+    public const int MEDAL_SILVER_OBJECTIVE_POINTS = 2;
+    public const int MEDAL_BRONZE_OBJECTIVE_POINTS = 1;
+
+    public const string MEDAL_FIRST = "gold";
+    public const string MEDAL_SECOND = "silver";
+    public const string MEDAL_THIRD = "bronze";
     #endregion
 }

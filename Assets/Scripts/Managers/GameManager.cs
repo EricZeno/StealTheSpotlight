@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private bool[] m_PlayersReady;
-    private int m_NumPlayers;
+    private static int m_NumPlayers;
     private int m_NumReady;
     private bool m_GameInProgress;
 
@@ -112,6 +112,10 @@ public class GameManager : MonoBehaviour {
     #region Accessors
     public PlayerManager getPlayer(int playerID) {
         return m_Players[playerID];
+    }
+
+    public static int getNumPlayers() {
+        return m_NumPlayers;
     }
 
     public LayerMask HittableLayers {

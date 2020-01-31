@@ -40,6 +40,7 @@ public class PlayerInventoryController : MonoBehaviour {
         m_Manager = GetComponent<PlayerManager>();
         m_UI = GetComponent<PlayerCanvas>();
         m_Weapon = GetComponent<PlayerWeapon>();
+        m_Inventory.SetCanvasUI(m_UI);
     }
     #endregion
 

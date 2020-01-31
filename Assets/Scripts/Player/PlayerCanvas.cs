@@ -39,7 +39,7 @@ public class PlayerCanvas : MonoBehaviour {
 
     #region Variables
     #region Editor Variables
-    //Combat UI
+    //Combat and Health UI
     [SerializeField]
     [Tooltip("Image overlay for death countdown")]
     private Image m_DeathPanel;
@@ -51,6 +51,11 @@ public class PlayerCanvas : MonoBehaviour {
     [SerializeField]
     [Tooltip("Health Slider UI element")]
     private Slider m_HealthSlider;
+
+    [SerializeField]
+    [Tooltip("The parent object that holds all Combat UI elements")]
+    private RectTransform m_CombatParent;
+
 
     //Inventory UI
     [SerializeField]
@@ -80,6 +85,10 @@ public class PlayerCanvas : MonoBehaviour {
     private Image[] m_WedgeImageArray;
     private Image[] m_InventoryImage;
     private int m_MaxHealth;
+    private Image m_ClassAbilityImage;
+    private Image m_ActiveItemImage;
+    private Image m_WeaponOneImage;
+    private Image m_WeaponTwoImage;
     #endregion
 
     #region Cached Components
@@ -110,6 +119,10 @@ public class PlayerCanvas : MonoBehaviour {
             m_WedgeImageArray[i] = m_WedgeParent.GetChild(i).GetComponent<Image>();
             m_InventoryImage[i] = m_WedgeParent.GetChild(i).GetChild(0).GetComponent<Image>();
         }
+        m_ClassAbilityImage = m_CombatParent.GetChild(0).GetChild(0).GetComponent<Image>();
+        m_ActiveItemImage = m_CombatParent.GetChild(1).GetChild(0).GetComponent<Image>();
+        m_WeaponOneImage = m_CombatParent.GetChild(3).GetChild(0).GetComponent<Image>();
+        m_WeaponTwoImage = m_CombatParent.GetChild(2).GetChild(0).GetComponent<Image>();
     }
     #endregion
 
@@ -177,7 +190,7 @@ public class PlayerCanvas : MonoBehaviour {
     #endregion
     #endregion
 
-    #region CombatUI
+    #region HealthUI
     public void SetSlider(int maxHealth) {
         m_HealthSlider.maxValue = maxHealth;
         m_HealthSlider.value = maxHealth;
@@ -190,6 +203,59 @@ public class PlayerCanvas : MonoBehaviour {
 
     public void SliderHeal(int heal) {
         m_HealthSlider.value += heal;
+    }
+    #endregion
+
+    #region CombatUI
+    //This will set weapon slot 1's image to the itemID's image
+    public void SetWeaponOneImage(int itemID) {
+        if (itemID != Consts.NULL_ITEM_ID) {
+            m_WeaponOneImage.sprite = ItemManager.GetItem(itemID).GetIcon();
+            m_WeaponOneImage.enabled = true;
+        }
+    }
+
+    //This will set weapon slot 2's image to the itemID's image
+    public void SetWeaponTwoImage(int itemID) {
+        if (itemID != Consts.NULL_ITEM_ID) {
+            m_WeaponTwoImage.sprite = ItemManager.GetItem(itemID).GetIcon();
+            m_WeaponTwoImage.enabled = true;
+        }
+    }
+
+    //This suite of functions clears
+    public void ClearWeaponOneImage() {
+        m_WeaponOneImage.enabled = false;
+    }
+
+    public void ClearWeaponTwoImage() {
+        m_WeaponTwoImage.enabled = false;
+    }
+
+    public void ClearActiveImage() {
+        m_ActiveItemImage.enabled = false;
+    }
+
+    //This will swap weapon 1's image with weapon 2's
+    public void SwapWeaponImage() {
+        if (m_WeaponTwoImage.enabled == false) {
+            m_WeaponTwoImage.enabled = true;
+            m_WeaponOneImage.enabled = false;
+        }
+        else if (m_WeaponOneImage.enabled == false) {
+            m_WeaponOneImage.enabled = true;
+            m_WeaponTwoImage.enabled = false;
+        }
+        Sprite tempImage = m_WeaponOneImage.sprite;
+        m_WeaponOneImage.sprite = m_WeaponTwoImage.sprite;
+        m_WeaponTwoImage.sprite = tempImage;
+    }
+
+    public void SetActiveItemImage(int itemID) {
+        if (itemID != Consts.NULL_ITEM_ID) {
+            m_ActiveItemImage.sprite = ItemManager.GetItem(itemID).GetIcon();
+            m_ActiveItemImage.enabled = true;
+        }
     }
     #endregion
 

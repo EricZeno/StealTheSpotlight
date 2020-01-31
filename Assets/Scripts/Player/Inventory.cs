@@ -28,6 +28,9 @@ public class Inventory {
 
     // The index of the current passive item.
     private int m_CurrPassiveItemIndex;
+
+    //A cached reference to the player's canvas. 
+    private PlayerCanvas m_UI;
     #endregion
 
     #region Constants
@@ -107,6 +110,12 @@ public class Inventory {
     }
     #endregion
 
+    #region Accessors and Setters
+    public void SetCanvasUI(PlayerCanvas canvas) {
+        m_UI = canvas;
+    }
+    #endregion
+
     #region Picking up and Dropping
     private int DropItemAtIndex(int index) {
         if (index < 0) {
@@ -130,6 +139,17 @@ public class Inventory {
         // Otherwise, remove the item at that index
         m_Inventory[index] = Consts.NULL_ITEM_ID;
         m_ItemCount -= 1;
+        switch (index) {
+            case m_WeaponStartingIndex:
+                m_UI.ClearWeaponOneImage();
+                break;
+            case m_WeaponStartingIndex + 1:
+                m_UI.ClearWeaponTwoImage();
+                break;
+            case m_ActiveItemIndex:
+                m_UI.ClearActiveImage();
+                break;
+        }
 
         // If the item was a passive, decrement the number of passives
         if (ItemManager.IsPassiveItem(itemID)) {
@@ -174,11 +194,13 @@ public class Inventory {
         // Inserting into first weapon slot
         if (m_Inventory[m_WeaponStartingIndex] == Consts.NULL_ITEM_ID) {
             m_Inventory[m_WeaponStartingIndex] = itemID;
+            m_UI.SetWeaponOneImage(itemID);
         }
 
         // Inserting into second weapon slot
         else {
             m_Inventory[m_WeaponStartingIndex + 1] = itemID;
+            m_UI.SetWeaponTwoImage(itemID);
         }
     }
 
@@ -195,6 +217,7 @@ public class Inventory {
         }
 
         // Insert active item into active item slot
+        m_UI.SetActiveItemImage(itemID);
         m_Inventory[m_ActiveItemIndex] = itemID;
     }
 
@@ -263,6 +286,7 @@ public class Inventory {
     #region Pickup and Drop
     public int DropCurrentWeapon() {
         if (m_ItemCount > 0 && m_Inventory[m_WeaponStartingIndex] != Consts.NULL_ITEM_ID) {
+            m_UI.ClearWeaponOneImage();
             return DropItemAtIndex(0);
         }
         return Consts.NULL_ITEM_ID;
@@ -347,7 +371,8 @@ public class Inventory {
             m_Inventory[m_WeaponStartingIndex + 1] == Consts.NULL_ITEM_ID) {
             return;
         }
-        
+
+        m_UI.SwapWeaponImage();
         int temp = m_Inventory[m_WeaponStartingIndex];
         m_Inventory[m_WeaponStartingIndex] = m_Inventory[m_WeaponStartingIndex + 1];
         m_Inventory[m_WeaponStartingIndex + 1] = temp;

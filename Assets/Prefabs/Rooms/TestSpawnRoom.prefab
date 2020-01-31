@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9172289784842474817}
   - component: {fileID: 1949309996}
+  - component: {fileID: 6155315022382074509}
   m_Layer: 0
   m_Name: TestSpawnRoom
   m_TagString: Untagged
@@ -57,6 +58,22 @@ MonoBehaviour:
   - {x: 5, y: 2.5, z: 0}
   - {x: -5, y: -2.5, z: 0}
   - {x: 5, y: -2.5, z: 0}
+--- !u!114 &6155315022382074509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878649681895637591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcd7d74470a65a408504bf5ec3ef63e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_castDimensions: {x: 26, y: 14, z: 0}
+  m_Layer:
+    serializedVersion: 2
+    m_Bits: 7680
 --- !u!1 &1279305893795209760
 GameObject:
   m_ObjectHideFlags: 0
@@ -893,6 +910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Level: Dungeon
+  chooser: 0
 --- !u!61 &1174376463
 BoxCollider2D:
   m_ObjectHideFlags: 0

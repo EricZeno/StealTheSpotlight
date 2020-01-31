@@ -62,8 +62,8 @@ public class DungeonGenerator : MonoBehaviour {
     #region Misc.
     private const int DUNGEON_SIZE = 8;
     private const int NUM_OBJECTIVES = 3;
-    private const float VERTICAL_ROOM_SIZE = 14;
-    private const float HORIZONTAL_ROOM_SIZE = 26;
+    private const float VERTICAL_ROOM_SIZE = 24;
+    private const float HORIZONTAL_ROOM_SIZE = 36;
     private const float MIN_ROOM_DENSITY_PERC = .34f;
     private const float MAX_ROOM_DENSITY_PERC = .45f;
     #endregion
@@ -125,6 +125,31 @@ public class DungeonGenerator : MonoBehaviour {
     [SerializeField]
     [Tooltip("The position of the bottom left room in the dungeon")]
     private Vector3 m_InitialPosition;
+
+    [SerializeField]
+    [Tooltip("Horizontal hallway")]
+    private GameObject horizontalHallway;
+
+    [SerializeField]
+    [Tooltip("Vertical hallway")]
+    private GameObject verticalHallway;
+
+    [SerializeField]
+    [Tooltip("Top wall")]
+    private GameObject topWall;
+
+    [SerializeField]
+    [Tooltip("Right wall")]
+    private GameObject rightWall;
+
+    [SerializeField]
+    [Tooltip("Bottom wall")]
+    private GameObject bottomWall;
+
+    [SerializeField]
+    [Tooltip("Left wall")]
+    private GameObject leftWall;
+
     #endregion
 
     #region Private Variable
@@ -159,6 +184,7 @@ public class DungeonGenerator : MonoBehaviour {
         ConnectSpecialRooms(spawn);
         PlaceRandomRooms();
         InstantiateDungeon();
+        InstantiateHallwaysAndWalls();
     }
 
     #region Special Room Placement
@@ -331,9 +357,9 @@ public class DungeonGenerator : MonoBehaviour {
             case BOSS_ID:
             case SHOP_ID:
             case OBJECTIVE_ID:
-                return true;
+            return true;
             default:
-                return false;
+            return false;
         }
     }
 
@@ -383,6 +409,38 @@ public class DungeonGenerator : MonoBehaviour {
         }
     }
     #endregion
+    #endregion
+
+    #region Hallway Placement
+    private void InstantiateHallwaysAndWalls() {
+        for (int row = DUNGEON_SIZE - 1; row >= 0; row--) {
+            for (int col = 0; col < DUNGEON_SIZE; col++) {
+                // Check if there is a room
+                if (m_Dungeon[row, col] != NO_ROOM_ID && m_Dungeon[row, col] != POSSIBLE_ROOM_ID) {
+                    // Check if there is a room to the right; if so, instantiate a horizontal hallway; if not, instatiate a wall
+                    if (col < DUNGEON_SIZE - 1 && m_Dungeon[row, col + 1] != NO_ROOM_ID && m_Dungeon[row, col + 1] != POSSIBLE_ROOM_ID) {
+                        Instantiate(horizontalHallway, RoomPosition(row, col), transform.rotation);
+                    } else {
+                        Instantiate(rightWall, RoomPosition(row, col), transform.rotation);
+                    }
+                    // Check if there is a room to the top; if so, instantiate a vertical hallway; if not, instantiate a wall
+                    if (row < DUNGEON_SIZE - 1 && m_Dungeon[row + 1, col] != NO_ROOM_ID && m_Dungeon[row + 1, col] != POSSIBLE_ROOM_ID) {
+                        Instantiate(verticalHallway, RoomPosition(row, col), transform.rotation);
+                    } else {
+                        Instantiate(topWall, RoomPosition(row, col), transform.rotation);
+                    }
+                    // Check if there is a room to the bottom; if not, instantiate a wall
+                    if (row == 0 || m_Dungeon[row - 1, col] == NO_ROOM_ID || m_Dungeon[row - 1, col] == POSSIBLE_ROOM_ID) {
+                        Instantiate(bottomWall, RoomPosition(row, col), transform.rotation);
+                    }
+                    // Check if there is a room to the left if not, instantiate a wall
+                    if (col == 0 || m_Dungeon[row, col - 1] == NO_ROOM_ID || m_Dungeon[row, col - 1] == POSSIBLE_ROOM_ID) {
+                        Instantiate(leftWall, RoomPosition(row, col), transform.rotation);
+                    }
+                }
+            }
+        }
+    }
     #endregion
 
     #region Instantiation

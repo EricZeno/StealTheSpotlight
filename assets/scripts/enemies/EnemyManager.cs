@@ -20,15 +20,17 @@ public class EnemyManager : MonoBehaviour {
 
     #region Private Variables
     private EnemyMovement m_Movement;
+    private Room m_Room;
     #endregion
 
     #region Initialization
-    private void Awake() {
+    private void Start() {
         m_Movement = GetComponent<EnemyMovement>();
-
+        m_Room = GetComponentInParent<Room>();
         m_Data.ResetAllStatsDefault();
         float range = m_Data.AttackRange;
         m_Attack.InitializeAttackCollider(range);
+
     }
     #endregion
 
@@ -48,6 +50,10 @@ public class EnemyManager : MonoBehaviour {
     public EnemyAttack GetEnemyAttack() {
         return m_Attack;
     }
+
+    public Room GetRoom() {
+        return m_Room;
+    }
     #endregion
 
     #region Drops
@@ -61,10 +67,10 @@ public class EnemyManager : MonoBehaviour {
     #endregion
 
     #region Health Methods
-    public void TakeDamage(int damage, int playerid) {
+    public void TakeDamage(int damage, int playerID) {
         m_Data.TakeDamage(damage);
         if (m_Data.CurrHealth <= 0) {
-            //GetComponentInParent<Room>().GiveMobKill(playerid);
+            GetComponentInParent<Room>().EnemyDeath(this, playerID);
             DropItem();
             Destroy(gameObject);
         }

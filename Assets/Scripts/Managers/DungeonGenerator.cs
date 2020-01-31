@@ -66,6 +66,8 @@ public class DungeonGenerator : MonoBehaviour {
     private const float HORIZONTAL_ROOM_SIZE = 36;
     private const float MIN_ROOM_DENSITY_PERC = .34f;
     private const float MAX_ROOM_DENSITY_PERC = .45f;
+    private const float ROW_MULTIPLIER = 5.2f;
+    private const float COL_MULTIPLIER = 3299.653f;
     #endregion
 
     #region Room IDs
@@ -150,6 +152,21 @@ public class DungeonGenerator : MonoBehaviour {
     [Tooltip("Left wall")]
     private GameObject m_LeftWall;
 
+    [SerializeField]
+    [Tooltip("Top door")]
+    private GameObject m_TopDoor;
+
+    [SerializeField]
+    [Tooltip("Right door")]
+    private GameObject m_RightDoor;
+
+    [SerializeField]
+    [Tooltip("Bottom door")]
+    private GameObject m_BottomDoor;
+
+    [SerializeField]
+    [Tooltip("Left wall")]
+    private GameObject m_LeftDoor;
     #endregion
 
     #region Private Variable
@@ -159,6 +176,7 @@ public class DungeonGenerator : MonoBehaviour {
     private List<Node> m_PossibleRooms;
     private Dictionary<int, List<Node>> m_MinDistances;
     private int m_NumRooms;
+    private Dictionary<float, GameObject> m_RoomMap;
     #endregion
     #endregion
 
@@ -170,6 +188,7 @@ public class DungeonGenerator : MonoBehaviour {
         m_PossibleRooms = new List<Node>();
         m_MinDistances = new Dictionary<int, List<Node>>();
         m_NumRooms = 0;
+        m_RoomMap = new Dictionary<float, GameObject>();
     }
 
     private void Start() {
@@ -184,7 +203,7 @@ public class DungeonGenerator : MonoBehaviour {
         ConnectSpecialRooms(spawn);
         PlaceRandomRooms();
         InstantiateDungeon();
-        InstantiateHallwaysAndWalls();
+        InstantiateDoorsHallwaysAndWalls();
     }
 
     #region Special Room Placement
@@ -411,8 +430,8 @@ public class DungeonGenerator : MonoBehaviour {
     #endregion
     #endregion
 
-    #region Hallway Placement
-    private void InstantiateHallwaysAndWalls() {
+    #region Door/Hallway/Wall Placement
+    private void InstantiateDoorsHallwaysAndWalls() {
         for (int row = DUNGEON_SIZE - 1; row >= 0; row--) {
             for (int col = 0; col < DUNGEON_SIZE; col++) {
                 // Check if there is a room
@@ -420,6 +439,15 @@ public class DungeonGenerator : MonoBehaviour {
                     // Check if there is a room to the right; if so, instantiate a horizontal hallway; if not, instatiate a wall
                     if (col < DUNGEON_SIZE - 1 && m_Dungeon[row, col + 1] != NO_ROOM_ID && m_Dungeon[row, col + 1] != POSSIBLE_ROOM_ID) {
                         Instantiate(m_HorizontalHallway, RoomPosition(row, col), transform.rotation);
+                        GameObject RightDoor = Instantiate(m_RightDoor, DoorPosition(row, col, m_RightDoor), transform.rotation);
+                        GameObject LeftDoor = Instantiate(m_LeftDoor, DoorPosition(row, col + 1, m_LeftDoor), transform.rotation);
+
+                        List<GameObject> doors = new List<GameObject> { RightDoor, LeftDoor };
+
+                        float room1 = row * ROW_MULTIPLIER + col * COL_MULTIPLIER;
+                        m_RoomMap[room1].GetComponent<Room>().AddDoors(doors);
+                        float room2 = row * ROW_MULTIPLIER + (col + 1) * COL_MULTIPLIER;
+                        m_RoomMap[room2].GetComponent<Room>().AddDoors(doors);
                     }
                     else {
                         Instantiate(m_RightWall, RoomPosition(row, col), transform.rotation);
@@ -427,6 +455,15 @@ public class DungeonGenerator : MonoBehaviour {
                     // Check if there is a room to the top; if so, instantiate a vertical hallway; if not, instantiate a wall
                     if (row < DUNGEON_SIZE - 1 && m_Dungeon[row + 1, col] != NO_ROOM_ID && m_Dungeon[row + 1, col] != POSSIBLE_ROOM_ID) {
                         Instantiate(m_VerticalHallway, RoomPosition(row, col), transform.rotation);
+                        GameObject TopDoor = Instantiate(m_TopDoor, DoorPosition(row, col, m_TopDoor), transform.rotation);
+                        GameObject BottomDoor = Instantiate(m_BottomDoor, DoorPosition(row + 1, col, m_BottomDoor), transform.rotation);
+
+                        List<GameObject> doors = new List<GameObject> { TopDoor, BottomDoor };
+
+                        float room1 = row * ROW_MULTIPLIER + col * COL_MULTIPLIER;
+                        m_RoomMap[room1].GetComponent<Room>().AddDoors(doors);
+                        float room2 = (row + 1) * ROW_MULTIPLIER + col * COL_MULTIPLIER;
+                        m_RoomMap[room2].GetComponent<Room>().AddDoors(doors);
                     }
                     else {
                         Instantiate(m_TopWall, RoomPosition(row, col), transform.rotation);
@@ -443,6 +480,10 @@ public class DungeonGenerator : MonoBehaviour {
             }
         }
     }
+
+    private Vector3 DoorPosition(int row, int col, GameObject door) {
+        return RoomPosition(row, col) + door.transform.position;
+    }
     #endregion
 
     #region Instantiation
@@ -450,33 +491,40 @@ public class DungeonGenerator : MonoBehaviour {
         Vector3[] playerSpawns = null;
         for (int row = 0; row < DUNGEON_SIZE; row++) {
             for (int col = 0; col < DUNGEON_SIZE; col++) {
+                float roomMapID = row * ROW_MULTIPLIER + col * COL_MULTIPLIER;
+                GameObject room;
                 switch (m_Dungeon[row, col]) {
                     case SPAWN_ID:
                         int chosenIndex = m_Random.Next(0, m_SpawnRooms.Count);
                         GameObject spawn = m_SpawnRooms[chosenIndex];
                         Vector3 spawnPos = RoomPosition(row, col);
-                        Instantiate(spawn, spawnPos, transform.rotation);
+                        room = Instantiate(spawn, spawnPos, transform.rotation);
                         playerSpawns = CalculatePlayerSpawns(spawn, spawnPos);
+                        m_RoomMap.Add(roomMapID, room);
                         break;
                     case BOSS_ID + CONNECTED_SPECIAL_ROOM_MOD:
                         chosenIndex = m_Random.Next(0, m_BossRooms.Count);
                         GameObject bossRoom = m_BossRooms[chosenIndex];
-                        Instantiate(bossRoom, RoomPosition(row, col), transform.rotation);
+                        room = Instantiate(bossRoom, RoomPosition(row, col), transform.rotation);
+                        m_RoomMap.Add(roomMapID, room);
                         break;
                     case SHOP_ID + CONNECTED_SPECIAL_ROOM_MOD:
                         chosenIndex = m_Random.Next(0, m_Shops.Count);
                         GameObject shop = m_Shops[chosenIndex];
-                        Instantiate(shop, RoomPosition(row, col), transform.rotation);
+                        room = Instantiate(shop, RoomPosition(row, col), transform.rotation);
+                        m_RoomMap.Add(roomMapID, room);
                         break;
                     case OBJECTIVE_ID + CONNECTED_SPECIAL_ROOM_MOD:
                         chosenIndex = m_Random.Next(0, m_ObjectiveRooms.Count);
                         GameObject objectiveRoom = m_ObjectiveRooms[chosenIndex];
-                        Instantiate(objectiveRoom, RoomPosition(row, col), transform.rotation);
+                        room = Instantiate(objectiveRoom, RoomPosition(row, col), transform.rotation);
+                        m_RoomMap.Add(roomMapID, room);
                         break;
                     case GENERIC_ROOM_ID:
                         chosenIndex = m_Random.Next(0, m_GenericRooms.Count);
                         GameObject genericRoom = m_GenericRooms[chosenIndex];
-                        Instantiate(genericRoom, RoomPosition(row, col), transform.rotation);
+                        room = Instantiate(genericRoom, RoomPosition(row, col), transform.rotation);
+                        m_RoomMap.Add(roomMapID, room);
                         break;
                 }
             }

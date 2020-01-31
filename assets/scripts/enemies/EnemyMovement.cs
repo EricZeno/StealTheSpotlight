@@ -5,7 +5,6 @@ using UnityEngine;
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(EnemyManager))]
-[RequireComponent(typeof(CircleCollider2D))]
 [RequireComponent(typeof(EnemyGraphics))]
 public class EnemyMovement : MonoBehaviour {
     #region Variables
@@ -17,7 +16,6 @@ public class EnemyMovement : MonoBehaviour {
             return m_MoveDir;
         }
     }
-    private List<GameObject> m_Targets;
     private Vector3 m_Spawn;
     private Vector2 m_ExternalForce;
     #endregion
@@ -25,7 +23,6 @@ public class EnemyMovement : MonoBehaviour {
     #region Cached Components
     private Rigidbody2D m_Rb;
     private EnemyManager m_Manager;
-    private CircleCollider2D m_Trigger;
     private EnemyGraphics m_Graphics;
     #endregion
     #endregion
@@ -34,9 +31,7 @@ public class EnemyMovement : MonoBehaviour {
     private void Awake() {
         m_Rb = GetComponent<Rigidbody2D>();
         m_Manager = GetComponent<EnemyManager>();
-        m_Trigger = GetComponent<CircleCollider2D>();
         m_Graphics = GetComponent<EnemyGraphics>();
-        m_Targets = new List<GameObject>();
         m_Spawn = transform.position;
         m_ExternalForce = Vector2.zero;
     }
@@ -109,11 +104,16 @@ public class EnemyMovement : MonoBehaviour {
         Vector2 pos = transform.position;
         float minDist = float.PositiveInfinity;
         GameObject minTarget = null;
-        foreach (GameObject target in m_Targets) {
-            float dist = Vector2.Distance(pos, target.transform.position);
+        List<PlayerManager> players = new List<PlayerManager>();
+        Room room = m_Manager.GetRoom();
+        if (room != null) {
+            players = room.GetPlayers();
+        }
+        foreach (PlayerManager player in players) {
+            float dist = Vector2.Distance(pos, player.transform.position);
             if (dist < minDist) {
                 dist = minDist;
-                minTarget = target;
+                minTarget = player.gameObject;
             }
         }
         return minTarget;
@@ -133,22 +133,6 @@ public class EnemyMovement : MonoBehaviour {
     #region Room Logic
     public void Reset() {
         m_Reset = true;
-    }
-    #endregion
-
-    #region Collisions
-    private void OnTriggerEnter2D(Collider2D collision) {
-        GameObject target = collision.gameObject;
-        if (target.CompareTag(Consts.PLAYER_TAG)) {
-            m_Targets.Add(target);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision) {
-        GameObject target = collision.gameObject;
-        if (target.CompareTag(Consts.PLAYER_TAG)) {
-            m_Targets.Remove(target);
-        }
     }
     #endregion
 

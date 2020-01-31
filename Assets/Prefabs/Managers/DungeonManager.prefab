@@ -54,14 +54,23 @@ MonoBehaviour:
   m_GenericRooms:
   - {fileID: 7543969576175178766, guid: 2b6def49b473f6b43a1f42083450b6e3, type: 3}
   m_InitialPosition: {x: 0, y: 0, z: 0}
-  horizontalHallway: {fileID: 8884969640930263203, guid: cff809844a7b481448dc828343d78c43,
+  m_HorizontalHallway: {fileID: 8884969640930263203, guid: cff809844a7b481448dc828343d78c43,
     type: 3}
-  verticalHallway: {fileID: 3377886832581935330, guid: 3d5ee8d5448054745901ec0ab852a5a4,
+  m_VerticalHallway: {fileID: 3377886832581935330, guid: 3d5ee8d5448054745901ec0ab852a5a4,
     type: 3}
-  topWall: {fileID: 5205557314865922838, guid: ae14abb9beb51ff4ab7cdcc5451d134b, type: 3}
-  rightWall: {fileID: 7548994427058065332, guid: d5e7a81a00dfa2a47a3d8573217092e6,
+  m_TopWall: {fileID: 5205557314865922838, guid: ae14abb9beb51ff4ab7cdcc5451d134b,
     type: 3}
-  bottomWall: {fileID: 4407827385508753080, guid: ce9941e2d616fd14db0de7e52f18c51d,
+  m_RightWall: {fileID: 7548994427058065332, guid: d5e7a81a00dfa2a47a3d8573217092e6,
     type: 3}
-  leftWall: {fileID: 4852306546062666263, guid: 771db76d9762fc8418ed98ed65add335,
+  m_BottomWall: {fileID: 4407827385508753080, guid: ce9941e2d616fd14db0de7e52f18c51d,
+    type: 3}
+  m_LeftWall: {fileID: 4852306546062666263, guid: 771db76d9762fc8418ed98ed65add335,
+    type: 3}
+  m_TopDoor: {fileID: 8593074825144036606, guid: 51ad9f946f11440118e9d8ea2bb6019f,
+    type: 3}
+  m_RightDoor: {fileID: 7560993472686287270, guid: 1317aa90b836941a3a94222f9b440713,
+    type: 3}
+  m_BottomDoor: {fileID: 5316424360678292148, guid: 7d06b29bfb27547beb17eb69ee973304,
+    type: 3}
+  m_LeftDoor: {fileID: 6944393647948715605, guid: 35adfbd8603e2453a9ce66b327fda31e,
     type: 3}

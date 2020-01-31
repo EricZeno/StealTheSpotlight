@@ -128,27 +128,27 @@ public class DungeonGenerator : MonoBehaviour {
 
     [SerializeField]
     [Tooltip("Horizontal hallway")]
-    private GameObject horizontalHallway;
+    private GameObject m_HorizontalHallway;
 
     [SerializeField]
     [Tooltip("Vertical hallway")]
-    private GameObject verticalHallway;
+    private GameObject m_VerticalHallway;
 
     [SerializeField]
     [Tooltip("Top wall")]
-    private GameObject topWall;
+    private GameObject m_TopWall;
 
     [SerializeField]
     [Tooltip("Right wall")]
-    private GameObject rightWall;
+    private GameObject m_RightWall;
 
     [SerializeField]
     [Tooltip("Bottom wall")]
-    private GameObject bottomWall;
+    private GameObject m_BottomWall;
 
     [SerializeField]
     [Tooltip("Left wall")]
-    private GameObject leftWall;
+    private GameObject m_LeftWall;
 
     #endregion
 
@@ -357,9 +357,9 @@ public class DungeonGenerator : MonoBehaviour {
             case BOSS_ID:
             case SHOP_ID:
             case OBJECTIVE_ID:
-            return true;
+                return true;
             default:
-            return false;
+                return false;
         }
     }
 
@@ -419,23 +419,25 @@ public class DungeonGenerator : MonoBehaviour {
                 if (m_Dungeon[row, col] != NO_ROOM_ID && m_Dungeon[row, col] != POSSIBLE_ROOM_ID) {
                     // Check if there is a room to the right; if so, instantiate a horizontal hallway; if not, instatiate a wall
                     if (col < DUNGEON_SIZE - 1 && m_Dungeon[row, col + 1] != NO_ROOM_ID && m_Dungeon[row, col + 1] != POSSIBLE_ROOM_ID) {
-                        Instantiate(horizontalHallway, RoomPosition(row, col), transform.rotation);
-                    } else {
-                        Instantiate(rightWall, RoomPosition(row, col), transform.rotation);
+                        Instantiate(m_HorizontalHallway, RoomPosition(row, col), transform.rotation);
+                    }
+                    else {
+                        Instantiate(m_RightWall, RoomPosition(row, col), transform.rotation);
                     }
                     // Check if there is a room to the top; if so, instantiate a vertical hallway; if not, instantiate a wall
                     if (row < DUNGEON_SIZE - 1 && m_Dungeon[row + 1, col] != NO_ROOM_ID && m_Dungeon[row + 1, col] != POSSIBLE_ROOM_ID) {
-                        Instantiate(verticalHallway, RoomPosition(row, col), transform.rotation);
-                    } else {
-                        Instantiate(topWall, RoomPosition(row, col), transform.rotation);
+                        Instantiate(m_VerticalHallway, RoomPosition(row, col), transform.rotation);
+                    }
+                    else {
+                        Instantiate(m_TopWall, RoomPosition(row, col), transform.rotation);
                     }
                     // Check if there is a room to the bottom; if not, instantiate a wall
                     if (row == 0 || m_Dungeon[row - 1, col] == NO_ROOM_ID || m_Dungeon[row - 1, col] == POSSIBLE_ROOM_ID) {
-                        Instantiate(bottomWall, RoomPosition(row, col), transform.rotation);
+                        Instantiate(m_BottomWall, RoomPosition(row, col), transform.rotation);
                     }
                     // Check if there is a room to the left if not, instantiate a wall
                     if (col == 0 || m_Dungeon[row, col - 1] == NO_ROOM_ID || m_Dungeon[row, col - 1] == POSSIBLE_ROOM_ID) {
-                        Instantiate(leftWall, RoomPosition(row, col), transform.rotation);
+                        Instantiate(m_LeftWall, RoomPosition(row, col), transform.rotation);
                     }
                 }
             }

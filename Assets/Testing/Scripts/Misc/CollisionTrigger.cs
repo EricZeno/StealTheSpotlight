@@ -40,7 +40,7 @@ public class CollisionTrigger : MonoBehaviour {
                 switch (chooser) {
                     case 0:
                         SceneChangeEvent();
-                        SceneManager.LoadScene(level);
+                        SceneManager.LoadScene(m_Level);
                         break;
                     case 1:
                         ObjectiveEvent(collision.gameObject.GetComponent<PlayerManager>().GetID(), Consts.BOSS_NAME);

@@ -23,6 +23,7 @@ public class PlayerInventoryController : MonoBehaviour {
     private PlayerManager m_Manager;
     private PlayerCanvas m_UI;
     private PlayerWeapon m_Weapon;
+    //private AudioManager m_AudioManager;
     #endregion
     #endregion
 
@@ -41,6 +42,7 @@ public class PlayerInventoryController : MonoBehaviour {
         m_UI = GetComponent<PlayerCanvas>();
         m_Weapon = GetComponent<PlayerWeapon>();
         m_Inventory.SetCanvasUI(m_UI);
+        //m_AudioManager = GetComponent<AudioManager>();
     }
     #endregion
 
@@ -95,6 +97,7 @@ public class PlayerInventoryController : MonoBehaviour {
         m_Manager.OpenInventory();
         m_Inventory.OpenInventory();
         m_UI.OpenInventoryUI();
+        //m_AudioManager.Play("wilhelm");
     }
 
     private void CloseInventory() {

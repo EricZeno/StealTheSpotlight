@@ -8,10 +8,6 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerManager))]
 [RequireComponent(typeof(PlayerGraphics))]
 public class PlayerMovement : MonoBehaviour {
-    #region Constants
-    private const float EXTERNAL_FORCE_REDUCTION_RATE = 0.8f;
-    #endregion
-
     #region Variables
     #region Private Variables
     // This vector holds the player's current movement input before it's
@@ -77,7 +73,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void UpdateExternalForce() {
-        m_ExternalForce = Vector2.Lerp(m_ExternalForce, Vector2.zero, EXTERNAL_FORCE_REDUCTION_RATE);
+        m_ExternalForce = Vector2.Lerp(m_ExternalForce, Vector2.zero, Consts.EXTERNAL_FORCE_REDUCTION_RATE);
     }
     #endregion
 

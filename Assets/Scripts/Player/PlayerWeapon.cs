@@ -182,7 +182,7 @@ public class PlayerWeapon : MonoBehaviour {
             Vector2 dir = new Vector2(Mathf.Cos(currentAngle), Mathf.Sin(currentAngle));
             RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, dir, range, layerMask);
             foreach (var hit in hits) {
-                if (hit.collider.CompareTag(Consts.PLAYER_TAG)) {
+                if (hit.collider.CompareTag(Consts.PLAYER_TAG) || hit.collider.CompareTag(Consts.GENERAL_ENEMY_TAG)) {
                     HitEnemy(hit.collider.gameObject);
                 }
             }
@@ -215,6 +215,12 @@ public class PlayerWeapon : MonoBehaviour {
             Vector2 dir = (other.transform.position - transform.position).normalized;
             other.GetComponent<PlayerMovement>().ApplyExternalForce(dir * data.KnockbackPower);
         }
+        else if (enemy.CompareTag(Consts.GENERAL_ENEMY_TAG)) {
+            EnemyManager enemyManager = enemy.GetComponent<EnemyManager>();
+            enemyManager.TakeDamage(data.Damage, m_Manager.GetID());
+            Vector2 dir = (enemyManager.transform.position - transform.position).normalized;
+            enemyManager.GetComponent<EnemyMovement>().ApplyExternalForce(dir * data.KnockbackPower);
+        }
     }
 
     private void ResetHitEnemies() {
@@ -245,7 +251,7 @@ public class PlayerWeapon : MonoBehaviour {
         float startAttackAnimationAngle = -m_WeaponData.ArcHalfAngle + dirAngle;
         StartCoroutine(AnimateWeaponMoveArc(
             startAnimationAngle,
-	        startAttackAnimationAngle,
+            startAttackAnimationAngle,
             time));
         yield return new WaitForSeconds(time);
 
@@ -287,7 +293,7 @@ public class PlayerWeapon : MonoBehaviour {
         float theta = Vector2.SignedAngle(Vector2.right, m_AttackDirection); // in DEGREES
         RotateWeapon(theta, true);
         float totalAttackTime = 1 / m_WeaponData.AttackSpeed;
-        
+
         // The wind up animation
         float time = totalAttackTime * m_WeaponData.WindupPercent;
         Vector2 startAnimationPosition = m_WeaponData.RightOffset;

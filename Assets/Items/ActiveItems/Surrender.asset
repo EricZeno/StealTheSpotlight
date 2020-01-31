@@ -17,7 +17,7 @@ MonoBehaviour:
   m_Description: I'm a pacifist
   m_Rarity: 0
   m_Limit: 0
-  m_Icon: {fileID: 21300000, guid: 8d3b5a99c30403848a5a2a8a64678948, type: 3}
+  m_Icon: {fileID: 21300000, guid: c167fd84b197f4b8fa0ff78cc540b54a, type: 3}
   m_Stack: 0
   m_Cooldown: 20
   m_EffectLength: 5

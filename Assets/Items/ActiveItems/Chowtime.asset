@@ -17,7 +17,7 @@ MonoBehaviour:
   m_Description: You feel the food surge through your muscles
   m_Rarity: 0
   m_Limit: 0
-  m_Icon: {fileID: 21300000, guid: 6c0d339312618f348b1db5ee1da2f289, type: 3}
+  m_Icon: {fileID: 21300000, guid: e87d855c688a449c69ae146a94ca79e4, type: 3}
   m_Stack: 0
   m_Cooldown: 15
   m_EffectLength: 5

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Chest
   layers:
   - Default
   - TransparentFX
@@ -21,6 +22,12 @@ TagManager:
   - Player4
   - Top
   - Wall
+  - PlayerProjectile
+  - Player
+  - Object
+  - 
+  - 
+  - 
   - 
   - 
   - 

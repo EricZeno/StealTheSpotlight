@@ -15,6 +15,7 @@
     #region Layers
     public const string ITEM_PHYSICS_LAYER = "Item";
     public const string NO_ID_PLAYER_LAYER = "Player";
+    public const string OBJECT_PHYSICS_LAYER = "Object";
     #endregion
 
     #region Player Animator Triggers

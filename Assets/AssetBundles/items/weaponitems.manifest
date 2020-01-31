@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 970325491
+CRC: 1044640390
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 06f23eade81ad323bc43737256cc61ad
+    Hash: d69858af2be0d411dcc2f9fbd4e95283
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 1238a3d4471d105a90f7235e24d41b86
+    Hash: 74a6943c2c1877f2cdedaaebf4e4e4ef
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -15,12 +15,16 @@ ClassTypes:
   Script: {fileID: 11500000, guid: b9f067b51b1e95448b6cdfcc8a64a432, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 7163d21bd7b6e7d4e82fe55a22f5ef53, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: a8454b9f363d03346b1505e4d182a3e8, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
 Assets:
+- Assets/Items/WeaponItems/Heavy/GreenAxe.asset
 - Assets/Items/WeaponItems/Polearm/TheBasicSpear.asset
+- Assets/Items/WeaponItems/Heavy/BlueAxe.asset
 - Assets/Items/WeaponItems/Dagger/MustardDagger.asset
 - Assets/Items/WeaponItems/Dagger/KetchupDagger.asset
 Dependencies: []

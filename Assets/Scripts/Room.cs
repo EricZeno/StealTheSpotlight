@@ -2,58 +2,91 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Room : MonoBehaviour
-{
-    #region Variables
-    #region Editor Variables
-    [Header("Raycast for players in the room")]
-    [SerializeField]
-    [Tooltip("Box cast dimensions")]
-    private Vector3 m_castDimensions = new Vector3(26, 14, 0);
-
-    [SerializeField]
-    [Tooltip("Player layer")]
-    private LayerMask m_Layer;
-    #endregion
-
+[DisallowMultipleComponent]
+[RequireComponent(typeof(Collider2D))]
+public class Room : MonoBehaviour {
     #region Private Variables
-    private List<int> m_Players;
+    private List<PlayerManager> m_Players;
+    private List<EnemyManager> m_Enemies;
+    private List<GameObject> m_Doors;
+    #endregion
 
-    //private List<Enemies> m_Enemies;
-    #endregion
-    #endregion
+    #region Initialization
+    private void Awake() {
+        m_Players = new List<PlayerManager>();
+        m_Doors = new List<GameObject>();
+    }
 
     private void Start() {
-        //m_Enemies = new List<Enemies>();
-        foreach(Transform child in transform) {
-            //Check if child is an enemy and if so, add it to m_Enemies
+        EnemyManager[] enemyChildren = GetComponentsInChildren<EnemyManager>();
+        if (enemyChildren.Length == 0) {
+            m_Enemies = new List<EnemyManager>();
+            OpenDoors();
+        }
+        else {
+            m_Enemies = new List<EnemyManager>(enemyChildren);
         }
     }
 
-    private void Update() {
-        GetPlayersInRoom();
+    public void AddDoors(List<GameObject> doorList) {
+        foreach (GameObject door in doorList) {
+            if (!m_Doors.Contains(door)) {
+                m_Doors.Add(door);
+            }
+        }
+    }
+    #endregion
 
-        if (m_Players.Count == 0) {
-            ResetEnemies();
+    #region Accessors
+    public List<PlayerManager> GetPlayers() {
+        return m_Players;
+    }
+    #endregion
+
+    #region Player Detection
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.CompareTag(Consts.PLAYER_TAG)) {
+            PlayerManager player = collision.gameObject.GetComponent<PlayerManager>();
+            m_Players.Add(player);
         }
     }
 
-    private void GetPlayersInRoom() {
-        m_Players = new List<int>();
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, m_castDimensions, 0, Vector2.zero);
-
-        foreach (RaycastHit2D hit in hits) {
-            m_Players.Add(hit.transform.gameObject.GetComponent<PlayerManager>().GetID());
+    private void OnTriggerExit2D(Collider2D collision) {
+        if (collision.gameObject.CompareTag(Consts.PLAYER_TAG)) {
+            PlayerManager player = collision.gameObject.GetComponent<PlayerManager>();
+            if (m_Players.Contains(player)) {
+                m_Players.Remove(player);
+                if (m_Players.Count == 0) {
+                    ResetEnemies();
+                }
+            }
         }
     }
+    #endregion
 
+    #region Enemies
     private void ResetEnemies() {
-        /*foreach(Enemy enemy in m_Enemies) {
-            enemy.ResetPosition();
-        }*/
+        foreach (EnemyManager enemy in m_Enemies) {
+            enemy.Reset();
+        }
     }
 
-    private void OnDrawGizmos() {
-        Gizmos.DrawWireCube(transform.position, m_castDimensions);
+    public void EnemyDeath(EnemyManager enemy, int playerID) {
+        // Give player credit for kill
+        m_Enemies.Remove(enemy);
+        if (m_Enemies.Count == 0) {
+            // Give room clear points
+            OpenDoors();
+        }
     }
+    #endregion
+
+    #region Doors
+    private void OpenDoors() {
+        foreach (GameObject door in m_Doors) {
+            // Play door opening animation
+            door.SetActive(false);
+        }
+    }
+    #endregion
 }

@@ -70,7 +70,12 @@ public class EnemyManager : MonoBehaviour {
     public void TakeDamage(int damage, int playerID) {
         m_Data.TakeDamage(damage);
         if (m_Data.CurrHealth <= 0) {
-            GetComponentInParent<Room>().EnemyDeath(this, playerID);
+            if (m_Movement.Target == null) {
+                GetComponentInParent<Room>().EnemyDeath(this, playerID);
+            } else {
+                GetComponentInParent<Room>().ObjectiveEnemyDeath(this, playerID);
+            }
+
             DropItem();
             Destroy(gameObject);
         }

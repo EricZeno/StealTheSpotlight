@@ -79,10 +79,14 @@ public class Room : MonoBehaviour {
             OpenDoors();
         }
     }
+
+    public void ObjectiveEnemyDeath(EnemyManager enemy, int playerID) {
+        GetComponentInChildren<ZoneDefense>().KillEnemy();
+    }
     #endregion
 
     #region Doors
-    private void OpenDoors() {
+    public void OpenDoors() {
         foreach (GameObject door in m_Doors) {
             // Play door opening animation
             door.SetActive(false);

@@ -75,7 +75,7 @@ public class PointManager : MonoBehaviour {
         //Event for moving to the next floor
         CollisionTrigger.SceneChangeEvent += FloorComplete;
         //Event for when an objective is triggered
-        CollisionTrigger.ObjectiveEvent += GiveObjective;
+        ObjectiveManager.ObjectiveEvent += GiveObjective;
         //Event for when a player kills another player
         PlayerManager.PKEvent += GivePK;
         //Event for when a player clears a room
@@ -240,7 +240,7 @@ public class PointManager : MonoBehaviour {
     #region Disable
     private void OnDisable() {
         CollisionTrigger.SceneChangeEvent -= FloorComplete;
-        CollisionTrigger.ObjectiveEvent -= GiveObjective;
+        ObjectiveManager.ObjectiveEvent -= GiveObjective;
         PlayerManager.PKEvent -= GivePK;
         CollisionTrigger.RoomClearedEvent -= GiveRooms;
     }

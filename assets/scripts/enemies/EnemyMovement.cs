@@ -18,6 +18,15 @@ public class EnemyMovement : MonoBehaviour {
     }
     private Vector3 m_Spawn;
     private Vector2 m_ExternalForce;
+    private GameObject m_Target;
+    public GameObject Target {
+        get {
+            return m_Target;
+        }
+        set {
+            m_Target = value;
+        }
+    }
     #endregion
 
     #region Cached Components
@@ -77,7 +86,14 @@ public class EnemyMovement : MonoBehaviour {
             }
             return;
         }
-        GameObject target = FindClosestTarget();
+
+        GameObject target;
+        if (m_Target == null) {
+            target = FindClosestTarget();
+        } else {
+            target = m_Target;
+        }
+
         if (target == null && transform.position != m_Spawn) {
             m_Manager.Reset();
             return;

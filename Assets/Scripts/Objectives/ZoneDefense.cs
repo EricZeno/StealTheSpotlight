@@ -119,7 +119,10 @@ public class ZoneDefense : MonoBehaviour
             int locationIndex = Random.Range(0, m_SpawnLocations.Length);
 
             GameObject spawnedEnemy = Instantiate(m_Enemies[enemyIndex], m_SpawnLocations[locationIndex].transform.position, Quaternion.identity);
-            spawnedEnemy.GetComponent<ZoneDefenseEnemy>().SetTarget(gameObject);
+
+            spawnedEnemy.GetComponent<EnemyMovement>().Target = gameObject;
+            spawnedEnemy.transform.SetParent(transform);
+
             m_SpawnedEnemies.Add(spawnedEnemy);
 
             yield return new WaitForSeconds(Random.Range(0, m_SpawnDelay));

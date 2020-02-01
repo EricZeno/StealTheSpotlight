@@ -23,7 +23,7 @@ public class PlayerInventoryController : MonoBehaviour {
     private PlayerManager m_Manager;
     private PlayerCanvas m_UI;
     private PlayerWeapon m_Weapon;
-    //private AudioManager m_AudioManager;
+    private AudioManager m_AudioManager;
     #endregion
     #endregion
 

@@ -5,10 +5,17 @@ using UnityEngine;
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Collider2D))]
 public class Room : MonoBehaviour {
+    #region Events and Delegates
+    public delegate void RoomCleared(int player);
+    public static event RoomCleared RoomClearedEvent;
+    #endregion
+
     #region Private Variables
     private List<PlayerManager> m_Players;
     private List<EnemyManager> m_Enemies;
     private List<GameObject> m_Doors;
+    private int[] m_mobkills;
+    private int m_totalmobs;
     #endregion
 
     #region Initialization
@@ -26,6 +33,9 @@ public class Room : MonoBehaviour {
         else {
             m_Enemies = new List<EnemyManager>(enemyChildren);
         }
+
+        m_totalmobs = m_Enemies.Count;
+        m_mobkills = new int[4];
     }
 
     public void AddDoors(List<GameObject> doorList) {
@@ -73,10 +83,12 @@ public class Room : MonoBehaviour {
 
     public void EnemyDeath(EnemyManager enemy, int playerID) {
         // Give player credit for kill
+        m_mobkills[playerID]++;
         m_Enemies.Remove(enemy);
         if (m_Enemies.Count == 0) {
             // Give room clear points
             OpenDoors();
+            Cleared();
         }
     }
 
@@ -92,5 +104,20 @@ public class Room : MonoBehaviour {
             door.SetActive(false);
         }
     }
+    #endregion
+
+    #region Clearing
+    private void Cleared() {
+        for (int i = 0; i < GameManager.getNumPlayers(); i++) {
+            if (m_mobkills[i] >= m_totalmobs / Consts.MOB_PARTICIPATION) {
+                GiveCredit(i);
+            }
+        }
+    }
+
+    private void GiveCredit(int playerID) {
+        RoomClearedEvent(playerID);
+    }
+
     #endregion
 }

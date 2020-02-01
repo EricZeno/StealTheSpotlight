@@ -48,9 +48,6 @@ public class CollisionTrigger : MonoBehaviour {
                     case 2:
                         ObjectiveEvent(collision.gameObject.GetComponent<PlayerManager>().GetID(), Consts.OBJROOM_NAME);
                         break;
-                    case 4:
-                        RoomClearedEvent(collision.gameObject.GetComponent<PlayerManager>().GetID());
-                        break;
                 }
             }
         }

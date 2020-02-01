@@ -45,7 +45,6 @@ public class PointManager : MonoBehaviour {
     private List<PointObjective>[] m_PlayersObjectives;
     #endregion
 
-
     #region Initialization
     // Start is called before the first frame update
     private void Awake() {
@@ -73,13 +72,13 @@ public class PointManager : MonoBehaviour {
 
     private void OnEnable() {
         //Event for moving to the next floor
-        CollisionTrigger.SceneChangeEvent += FloorComplete;
+        CollisionTrigger.LoadDungeonEvent += FloorComplete;
         //Event for when an objective is triggered
         ObjectiveManager.ObjectiveEvent += GiveObjective;
         //Event for when a player kills another player
         PlayerManager.PKEvent += GivePK;
         //Event for when a player clears a room
-        CollisionTrigger.RoomClearedEvent += GiveRooms;
+        Room.RoomClearedEvent += GiveRooms;
     }
     #endregion
 
@@ -242,7 +241,7 @@ public class PointManager : MonoBehaviour {
         CollisionTrigger.SceneChangeEvent -= FloorComplete;
         ObjectiveManager.ObjectiveEvent -= GiveObjective;
         PlayerManager.PKEvent -= GivePK;
-        CollisionTrigger.RoomClearedEvent -= GiveRooms;
+        Room.RoomClearedEvent -= GiveRooms;
     }
     #endregion
 }

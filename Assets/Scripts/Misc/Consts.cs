@@ -128,5 +128,8 @@
     public const string MEDAL_FIRST = "gold";
     public const string MEDAL_SECOND = "silver";
     public const string MEDAL_THIRD = "bronze";
+
+    //Can be changed
+    public const int MOB_PARTICIPATION = 1;
     #endregion
 }

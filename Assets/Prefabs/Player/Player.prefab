@@ -1682,7 +1682,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4462817945306814935}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4462817946423847192}
@@ -1715,7 +1715,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 8
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -1768,7 +1768,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4462817946423847193}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 10, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8689418769385408831}
@@ -1793,7 +1793,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Data:
     m_BasePower: 0
-    m_BaseMovementSpeed: 10
+    m_BaseMovementSpeed: 8
     m_Tenacity: 0
     m_BaseHealth: 1000
     m_InteractionRadius: 0.7
@@ -1936,7 +1936,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.07894659, y: -1.1949747}
+  m_Offset: {x: -0.00054216385, y: -0.5376508}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1947,7 +1947,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.157893, y: 0.4222362}
+  m_Size: {x: 0.98502445, y: 1.6544642}
   m_EdgeRadius: 0
 --- !u!50 &4462817946423847191
 Rigidbody2D:
@@ -1999,7 +1999,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_AutoSwitchControlScheme: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 28250375-18d2-4c0e-8628-f11f257d9e92
+  m_DefaultActionMap: e26ade35-fa3b-462c-a856-19cedea34a61
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 4462817945306814932}
 --- !u!114 &8559618941796342052

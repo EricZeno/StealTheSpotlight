@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour {
     public static event NewFloor NewFloorEvent;
     #endregion
 
+    #region Variables
     #region Editor Variables
     [SerializeField]
     [Tooltip("The spawn locations for each player")]
@@ -83,6 +84,11 @@ public class GameManager : MonoBehaviour {
     private GameObject[] m_PlayerObjs;
     #endregion
 
+    #region Cached Components
+    private AudioManager m_AudioManager;
+    #endregion
+    #endregion
+
     #region Initialization
     private void Awake() {
         if (m_Singleton != null) {
@@ -96,6 +102,7 @@ public class GameManager : MonoBehaviour {
         m_PlayersReady = new bool[Consts.MAX_NUM_PLAYERS];
         m_NumPlayers = 0;
         m_GameInProgress = false;
+        m_AudioManager = GetComponent<AudioManager>();
 
         DontDestroyOnLoad(this);
     }
@@ -105,6 +112,7 @@ public class GameManager : MonoBehaviour {
         PlayerManager.PlayerReadyEvent += PlayerReady;
         CollisionTrigger.SceneChangeEvent += ResetPlayerLocation;
         CollisionTrigger.LoadDungeonEvent += DisablePlayers;
+        CollisionTrigger.LoadDungeonEvent += PlaySoundtrack;
         DungeonGenerator.DungeonLoadedEvent += StartFloor;
     }
     #endregion
@@ -229,6 +237,10 @@ public class GameManager : MonoBehaviour {
             }
         }
     }
+
+    private void PlaySoundtrack() {
+        m_AudioManager.Play("Soundtrack");
+    }
     #endregion
 
     #region Disable/Enders
@@ -237,6 +249,7 @@ public class GameManager : MonoBehaviour {
         PlayerManager.PlayerReadyEvent -= PlayerReady;
         CollisionTrigger.SceneChangeEvent -= ResetPlayerLocation;
         CollisionTrigger.LoadDungeonEvent -= DisablePlayers;
+        CollisionTrigger.LoadDungeonEvent -= PlaySoundtrack;
         DungeonGenerator.DungeonLoadedEvent -= StartFloor;
     }
     #endregion

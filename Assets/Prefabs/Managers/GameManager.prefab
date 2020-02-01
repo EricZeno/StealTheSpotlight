@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4822501508248935739}
   - component: {fileID: 4822501508248935738}
   - component: {fileID: 817932753569047295}
+  - component: {fileID: 829974643921148582}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -123,3 +124,22 @@ MonoBehaviour:
       type: 3}
     m_BackLeg: {fileID: -3976944033501616264, guid: dee79e17c9bdf7c4a89d7f0136a3f04d,
       type: 3}
+--- !u!114 &829974643921148582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4822501508248935733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41d7687816876d45983ea9e2437011c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Soundtrack
+    clip: {fileID: 8300000, guid: 05b8b4caa719b41e89952e2b92908397, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}

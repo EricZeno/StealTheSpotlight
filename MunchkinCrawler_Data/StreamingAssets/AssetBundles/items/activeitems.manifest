@@ -1,0 +1,46 @@
+ManifestFileVersion: 0
+CRC: 2655443480
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 30a6b141b5fa05fdb8d29a7c109c92d7
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: e56dba5b17bec690baf72075905d2bb6
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 50
+  Script: {instanceID: 0}
+- Class: 61
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: bd3d3962fb194024ebf809b8fb3156ca, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 856e7153020e4644c9b4c574ce56c347, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8ca50f57c77a409498e387b9a13963b8, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b8a19beab1b1f5740a35d1a1eefd719e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 750b008cace68764080a92193b968492, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 212
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Items/ActiveItems/Chowtime.asset
+- Assets/Items/ActiveItems/BowNotIncl.asset
+- Assets/Items/ActiveItems/Surrender.asset
+Dependencies: []

@@ -59,7 +59,7 @@ public class EnemyManager : MonoBehaviour {
     #region Drops
     private void DropItem() {
         int itemId = DropManager.GetDrop(m_DropCategory);
-        if (itemId == -1) {
+        if (itemId == Consts.NULL_ITEM_ID) {
             return;
         }
         DropManager.DropItem(itemId, transform.position);
@@ -72,7 +72,8 @@ public class EnemyManager : MonoBehaviour {
         if (m_Data.CurrHealth <= 0) {
             if (m_Movement.Target == null) {
                 GetComponentInParent<Room>().EnemyDeath(this, playerID);
-            } else {
+            }
+            else {
                 GetComponentInParent<Room>().ObjectiveEnemyDeath(this, playerID);
             }
 

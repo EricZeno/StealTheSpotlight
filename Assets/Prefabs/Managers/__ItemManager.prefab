@@ -71,7 +71,7 @@ MonoBehaviour:
   m_MinibossDropRate: 0
   m_HardEnemyDropRate: 0
   m_MediumEnemyDropRate: 0
-  m_EasyEnemyDropRate: 0
+  m_EasyEnemyDropRate: 0.2
   m_SwarmEnemyDropRate: 0
   m_ChestDropRate: 1
   m_HardObjectiveDropRate: 0

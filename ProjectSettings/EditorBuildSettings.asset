@@ -6,12 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/AlexScene.unity
-    guid: 733479ebfe1f74f4fb506a1aadd9a6c5
-  - enabled: 1
-    path: Assets/Scenes/AlexScene2.unity
-    guid: c3ba504c95d322d4fb974dfcee9eca96
+    path: Assets/Scenes/EricScene.unity
+    guid: 5680a353daddb45a4b9797ca293430eb
   - enabled: 1
     path: Assets/Scenes/Dungeon.unity
     guid: 9ed1478736f5a4d1fa1c5d6c43e30a98
+  - enabled: 0
+    path: Assets/Scenes/AlexScene.unity
+    guid: 733479ebfe1f74f4fb506a1aadd9a6c5
+  - enabled: 0
+    path: Assets/Scenes/AlexScene2.unity
+    guid: c3ba504c95d322d4fb974dfcee9eca96
   m_configObjects: {}

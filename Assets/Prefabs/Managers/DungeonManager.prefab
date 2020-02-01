@@ -53,6 +53,14 @@ MonoBehaviour:
   - {fileID: 6889651427760042766, guid: 9d3d4d2690a75ae44be599165778e0f9, type: 3}
   m_GenericRooms:
   - {fileID: 7543969576175178766, guid: 2b6def49b473f6b43a1f42083450b6e3, type: 3}
+  - {fileID: 8297719882121026100, guid: cc016018da5646444b8f2d68c3be166d, type: 3}
+  - {fileID: 2378770051470865378, guid: 2866b32d1591d1342a0c58d474d31fac, type: 3}
+  - {fileID: 1001381744715046158, guid: 3370e184e2b8b064e9a62da411bd6438, type: 3}
+  - {fileID: 6652261881127294547, guid: 850df181e31938e4486ca98c216337dc, type: 3}
+  - {fileID: 7413786046037921054, guid: 36808c8b36e40d44f84b47fa0546a38d, type: 3}
+  - {fileID: 1691975839412594159, guid: 3dcef3db14acd01448aa1119ed2ab4af, type: 3}
+  - {fileID: 4627366779373225941, guid: ab3056af87076da409b369bca16a5d08, type: 3}
+  - {fileID: 5956116299633413738, guid: 50ef135eb0e095a41976745771771334, type: 3}
   m_InitialPosition: {x: 0, y: 0, z: 0}
   m_HorizontalHallway: {fileID: 8884969640930263203, guid: cff809844a7b481448dc828343d78c43,
     type: 3}

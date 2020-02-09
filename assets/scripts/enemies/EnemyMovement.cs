@@ -49,6 +49,7 @@ public class EnemyMovement : MonoBehaviour {
     #region Main Updates
     private void Update() {
         UpdateGFX();
+        UpdateExternalForce();
     }
 
     private void FixedUpdate() {
@@ -66,8 +67,9 @@ public class EnemyMovement : MonoBehaviour {
 
     #region Movement
     private void Move() {
-        Vector2 delta = m_MoveDir * Time.fixedDeltaTime;
-        delta *= m_Manager.GetEnemyData().CurrMovementSpeed;
+        Vector2 delta = m_MoveDir * m_Manager.GetEnemyData().CurrMovementSpeed;
+        delta += m_ExternalForce;
+        delta *= Time.fixedDeltaTime;
         m_Rb.MovePosition(m_Rb.position + delta);
     }
 

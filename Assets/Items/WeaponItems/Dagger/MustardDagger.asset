@@ -25,4 +25,4 @@ MonoBehaviour:
   m_ArcAngle: 60
   m_AttackStartPosition: {x: 0, y: 0}
   m_AttackFinalPosition: {x: 0, y: 0}
-  m_KnockbackPower: 10
+  m_KnockbackPower: 50

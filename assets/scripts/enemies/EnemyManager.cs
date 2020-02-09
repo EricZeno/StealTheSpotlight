@@ -21,6 +21,12 @@ public class EnemyManager : MonoBehaviour {
     #region Private Variables
     private EnemyMovement m_Movement;
     private Room m_Room;
+
+    private bool m_IsFlashing;
+    #endregion
+
+    #region Cached Components
+    private EnemyGraphics m_Graphics;
     #endregion
 
     #region Initialization
@@ -30,7 +36,7 @@ public class EnemyManager : MonoBehaviour {
         m_Data.ResetAllStatsDefault();
         float range = m_Data.AttackRange;
         m_Attack.InitializeAttackCollider(range);
-
+        m_Graphics = GetComponent<EnemyGraphics>();
     }
     #endregion
 
@@ -69,6 +75,11 @@ public class EnemyManager : MonoBehaviour {
     #region Health Methods
     public void TakeDamage(int damage, int playerID) {
         m_Data.TakeDamage(damage);
+
+        if (!m_IsFlashing) {
+            StartCoroutine(DamageFlash());
+        }
+
         if (m_Data.CurrHealth <= 0) {
             if (m_Movement.Target == null) {
                 GetComponentInParent<Room>().EnemyDeath(this, playerID);
@@ -95,6 +106,22 @@ public class EnemyManager : MonoBehaviour {
             t += Time.deltaTime;
             yield return null;
         }
+    }
+
+    private IEnumerator DamageFlash() {
+        m_IsFlashing = true;
+
+        float flashDelay = .1f;
+        Color flashColor = Color.red;
+        int numOfFlashes = 1;
+        for (int i = 0; i < numOfFlashes; i++) {
+            m_Graphics.SetColor(flashColor);
+            yield return new WaitForSeconds(flashDelay);
+            m_Graphics.SetColor(Color.white);
+            yield return new WaitForSeconds(flashDelay);
+        }
+
+        m_IsFlashing = false;
     }
     #endregion
 

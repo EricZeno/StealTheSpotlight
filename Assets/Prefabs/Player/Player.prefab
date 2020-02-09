@@ -2014,7 +2014,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d41d7687816876d45983ea9e2437011c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - name: Light Hit 1
+    clip: {fileID: 8300000, guid: 2f45b72e28c91a748bebb3ba0ffcbad0, type: 3}
+    volume: 0.25
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &4607779233523327182
 GameObject:
   m_ObjectHideFlags: 0

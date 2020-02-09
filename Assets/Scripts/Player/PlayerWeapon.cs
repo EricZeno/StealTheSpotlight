@@ -45,6 +45,7 @@ public class PlayerWeapon : MonoBehaviour {
 
     #region Cached Components
     private PlayerManager m_Manager;
+    private AudioManager m_Audio;
     #endregion
 
     #region Cached References
@@ -70,6 +71,7 @@ public class PlayerWeapon : MonoBehaviour {
         m_HitEnemies = null;
 
         m_Manager = GetComponent<PlayerManager>();
+        m_Audio = GetComponent<AudioManager>();
     }
 
     private void Start() {
@@ -204,6 +206,8 @@ public class PlayerWeapon : MonoBehaviour {
                 break;
             }
         }
+
+        m_Audio.Play("Light Hit 1");
 
         WeaponBaseData data = new WeaponBaseData(
             m_Manager.GetPlayerData().GetPower() + m_WeaponData.Damage,

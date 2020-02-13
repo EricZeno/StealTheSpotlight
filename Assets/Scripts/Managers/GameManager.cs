@@ -48,8 +48,6 @@ public class GameManager : MonoBehaviour {
     #endregion
 
     #region Events and Delegates
-    public delegate void StartGame();
-    public static event StartGame StartGameEvent;
     public delegate void NewFloor();
     public static event NewFloor NewFloorEvent;
     #endregion
@@ -75,9 +73,7 @@ public class GameManager : MonoBehaviour {
         return m_Singleton;
     }
 
-    private bool[] m_PlayersReady;
     private static int m_NumPlayers;
-    private int m_NumReady;
     private bool m_GameInProgress;
 
     private PlayerManager[] m_Players;
@@ -99,7 +95,6 @@ public class GameManager : MonoBehaviour {
 
         m_Players = new PlayerManager[Consts.MAX_NUM_PLAYERS];
         m_PlayerObjs = new GameObject[Consts.MAX_NUM_PLAYERS];
-        m_PlayersReady = new bool[Consts.MAX_NUM_PLAYERS];
         m_NumPlayers = 0;
         m_GameInProgress = false;
         m_AudioManager = GetComponent<AudioManager>();
@@ -109,7 +104,6 @@ public class GameManager : MonoBehaviour {
 
     private void OnEnable() {
         PlayerManager.DeathEvent += Respawn;
-        PlayerManager.PlayerReadyEvent += PlayerReady;
         CollisionTrigger.SceneChangeEvent += ResetPlayerLocation;
         CollisionTrigger.LoadDungeonEvent += DisablePlayers;
         CollisionTrigger.LoadDungeonEvent += PlaySoundtrack;
@@ -147,24 +141,6 @@ public class GameManager : MonoBehaviour {
     private void OnPlayerLeft(PlayerInput player) {
         if (!(m_NumPlayers == 0)) {
             m_NumPlayers--;
-        }
-    }
-
-    private void PlayerReady(int playerID, bool ready) {
-        PlayerManager player = m_Players[playerID];
-        if (m_PlayersReady[playerID]) {
-            if (!ready) {
-                m_PlayersReady[playerID] = false;
-                m_NumReady--;
-            }
-        }
-        else if (ready) {
-            m_PlayersReady[playerID] = true;
-            m_NumReady++;
-            if (m_NumPlayers == m_NumReady) {
-                m_GameInProgress = true;
-                StartGameEvent();
-            }
         }
     }
     #endregion
@@ -246,7 +222,6 @@ public class GameManager : MonoBehaviour {
     #region Disable/Enders
     private void OnDisable() {
         PlayerManager.DeathEvent -= Respawn;
-        PlayerManager.PlayerReadyEvent -= PlayerReady;
         CollisionTrigger.SceneChangeEvent -= ResetPlayerLocation;
         CollisionTrigger.LoadDungeonEvent -= DisablePlayers;
         CollisionTrigger.LoadDungeonEvent -= PlaySoundtrack;

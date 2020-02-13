@@ -18,8 +18,6 @@ public class PlayerManager : MonoBehaviour {
     public static event Death DeathEvent;
     public delegate void PK(int player);
     public static event PK PKEvent;
-    public delegate void PlayerReady(int playerID, bool ready);
-    public static event PlayerReady PlayerReadyEvent;
     #endregion
 
     #region Interface
@@ -117,13 +115,8 @@ public class PlayerManager : MonoBehaviour {
 
     #region OnEnable
     private void OnEnable() {
-        AddEvents();
         EnableScriptsAndComponents();
         ResetComponentsToDefaults();
-    }
-
-    private void AddEvents() {
-        GameManager.StartGameEvent += SwitchToGameplayActions;
     }
 
     private void EnableScriptsAndComponents() {
@@ -182,14 +175,6 @@ public class PlayerManager : MonoBehaviour {
         if (dir.sqrMagnitude > Consts.SQR_MAG_CLOSE_TO_ZERO_HIGH) {
             m_AimDir = dir;
         }
-    }
-
-    private void OnReady() {
-        PlayerReadyEvent(m_PlayerID, true);
-    }
-
-    private void OnUnready() {
-        PlayerReadyEvent(m_PlayerID, false);
     }
     #endregion
 
@@ -302,12 +287,7 @@ public class PlayerManager : MonoBehaviour {
 
     #region OnDisable And Other Enders
     private void OnDisable() {
-        RemoveEvents();
         DisableScriptsAndComponents();
-    }
-
-    private void RemoveEvents() {
-        GameManager.StartGameEvent -= SwitchToGameplayActions;
     }
 
     private void DisableScriptsAndComponents() {

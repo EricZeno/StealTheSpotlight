@@ -47,4 +47,12 @@ public class EnemyGraphics : MonoBehaviour {
         m_Animator.SetBool("IsFacingLeft", !isFacingLeft);
     }
     #endregion
+
+    #region Color
+    public void SetColor(Color c) {
+        m_Body.color = c;
+        m_FrontLeg.color = c;
+        m_BackLeg.color = c;
+    }
+    #endregion
 }

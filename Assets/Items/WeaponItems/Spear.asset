@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d92b0ebd61e3ca64eb8f06cc720cd36c, type: 3}
+  m_Name: Spear
+  m_EditorClassIdentifier: 
+  m_ID: 6667
+  m_ItemName: Improved Spear
+  m_Description: Now with animations
+  m_Rarity: 0
+  m_Limit: 0
+  m_Icon: {fileID: 21300000, guid: 6d01406afd85a9645ac9934408b5e1a5, type: 3}
+  m_Damage: 5
+  m_KnockbackPower: 200
+  m_AttackSpeed: 3
+  m_AnimationName: Spear

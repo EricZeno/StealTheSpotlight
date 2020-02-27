@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 1970374141594930674}
   - component: {fileID: 9093786967977976937}
   - component: {fileID: 3408776828946664616}
-  - component: {fileID: 2554850496637745591}
   - component: {fileID: 1096281508968317925}
   - component: {fileID: 799473472}
   - component: {fileID: 799473470}
+  - component: {fileID: 3604600394232376193}
   m_Layer: 18
   m_Name: Goblin
   m_TagString: Enemy
@@ -85,18 +85,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &2554850496637745591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 631284976252667889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74d56bbceb3abfb46afa84eb5161c3c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1096281508968317925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,7 +106,6 @@ MonoBehaviour:
     m_Damage: 100
     m_AttackRange: 1
     m_AttackCone: 30
-  m_Attack: {fileID: 1970374141172772332}
   m_DropCategory: 4
 --- !u!95 &799473472
 Animator:
@@ -154,6 +141,19 @@ MonoBehaviour:
   m_Body: {fileID: 2619373568360308876}
   m_FrontLeg: {fileID: 3420123126761425513}
   m_BackLeg: {fileID: 5589103015784539291}
+--- !u!114 &3604600394232376193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631284976252667889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f9014c00fd3541a18e9c42b23a2fc20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Attack: {fileID: 968441679656523149}
 --- !u!1 &1874025779683823078
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,7 +243,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1970374141172772333}
-  - component: {fileID: 1970374141172772332}
+  - component: {fileID: 968441679656523149}
   m_Layer: 0
   m_Name: EnemyWeapon
   m_TagString: Untagged
@@ -265,7 +265,7 @@ Transform:
   m_Father: {fileID: 1970374141594930674}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1970374141172772332
+--- !u!114 &968441679656523149
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -274,7 +274,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1970374141172772330}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ea5022ea9db41b448ecc290ad95b3f8, type: 3}
+  m_Script: {fileID: 11500000, guid: 88bfd1d492a384eb5a9db955b266404a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3247884936670022597

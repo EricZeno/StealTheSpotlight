@@ -7,38 +7,47 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyManager))]
 [RequireComponent(typeof(EnemyGraphics))]
 public class EnemyMovement : MonoBehaviour {
+    #region Constants
+    private const float RESET_ERROR_TOLERANCE = 0.5f;
+    #endregion
+
     #region Variables
+    #region Editor Variables
+    [SerializeField]
+    [Tooltip("The attack functionality for the enemy.")]
+    protected EnemyAttack m_Attack;
+    #endregion
+
     #region Private Variables
-    private Vector2 m_MoveDir;
-    private bool m_Reset;
-    public Vector2 dir {
+    protected Vector2 m_MoveDir;
+    protected Vector3 m_Spawn;
+    protected Vector2 m_ExternalForce;
+    protected bool m_Reset;
+    #endregion
+
+    #region Cached Components
+    protected Rigidbody2D m_RB;
+    protected EnemyManager m_Manager;
+    protected EnemyGraphics m_Graphics;
+    #endregion
+    #endregion
+
+    #region Accessors and Setters
+    public Vector2 Dir {
         get {
             return m_MoveDir;
         }
     }
-    private Vector3 m_Spawn;
-    private Vector2 m_ExternalForce;
-    private GameObject m_Target;
-    public GameObject Target {
-        get {
-            return m_Target;
-        }
-        set {
-            m_Target = value;
-        }
+
+    protected void SetMove(Vector2 value) {
+        m_MoveDir = value;
+        m_MoveDir.Normalize();
     }
     #endregion
 
-    #region Cached Components
-    private Rigidbody2D m_Rb;
-    private EnemyManager m_Manager;
-    private EnemyGraphics m_Graphics;
-    #endregion
-    #endregion
-
     #region Initialization
-    private void Awake() {
-        m_Rb = GetComponent<Rigidbody2D>();
+    protected virtual void Awake() {
+        m_RB = GetComponent<Rigidbody2D>();
         m_Manager = GetComponent<EnemyManager>();
         m_Graphics = GetComponent<EnemyGraphics>();
         m_Spawn = transform.position;
@@ -47,40 +56,24 @@ public class EnemyMovement : MonoBehaviour {
     #endregion
 
     #region Main Updates
-    private void Update() {
+    protected virtual void Update() {
         UpdateGFX();
         UpdateExternalForce();
     }
 
-    private void FixedUpdate() {
+    protected void FixedUpdate() {
         MovementAlgorithm();
     }
     #endregion
 
-    #region Input Receivers
-    // Detects movement "input" from movement algorithm
-    private void SetMove(Vector2 value) {
-        m_MoveDir = value;
-        m_MoveDir.Normalize();
-    }
-    #endregion
-
     #region Movement
-    private void Move() {
-        Vector2 delta = m_MoveDir * m_Manager.GetEnemyData().CurrMovementSpeed;
-        delta += m_ExternalForce;
-        delta *= Time.fixedDeltaTime;
-        m_Rb.MovePosition(m_Rb.position + delta);
-    }
-
-    //New enemy movement scripts should override this
-    private void MovementAlgorithm() {
+    protected virtual void MovementAlgorithm() {
         if (m_Reset) {
             Vector2 dirReset = m_Spawn - transform.position;
             SetMove(dirReset);
 
             Vector2 error = transform.position - m_Spawn;
-            if (error.magnitude > 0.5f) {
+            if (error.magnitude > RESET_ERROR_TOLERANCE) {
                 Move();
             }
             else {
@@ -88,45 +81,28 @@ public class EnemyMovement : MonoBehaviour {
             }
             return;
         }
-
-        GameObject target;
-        if (m_Target == null) {
-            target = FindClosestTarget();
-        } else {
-            target = m_Target;
-        }
-
-        if (target == null && transform.position != m_Spawn) {
-            m_Manager.Reset();
-            return;
-        }
-        if (target == null) {
-            return;
-        }
-        Vector2 dir = target.transform.position - transform.position;
-        SetMove(dir);
-
-
-        float dist = Vector2.Distance(transform.position, target.transform.position);
-        float scale = Mathf.Max(transform.localScale.x, transform.localScale.y);
-        if (dist >= (m_Manager.GetEnemyData().AttackRange * 4 / 5) * scale) {
-            Move();
-            m_Manager.GetEnemyAttack().CanAttack = false;
-        }
-        else {
-            m_Manager.GetEnemyAttack().CanAttack = true;
-        }
     }
 
-    private GameObject FindClosestTarget() {
+    protected void Move() {
+        Vector2 delta = m_MoveDir * m_Manager.GetEnemyData().CurrMovementSpeed;
+        delta += m_ExternalForce;
+        delta *= Time.fixedDeltaTime;
+        m_RB.MovePosition(m_RB.position + delta);
+    }
+    #endregion
+
+    #region Targeting
+    protected GameObject FindClosestTarget() {
         Vector2 pos = transform.position;
         float minDist = float.PositiveInfinity;
         GameObject minTarget = null;
         List<PlayerManager> players = new List<PlayerManager>();
         Room room = m_Manager.GetRoom();
+
         if (room != null) {
             players = room.GetPlayers();
         }
+
         foreach (PlayerManager player in players) {
             float dist = Vector2.Distance(pos, player.transform.position);
             if (dist < minDist) {
@@ -134,6 +110,7 @@ public class EnemyMovement : MonoBehaviour {
                 minTarget = player.gameObject;
             }
         }
+
         return minTarget;
     }
     #endregion
@@ -143,7 +120,7 @@ public class EnemyMovement : MonoBehaviour {
         m_ExternalForce += initialForce;
     }
 
-    private void UpdateExternalForce() {
+    protected void UpdateExternalForce() {
         m_ExternalForce = Vector2.Lerp(m_ExternalForce, Vector2.zero, Consts.EXTERNAL_FORCE_REDUCTION_RATE);
     }
     #endregion
@@ -155,7 +132,7 @@ public class EnemyMovement : MonoBehaviour {
     #endregion
 
     #region Graphics
-    private void UpdateGFX() {
+    protected void UpdateGFX() {
         m_Graphics.Move(m_MoveDir);
         m_Graphics.FacingDirection(m_MoveDir);
     }

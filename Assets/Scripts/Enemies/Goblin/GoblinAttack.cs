@@ -2,33 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[DisallowMultipleComponent]
-public class EnemyAttack : MonoBehaviour {
-
+public class GoblinAttack : EnemyAttack {
     #region Private Variables
-    // This vector holds the player's current movement input before it's
-    // translated to the rigidbody
     private float m_AttackCD;
     private float m_CurrCD;
     private float m_RotationTime = 0.15f;
     private bool m_AttackLocked;
-    private bool m_CanAttack;
-    public bool CanAttack {
-        set {
-            m_CanAttack = value;
-        }
-    }
     #endregion
 
     #region Cached Components
-    private EnemyManager m_Manager;
     private BoxCollider2D m_AttackCollider;
     #endregion
 
     #region Initialization
-    private void Awake() {
-        m_Manager = GetComponentInParent<EnemyManager>();
+    protected override void Awake() {
+        base.Awake();
         m_AttackCD = 1 / m_Manager.GetEnemyData().AttackSpeed;
+        InitializeAttackCollider(m_Manager.GetEnemyData().AttackRange);
     }
 
     public void InitializeAttackCollider(float radius) {
@@ -58,7 +48,7 @@ public class EnemyAttack : MonoBehaviour {
 
         yield return new WaitForSeconds(m_AttackCD / 3);
 
-        Vector2 dir = m_Manager.GetDir();
+        Vector2 dir = m_Movement.Dir;
         Debug.Log(dir);
         float attackCone = m_Manager.GetEnemyData().AttackCone;
         transform.rotation = Quaternion.Euler(0, 0, Vector3.Angle(Vector3.right, dir));

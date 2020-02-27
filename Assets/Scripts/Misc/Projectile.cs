@@ -5,7 +5,7 @@ using UnityEngine;
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(Collider2D))]
 public class Projectile : MonoBehaviour {
     #region Private Variables
     private int m_Damage;
@@ -30,6 +30,11 @@ public class Projectile : MonoBehaviour {
         SetDamage(damage);
         SetVelocity(dir, speed);
         SetSpriteAndCollider(sprite, colliderSize);
+    }
+
+    public void Setup(int damage, Vector2 dir, float speed) {
+        SetDamage(damage);
+        SetVelocity(dir, speed);
     }
 
     private void SetDamage(int damage) {
@@ -67,6 +72,9 @@ public class Projectile : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag(Consts.PLAYER_TAG)) {
             other.GetComponent<PlayerManager>().TakeDamage(m_Damage);
+            Destroy(gameObject);
+        }
+        else if (other.gameObject.layer == LayerMask.NameToLayer("Wall")) {
             Destroy(gameObject);
         }
     }

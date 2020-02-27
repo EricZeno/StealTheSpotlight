@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
+[RequireComponent(typeof(EnemyGraphics))]
 public class EnemyManager : MonoBehaviour {
     #region Editor Variables
     [SerializeField]
     [Tooltip("The starting data for the enemy.")]
     private EnemyData m_Data;
-
-    [SerializeField]
-    [Tooltip("The attack functionality for the enemy.")]
-    private EnemyAttack m_Attack;
 
     [SerializeField]
     [Tooltip("The drop category of the enemy.")]
@@ -34,8 +31,6 @@ public class EnemyManager : MonoBehaviour {
         m_Movement = GetComponent<EnemyMovement>();
         m_Room = GetComponentInParent<Room>();
         m_Data.ResetAllStatsDefault();
-        float range = m_Data.AttackRange;
-        m_Attack.InitializeAttackCollider(range);
         m_Graphics = GetComponent<EnemyGraphics>();
     }
     #endregion
@@ -46,15 +41,11 @@ public class EnemyManager : MonoBehaviour {
     }
 
     public Vector2 GetDir() {
-        return m_Movement.dir;
+        return m_Movement.Dir;
     }
 
     public EnemyData GetEnemyData() {
         return m_Data;
-    }
-
-    public EnemyAttack GetEnemyAttack() {
-        return m_Attack;
     }
 
     public Room GetRoom() {
@@ -81,13 +72,7 @@ public class EnemyManager : MonoBehaviour {
         }
 
         if (m_Data.CurrHealth <= 0) {
-            if (m_Movement.Target == null) {
-                GetComponentInParent<Room>().EnemyDeath(this, playerID);
-            }
-            else {
-                GetComponentInParent<Room>().ObjectiveEnemyDeath(this, playerID);
-            }
-
+            GetComponentInParent<Room>().EnemyDeath(this, playerID);
             DropItem();
             Destroy(gameObject);
         }

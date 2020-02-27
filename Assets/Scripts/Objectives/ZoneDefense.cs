@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZoneDefense : MonoBehaviour
-{
+public class ZoneDefense : MonoBehaviour {
     #region Variables
     #region Editor Variables
     [SerializeField]
@@ -33,7 +32,7 @@ public class ZoneDefense : MonoBehaviour
 
     #region Private Variables
     private int m_Countdown = 3;
-    
+
     private HashSet<GameObject> m_SpawnedEnemies;
     private int m_EnemiesKilled;
 
@@ -112,7 +111,7 @@ public class ZoneDefense : MonoBehaviour
 
         m_FinishedSpawn = true;
     }
-    
+
     private IEnumerator SpawnEnemies(int wave) {
         for (int i = 0; i < m_EnemiesPerWave[wave]; i++) {
             int enemyIndex = Random.Range(0, m_Enemies.Length);
@@ -120,7 +119,9 @@ public class ZoneDefense : MonoBehaviour
 
             GameObject spawnedEnemy = Instantiate(m_Enemies[enemyIndex], m_SpawnLocations[locationIndex].transform.position, Quaternion.identity);
 
-            spawnedEnemy.GetComponent<EnemyMovement>().Target = gameObject;
+            // Zone defense will be broken as an objective until this is uncommented.
+            // We should have a specific enemy type for the objective though, which gives us more control over its behavior
+            //spawnedEnemy.GetComponent<EnemyMovement>().Target = gameObject;
             spawnedEnemy.transform.SetParent(transform);
 
             m_SpawnedEnemies.Add(spawnedEnemy);

@@ -64,7 +64,7 @@ public class EnemyManager : MonoBehaviour {
     #endregion
 
     #region Health Methods
-    public void TakeDamage(int damage, int playerID) {
+    public void TakeDamage(BaseWeaponItem weaponUsed, int damage, int playerID) {
         m_Data.TakeDamage(damage);
 
         if (!m_IsFlashing) {
@@ -72,6 +72,10 @@ public class EnemyManager : MonoBehaviour {
         }
 
         if (m_Data.CurrHealth <= 0) {
+            if (weaponUsed != null) {
+              weaponUsed.OnKillEnemy();
+            }
+        
             GetComponentInParent<Room>().EnemyDeath(this, playerID);
             DropItem();
             Destroy(gameObject);

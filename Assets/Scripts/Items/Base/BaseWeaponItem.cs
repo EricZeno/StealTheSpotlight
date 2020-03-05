@@ -8,7 +8,7 @@ public abstract class BaseWeaponItem : BaseItem {
 
     [SerializeField]
     [Tooltip("The amount of damage this weapon deals.")]
-    private int m_Damage;
+    protected int m_Damage;
 
     [SerializeField]
     [Tooltip("How much an enemy is pushed back when hit with this weapon.")]
@@ -29,10 +29,13 @@ public abstract class BaseWeaponItem : BaseItem {
 
     #region Attack methods
     public abstract void Attack();
+    public abstract void RunEverySecond();
+
+    public virtual void OnKillEnemy() { }
     #endregion
 
     #region Accessors
-    public int Damage {
+    public virtual int Damage {
         get {
             return m_Damage;
         }

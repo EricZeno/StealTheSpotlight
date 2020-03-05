@@ -263,9 +263,17 @@ public class PlayerManager : MonoBehaviour {
 
     #region Health Methods
     public void TakeDamage(int damage, PlayerManager from = null) {
+        TakeDamage(null, damage, from);
+    }
+
+    public void TakeDamage(BaseWeaponItem weaponUsed, int damage, PlayerManager from = null) {
         m_Data.TakeDamage(damage);
         m_PlayerCanvas.SliderDamage(damage);
         if (m_Data.CurrHealth <= 0) {
+            if (weaponUsed != null) {
+                weaponUsed.OnKillEnemy();
+            }
+
             Die();
             if (from != null) {
                 PKEvent(from.GetID());

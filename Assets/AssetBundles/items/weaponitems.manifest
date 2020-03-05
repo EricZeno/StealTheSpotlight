@@ -1,16 +1,18 @@
 ManifestFileVersion: 0
-CRC: 912740354
+CRC: 2940301567
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 585cec3947e53ed1c47a2adf955d0bfa
+    Hash: 7fb99ae4efffdf3e0e1d2549bf1a74f7
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 612991e28832344a20227737c127037d
+    Hash: a3ed3d732de3d2435ea20e130fe3d2aa
 HashAppended: 0
 ClassTypes:
 - Class: 28
   Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: cb1281d131a411b498a4a2abe2b5288d, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: d92b0ebd61e3ca64eb8f06cc720cd36c, type: 3}
 - Class: 115
@@ -18,5 +20,6 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
+- Assets/Items/WeaponItems/Greatsword.asset
 - Assets/Items/WeaponItems/Spear.asset
 Dependencies: []

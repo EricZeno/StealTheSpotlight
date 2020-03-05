@@ -115,6 +115,8 @@ public class PlayerWeapon : MonoBehaviour {
     private void ApplyWeaponData() {
         m_WeaponSprite.sprite = m_WeaponData.GetIcon();
         m_WeaponAnimator.SetBool(m_WeaponData.AnimationBool, true);
+
+        StartCoroutine(RunEverySecond());
     }
     #endregion
 
@@ -124,7 +126,7 @@ public class PlayerWeapon : MonoBehaviour {
         m_IsAttacking = true;
 
         m_WeaponAnimator.SetTrigger("Attack");
-        yield return new WaitForSeconds(m_WeaponAnimator.GetCurrentAnimatorStateInfo(0).length);
+        yield return new WaitForSeconds(m_WeaponAnimator.GetCurrentAnimatorStateInfo(0).length + .1f);
 
         //Special attack effects
         m_WeaponData.Attack();
@@ -147,13 +149,13 @@ public class PlayerWeapon : MonoBehaviour {
         data = ApplyOnAttackEffects(data);
         if (enemy.CompareTag(Consts.PLAYER_TAG)) {
             PlayerManager other = enemy.GetComponent<PlayerManager>();
-            other.TakeDamage(data.Damage, m_Manager);
+            other.TakeDamage(m_WeaponData, data.Damage, m_Manager);
             Vector2 dir = (other.transform.position - transform.position).normalized;
             other.GetComponent<PlayerMovement>().ApplyExternalForce(dir * data.KnockbackPower);
         }
         else if (enemy.CompareTag(Consts.GENERAL_ENEMY_TAG)) {
             EnemyManager enemyManager = enemy.GetComponent<EnemyManager>();
-            enemyManager.TakeDamage(data.Damage, m_Manager.GetID());
+            enemyManager.TakeDamage(m_WeaponData, data.Damage, m_Manager.GetID());
             Vector2 dir = (enemyManager.transform.position - transform.position).normalized;
             enemyManager.GetComponent<EnemyMovement>().ApplyExternalForce(dir * data.KnockbackPower);
         }
@@ -167,6 +169,14 @@ public class PlayerWeapon : MonoBehaviour {
             result = itemAndEffect.Effect(result);
         }
         return result;
+    }
+
+    private IEnumerator RunEverySecond() {
+        while (true) {
+            m_WeaponData.RunEverySecond();
+
+            yield return new WaitForSeconds(1f);
+        }
     }
     #endregion
 
@@ -192,6 +202,7 @@ public class PlayerWeapon : MonoBehaviour {
         m_HasWeaponEquipped = false;
         m_WeaponSprite.sprite = null;
         m_WeaponAnimator.SetBool(m_WeaponData.AnimationBool, false);
+        StopAllCoroutines();
     }
 
     public void Use() {
@@ -274,6 +285,7 @@ public class PlayerWeapon : MonoBehaviour {
     #region OnEnable
     private void OnEnable() {
         if (m_HasWeaponEquipped) {
+            StopAllCoroutines();
             m_IsInUse = false;
             m_WeaponAnimator.ResetTrigger("Attack");
             m_WeaponAnimator.SetTrigger("Reset");

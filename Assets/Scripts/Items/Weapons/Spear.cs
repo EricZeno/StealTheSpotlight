@@ -5,6 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Spear", menuName = "Items/Weapons/Spear")]
 public class Spear : BaseWeaponItem {
     public override void Attack() {
-        Debug.Log("attack");
+        
+    }
+
+    public override void RunEverySecond() {
+        
     }
 }

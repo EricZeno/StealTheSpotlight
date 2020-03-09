@@ -110,6 +110,7 @@ public class PlayerWeapon : MonoBehaviour {
     #region Equip Helper Methods
     private void SetWeaponData() {
         m_WeaponData = ItemManager.GetWeaponItem(m_WeaponID);
+        m_WeaponData.Manager = m_Manager;
     }
 
     private void ApplyWeaponData() {
@@ -177,6 +178,10 @@ public class PlayerWeapon : MonoBehaviour {
 
             yield return new WaitForSeconds(1f);
         }
+    }
+
+    public void SetAnimationBool(string animation, bool b) {
+        m_WeaponAnimator.SetBool(animation, b);
     }
     #endregion
 

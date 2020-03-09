@@ -70,7 +70,7 @@ public class PlayerManager : MonoBehaviour {
     #region Cached Components
     // A reference to the Player Input component to swap action maps
     private PlayerInput m_Input;
-    private PlayerWeapon m_Weapon;
+    public PlayerWeapon m_Weapon { get; private set; }
     private PlayerGraphics m_Graphics;
     private PlayerCanvas m_UI;
     private Collider2D m_Collider;

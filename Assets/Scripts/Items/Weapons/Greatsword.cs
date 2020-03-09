@@ -13,6 +13,10 @@ public class Greatsword : BaseWeaponItem {
     [SerializeField]
     [Tooltip("Max charge for the greatsword.")]
     private float m_MaxCharge;
+
+    [SerializeField]
+    [Tooltip("Animation clip for pony.")]
+    private string m_PonyAnimation;
     #endregion
 
     #region Private Variables

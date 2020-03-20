@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enemy
   - Chest
+  - Bush
+  - Pot
   layers:
   - Default
   - TransparentFX
@@ -26,8 +28,8 @@ TagManager:
   - Player
   - Object
   - Enemy
+  - Environmental
   - PlayerWeapon
-  - 
   - 
   - 
   - 

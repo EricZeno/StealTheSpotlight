@@ -27,14 +27,22 @@ public abstract class BaseWeaponItem : BaseItem {
     private GameObject m_Projectile;
     #endregion
 
+    protected PlayerManager m_manager;
+
     #region Attack methods
-    public abstract void Attack();
-    public abstract void RunEverySecond();
+    public virtual void Attack() { }
+    public virtual void RunEverySecond() { }
 
     public virtual void OnKillEnemy() { }
     #endregion
 
     #region Accessors
+    public virtual PlayerManager Manager {
+        set {
+            m_manager = value;
+        }
+    }
+
     public virtual int Damage {
         get {
             return m_Damage;
@@ -47,7 +55,7 @@ public abstract class BaseWeaponItem : BaseItem {
         }
     }
 
-    public string AnimationBool {
+    public virtual string AnimationBool {
         get {
             return m_AnimationName;
         }

@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2940301567
+CRC: 1248593743
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 7fb99ae4efffdf3e0e1d2549bf1a74f7
+    Hash: 9e62d79038a239aa5b3e15e9f24712e5
   TypeTreeHash:
     serializedVersion: 2
-    Hash: a3ed3d732de3d2435ea20e130fe3d2aa
+    Hash: 7b6798f31420a9c7a6d40f20416bad02
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -15,11 +15,14 @@ ClassTypes:
   Script: {fileID: 11500000, guid: cb1281d131a411b498a4a2abe2b5288d, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: d92b0ebd61e3ca64eb8f06cc720cd36c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 123340656fea96945a296c15095fa2a2, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
 Assets:
+- Assets/Items/WeaponItems/Pony.asset
 - Assets/Items/WeaponItems/Greatsword.asset
 - Assets/Items/WeaponItems/Spear.asset
 Dependencies: []

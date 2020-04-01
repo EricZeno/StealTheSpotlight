@@ -50,6 +50,8 @@ public class GameManager : MonoBehaviour {
     #region Events and Delegates
     public delegate void NewFloor();
     public static event NewFloor NewFloorEvent;
+    public delegate void PlayerAdded(int m_NumPlayers);
+    public static event PlayerAdded PlayerAddedEvent;
     #endregion
 
     #region Variables
@@ -136,6 +138,15 @@ public class GameManager : MonoBehaviour {
             return;
         }
         AddPlayer(newPlayer);
+        if (PlayerAddedEvent != null) {
+            StartCoroutine(Resize());
+        }
+    }
+
+    IEnumerator Resize()
+    {
+        yield return new WaitForSeconds(0.1f);
+        PlayerAddedEvent(m_NumPlayers);
     }
 
     private void OnPlayerLeft(PlayerInput player) {

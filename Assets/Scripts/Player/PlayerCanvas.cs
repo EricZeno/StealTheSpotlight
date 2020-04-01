@@ -37,6 +37,19 @@ public class PlayerCanvas : MonoBehaviour {
     }
     #endregion
 
+    #region Constants
+    private const float LeftGemsScaleOne = 2.5f;
+    private const float RightGemsScaleOne = 3f;
+
+    private const float LeftOffsetTwo = 123.46f;
+    private const float LeftGemsScaleTwo = 2.1f;
+    private const float RightGemsScaleTwo = 2.52f;
+
+    private const float LeftOffsetThree = 100f;
+    private const float LeftGemsScaleThree = 1.75f;
+    private const float RightGemsScaleThree = 2.1f;
+    #endregion
+
     #region Variables
     #region Editor Variables
     //Combat and Health UI
@@ -102,6 +115,10 @@ public class PlayerCanvas : MonoBehaviour {
         SetupCachedComponents();
         SetupBasicVariables();
         SetupCachedReferences();
+    }
+
+    private void OnEnable() {
+        GameManager.PlayerAddedEvent += Resize;
     }
 
     private void SetupCachedComponents() {
@@ -291,6 +308,26 @@ public class PlayerCanvas : MonoBehaviour {
             yield return new WaitForSeconds(1);
         }
         DisableDeathCanvas();
+    }
+    #endregion
+
+    #region ResizeUI
+    public void Resize(int numPlayers) {
+        Debug.Log("Reached");
+        if (numPlayers == 2)
+        {
+            m_CombatParent.GetChild(0).transform.localScale = new Vector3(LeftGemsScaleTwo, LeftGemsScaleTwo, LeftGemsScaleTwo);
+            RectTransform active = m_CombatParent.GetChild(1).GetComponent<RectTransform>();
+            active.localScale = new Vector3(LeftGemsScaleTwo, LeftGemsScaleTwo, LeftGemsScaleTwo);
+            active.anchoredPosition = new Vector3(LeftOffsetTwo, 0, 0);
+
+        }
+        if (numPlayers == 3) {
+            m_CombatParent.GetChild(0).transform.localScale = new Vector3(LeftGemsScaleThree, LeftGemsScaleThree, LeftGemsScaleThree);
+            RectTransform active = m_CombatParent.GetChild(1).GetComponent<RectTransform>();
+            active.localScale = new Vector3(LeftGemsScaleThree, LeftGemsScaleThree, LeftGemsScaleThree);
+            active.anchoredPosition = new Vector3(LeftOffsetThree, 0, 0);
+        }
     }
     #endregion
 }

@@ -36,11 +36,13 @@ public class Turret : MonoBehaviour
 
     #region Private Variable
     private float m_timer;
+    private bool m_shooting;
     #endregion
 
     #region Initialization
     private void Start() {
         m_timer = m_interval;
+        m_shooting = false;
     }
     #endregion
 
@@ -50,15 +52,17 @@ public class Turret : MonoBehaviour
             m_timer -= Time.deltaTime;
         }
         else {
-            m_timer = m_interval;
-            StartCoroutine(Shoot());
+            if (!m_shooting) {
+                m_shooting = true;
+                StartCoroutine(Shoot());
+            }
         }
     }
     #endregion
 
     #region Shoot
     private IEnumerator Shoot() {
-        float timeBetweenShots = m_bullets / m_timeframe;
+        float timeBetweenShots = m_timeframe/ m_bullets;
         Vector2 firingVector = Vector2.up;
         //Fix direction
         firingVector = Quaternion.Euler(0, 0, m_degree) * firingVector;
@@ -70,6 +74,8 @@ public class Turret : MonoBehaviour
 
             yield return new WaitForSeconds(timeBetweenShots);
         }
+        m_timer = m_interval;
+        m_shooting = false;
         yield return null;
     }
     #endregion

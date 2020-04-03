@@ -12,6 +12,10 @@ public class PlayerInventoryController : MonoBehaviour {
     public bool PickUpItem(ItemGameObject item) {
         return PickUpItem(item.GetID());
     }
+
+    public bool EquipItem(int itemID) {
+        return PickUpItem(itemID);
+    }
     #endregion
 
     #region Variables
@@ -206,7 +210,7 @@ public class PlayerInventoryController : MonoBehaviour {
         // Set up variables
         float wedgeAngle = 360 / m_Inventory.MaxInventoryCapacity;
         float halfWedgeAngle = wedgeAngle / 2;
-        
+
         // Special case: selectIndex is 0 (top wedge wraps around between 337.5 and 22.5 degrees)
         if (angle > 360 - halfWedgeAngle || angle <= halfWedgeAngle) {
             return 0;
@@ -242,13 +246,13 @@ public class PlayerInventoryController : MonoBehaviour {
         if (m_Inventory.IsOpen) {
             m_UI.UpdateUI();
         }
-        
+
         return true;
     }
 
     private int PickUpAndReplaceItem(int itemID) {
         if (ItemManager.IsPassiveItem(itemID)) {
-            return PickUpPassiveItem(itemID); ;
+            return PickUpPassiveItem(itemID);
         }
         if (ItemManager.IsActiveItem(itemID)) {
             return PickUpActiveItem(itemID);

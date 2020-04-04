@@ -87,17 +87,23 @@ public class ChonkersMovement : EnemyMovement {
 
     #region Movement
     protected override void MovementAlgorithm() {
-        List<PlayerManager> players = new List<PlayerManager>();
-        Room room = m_Manager.GetRoom();
-        if (room != null) {
-            players = room.GetPlayers();
-        }
-        if (players.Count == 0) {
-            m_Manager.Reset();
+        //List<PlayerManager> players = new List<PlayerManager>();
+        //Room room = m_Manager.GetRoom();
+        //if (room != null) {
+        //    players = room.GetPlayers();
+        //}
+        //if (players.Count == 0) {
+        //    m_Manager.Reset();
+        //    return;
+        //}
+        base.MovementAlgorithm();
+
+        GameObject target = FindClosestTarget();
+
+        if (target == null) {
             return;
         }
 
-        GameObject target = FindClosestTarget();
         Vector3 targetPos = target.transform.position;
         float dist = Vector2.Distance(transform.position, target.transform.position);
 

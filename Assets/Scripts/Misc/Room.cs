@@ -6,8 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Room : MonoBehaviour {
     #region Events and Delegates
-    public delegate void RoomCleared(int player);
-    public static event RoomCleared RoomClearedEvent;
+    public delegate void MobKilled(int player, float enemypoints);
+    public static event MobKilled MobKilledEvent;
     #endregion
 
     #region Private Variables
@@ -85,15 +85,19 @@ public class Room : MonoBehaviour {
         // Give player credit for kill
         m_mobkills[playerID]++;
         m_Enemies.Remove(enemy);
+        GiveCredit(playerID, enemy.GetEnemyData().Points);
         if (m_Enemies.Count == 0) {
             // Give room clear points
             OpenDoors();
-            Cleared();
         }
     }
 
     public void ObjectiveEnemyDeath(EnemyManager enemy, int playerID) {
         GetComponentInChildren<ZoneDefense>().KillEnemy();
+    }
+
+    private void GiveCredit(int playerID, float points) {
+        MobKilledEvent(playerID, points);
     }
     #endregion
 
@@ -104,20 +108,5 @@ public class Room : MonoBehaviour {
             door.SetActive(false);
         }
     }
-    #endregion
-
-    #region Clearing
-    private void Cleared() {
-        for (int i = 0; i < GameManager.getNumPlayers(); i++) {
-            if (m_mobkills[i] >= m_totalmobs / Consts.MOB_PARTICIPATION) {
-                GiveCredit(i);
-            }
-        }
-    }
-
-    private void GiveCredit(int playerID) {
-        RoomClearedEvent(playerID);
-    }
-
     #endregion
 }

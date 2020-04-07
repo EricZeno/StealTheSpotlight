@@ -75,7 +75,6 @@ public class ChonkersMovement : EnemyMovement {
             m_OnWall -= Time.deltaTime;
             if (m_OnWall <= 0) {
                 m_OnWall = m_MaxOnWallTimer;
-                Debug.Log("Going towards center");
                 Vector3 center = new Vector3(GetComponentInParent<Room>().GetComponent<BoxCollider2D>().bounds.center.x, GetComponentInParent<Room>().GetComponent<BoxCollider2D>().bounds.center.y);
                 Vector3 offset = new Vector3(Random.Range(-m_OffsetX, m_OffsetX + 1), Random.Range(-m_OffsetY, m_OffsetY + 1));
                 SetMove(center - transform.position + offset);
@@ -86,15 +85,6 @@ public class ChonkersMovement : EnemyMovement {
 
     #region Movement
     protected override void MovementAlgorithm() {
-        //List<PlayerManager> players = new List<PlayerManager>();
-        //Room room = m_Manager.GetRoom();
-        //if (room != null) {
-        //    players = room.GetPlayers();
-        //}
-        //if (players.Count == 0) {
-        //    m_Manager.Reset();
-        //    return;
-        //}
         base.MovementAlgorithm();
 
         GameObject target = FindClosestTarget();

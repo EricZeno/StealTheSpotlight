@@ -102,6 +102,7 @@ MonoBehaviour:
     m_BaseMovementSpeed: 3
     m_Tenacity: 0
     m_BaseHealth: 100
+    m_name: Goblin
     m_AttackSpeed: 0
     m_Damage: 100
     m_AttackRange: 1

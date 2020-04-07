@@ -4,6 +4,17 @@ using UnityEngine;
 
 [System.Serializable]
 public class EnemyData : UnitStats {
+    #region Points
+    [SerializeField]
+    [Tooltip("Name of enemy")]
+    private int m_points;
+    public int Points {
+        get {
+            return m_points;
+        }
+    }
+    #endregion
+
     #region Attack Stats
     [SerializeField]
     [Tooltip("Number of attacks per second")]

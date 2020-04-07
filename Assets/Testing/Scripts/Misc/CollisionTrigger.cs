@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class CollisionTrigger : MonoBehaviour {
     #region Events and Delegates
-    public delegate void SceneChange();
-    public static event SceneChange SceneChangeEvent;
+    public delegate void FloorChange(int playerID);
+    public static event FloorChange FloorChangeEvent;
     public delegate void LoadDungeon();
     public static event LoadDungeon LoadDungeonEvent;
     public delegate void Objective(int player, string objective);
@@ -19,13 +19,6 @@ public class CollisionTrigger : MonoBehaviour {
     [SerializeField]
     [Tooltip("The name of the level to be loaded when this trigger is touched.")]
     private string m_Level;
-    [SerializeField]
-    private int chooser;
-    //0 - Scene Change
-    //1 - Boss
-    //2 - Obj Room
-    //3 - PK
-    //4 - Room Cleared
     #endregion
 
     #region Collision
@@ -37,18 +30,8 @@ public class CollisionTrigger : MonoBehaviour {
                 SceneManager.LoadSceneAsync(m_Level);
             }
             else {
-                switch (chooser) {
-                    case 0:
-                        SceneChangeEvent();
-                        SceneManager.LoadScene(m_Level);
-                        break;
-                    case 1:
-                        ObjectiveEvent(collision.gameObject.GetComponent<PlayerManager>().GetID(), Consts.BOSS_NAME);
-                        break;
-                    case 2:
-                        ObjectiveEvent(collision.gameObject.GetComponent<PlayerManager>().GetID(), Consts.OBJROOM_NAME);
-                        break;
-                }
+                FloorChangeEvent(collision.GetComponent<PlayerManager>().GetID());
+                SceneManager.LoadScene(m_Level);
             }
         }
     }

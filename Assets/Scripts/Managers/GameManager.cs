@@ -106,10 +106,11 @@ public class GameManager : MonoBehaviour {
 
     private void OnEnable() {
         PlayerManager.DeathEvent += Respawn;
-        CollisionTrigger.SceneChangeEvent += ResetPlayerLocation;
+        CollisionTrigger.FloorChangeEvent += ResetPlayerLocation;
         CollisionTrigger.LoadDungeonEvent += DisablePlayers;
         CollisionTrigger.LoadDungeonEvent += PlaySoundtrack;
         DungeonGenerator.DungeonLoadedEvent += StartFloor;
+        PointManager.SpotlightEvent += SpotlightChange;
     }
     #endregion
 
@@ -194,6 +195,17 @@ public class GameManager : MonoBehaviour {
     }
     #endregion
 
+    #region Spotlight
+    private void SpotlightChange(int player, int playerlost) {
+        if (playerlost != -1) {
+            //Add sound here
+            m_PlayerObjs[playerlost].GetComponentsInChildren<SpriteRenderer>(true)[0].gameObject.SetActive(false);
+        }
+        //Add sound here
+        m_PlayerObjs[player].GetComponentsInChildren<SpriteRenderer>(true)[0].gameObject.SetActive(true);
+    }
+    #endregion
+
     #region Changing Floors
     private void StartFloor(Vector3[] spawnPositions) {
         m_SpawnPositions = spawnPositions;
@@ -201,7 +213,7 @@ public class GameManager : MonoBehaviour {
         EnablePlayers();
     }
 
-    private void ResetPlayerLocation() {
+    private void ResetPlayerLocation(int placeholder = -1) {
         for (int i = 0; i < m_Players.Length; i++) {
             if (m_Players[i]) {
                 m_Players[i].transform.position = m_SpawnPositions[i];
@@ -233,10 +245,11 @@ public class GameManager : MonoBehaviour {
     #region Disable/Enders
     private void OnDisable() {
         PlayerManager.DeathEvent -= Respawn;
-        CollisionTrigger.SceneChangeEvent -= ResetPlayerLocation;
+        CollisionTrigger.FloorChangeEvent -= ResetPlayerLocation;
         CollisionTrigger.LoadDungeonEvent -= DisablePlayers;
         CollisionTrigger.LoadDungeonEvent -= PlaySoundtrack;
         DungeonGenerator.DungeonLoadedEvent -= StartFloor;
+        PointManager.SpotlightEvent -= SpotlightChange;
     }
     #endregion
 }

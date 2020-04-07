@@ -16,7 +16,7 @@ public class PlayerManager : MonoBehaviour {
     public delegate void EffectToApply(PlayerManager player);
     public delegate void Death(int playerID, int respawnTime);
     public static event Death DeathEvent;
-    public delegate void PK(int player);
+    public delegate void PK(int player, int playerkilled);
     public static event PK PKEvent;
     #endregion
 
@@ -279,7 +279,7 @@ public class PlayerManager : MonoBehaviour {
 
             Die();
             if (from != null) {
-                PKEvent(from.GetID());
+                PKEvent(from.GetID(), GetID());
             }
         }
     }

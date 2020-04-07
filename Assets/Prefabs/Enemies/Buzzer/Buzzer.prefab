@@ -427,6 +427,7 @@ MonoBehaviour:
     m_BaseMovementSpeed: 15
     m_Tenacity: 0
     m_BaseHealth: 100
+    m_name: Buzzer
     m_AttackSpeed: 0
     m_Damage: 100
     m_AttackRange: 1

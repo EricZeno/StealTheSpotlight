@@ -91,7 +91,6 @@ public class ZoneDefense : MonoBehaviour {
     }
 
     public void CompleteObjective() {
-        m_ObjectiveManager.CompleteObjective();
 
         Destroy(gameObject);
     }

@@ -42,12 +42,6 @@ public class ObjectiveManager : MonoBehaviour {
 
         ResetRoom();
     }
-
-    public void CompleteObjective() {
-        foreach (int player in m_Players) {
-            ObjectiveEvent(player, Consts.OBJROOM_NAME);
-        }
-    }
     #endregion
 
     private void FindPlayers() {

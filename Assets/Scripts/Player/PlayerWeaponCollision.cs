@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerWeaponCollision : MonoBehaviour
-{
+public class PlayerWeaponCollision : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision) {
-        Debug.Log("Triggered");
         if (collision.gameObject.layer == transform.parent.gameObject.layer) {
             return;
         }

@@ -43,7 +43,6 @@ public class Spikes : MonoBehaviour {
 
     #region Collision
     private void OnTriggerEnter2D(Collider2D collision) {
-        Debug.Log("Spikes Triggered");
         if (collision.CompareTag(Consts.PLAYER_TAG) && !m_spike) {
             StartCoroutine(ActivateSpikes());
         }

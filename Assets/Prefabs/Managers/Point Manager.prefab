@@ -43,3 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55849a24ff4f64a439dc7583604ea0cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Multiplier: 2
+  m_PointGoal: 100
+  m_SpotlightCombo: 3

@@ -94,7 +94,8 @@
 
     #region AssetBundles
     public const string ASSETBUNDLES_DIRECTORY = "AssetBundles";
-    public const string RUNTIME_STREAMING_ASSETS_DIRECTORY = "MunchkinCrawler_Data/StreamingAssets";
+    public const string RUNTIME_STREAMING_ASSETS_DIRECTORY_WINDOWS = "MunchkinCrawler_Data/StreamingAssets";
+    public const string RUNTIME_STREAMING_ASSETS_DIRECTORY_OSX = "Contents/Resources/Data/StreamingAssets";
     public const string PASSIVE_ITEM_BUNDLE_NAME = "passiveitems";
     public const string ACTIVE_ITEM_BUNDLE_NAME = "activeitems";
     public const string WEAPON_ITEM_BUNDLE_NAME = "weaponitems";

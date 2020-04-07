@@ -11,7 +11,8 @@ public class CreateAssetBundles {
         if (!Directory.Exists(dir)) {
             Directory.CreateDirectory(dir);
         }
-        BuildPipeline.BuildAssetBundles(dir, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows);
+        //BuildPipeline.BuildAssetBundles(dir, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows);
+        BuildPipeline.BuildAssetBundles(dir, BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
     }
     #endregion
 
@@ -19,7 +20,18 @@ public class CreateAssetBundles {
     [PostProcessBuildAttribute(1)]
     public static void OnPostProcessBuild(BuildTarget target, string pathToBuiltProject) {
         string sourcePath = Path.Combine(Application.dataPath, Consts.ASSETBUNDLES_DIRECTORY);
-        string destinationPath = Path.Combine(Directory.GetParent(pathToBuiltProject).FullName, Consts.RUNTIME_STREAMING_ASSETS_DIRECTORY, Consts.ASSETBUNDLES_DIRECTORY);
+        string destinationPath = "";
+
+        if (target.ToString().Contains("Windows")) {
+            destinationPath = Path.Combine(Directory.GetParent(pathToBuiltProject).FullName, Consts.RUNTIME_STREAMING_ASSETS_DIRECTORY_WINDOWS, Consts.ASSETBUNDLES_DIRECTORY);
+        }
+        else if (target.ToString().Contains("OSX")) {
+            destinationPath = Path.Combine(pathToBuiltProject, Consts.RUNTIME_STREAMING_ASSETS_DIRECTORY_OSX, Consts.ASSETBUNDLES_DIRECTORY);
+        }
+        else {
+            throw new System.NotSupportedException("This build target is not supported");
+        }
+
 
         Debug.Log($"Copying {sourcePath} to {destinationPath}");
 

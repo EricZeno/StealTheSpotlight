@@ -143,8 +143,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    IEnumerator Resize()
-    {
+    IEnumerator Resize() {
         yield return new WaitForSeconds(0.1f);
         PlayerAddedEvent(m_NumPlayers);
     }
@@ -191,6 +190,7 @@ public class GameManager : MonoBehaviour {
         string playerLayer = Consts.NO_ID_PLAYER_LAYER + (index + 1).ToString();
         player.gameObject.layer = LayerMask.NameToLayer(playerLayer);
         player.InitialSetup(m_PlayerSprites[index]);
+        player.EquipStartingWeapon();
     }
     #endregion
 

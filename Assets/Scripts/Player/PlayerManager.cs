@@ -74,6 +74,7 @@ public class PlayerManager : MonoBehaviour {
     private PlayerGraphics m_Graphics;
     private PlayerCanvas m_UI;
     private Collider2D m_Collider;
+    private PlayerInventoryController m_Inventory;
     #endregion
 
     #region Cached References
@@ -105,6 +106,7 @@ public class PlayerManager : MonoBehaviour {
         m_Graphics = GetComponent<PlayerGraphics>();
         m_UI = GetComponent<PlayerCanvas>();
         m_Collider = GetComponent<Collider2D>();
+        m_Inventory = GetComponent<PlayerInventoryController>();
     }
 
     private void SetupCachedReferences() {
@@ -198,7 +200,8 @@ public class PlayerManager : MonoBehaviour {
         IEnumerator effectFunction = TimedEffect(effect, repeatTime);
         if (m_TimedEffects.ContainsKey(itemID)) {
             m_TimedEffects[itemID].Add(effectFunction);
-        } else {
+        }
+        else {
             List<IEnumerator> functionEffects = new List<IEnumerator>();
             functionEffects.Add(effectFunction);
             m_TimedEffects.Add(itemID, functionEffects);
@@ -314,6 +317,10 @@ public class PlayerManager : MonoBehaviour {
     #region Game Start Methods
     private void SwitchToGameplayActions() {
         SwitchInputMap(InputMaps.GAMEPLAY);
+    }
+
+    public void EquipStartingWeapon() {
+        m_Inventory.EquipItem(Consts.STARTING_WEAPON_ID);
     }
     #endregion
 

@@ -40,6 +40,8 @@
     public const string WEAPON_OBJECT_NAME = "Weapon";
 
     public const float EXTERNAL_FORCE_REDUCTION_RATE = 0.8f;
+
+    public const int STARTING_WEAPON_ID = 6667;
     #endregion
 
     #region Bounding Consts

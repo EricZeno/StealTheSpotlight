@@ -72,7 +72,6 @@ public class ChonkersMovement : EnemyMovement {
             SetMove(new Vector2(Random.Range(-100, 101), Random.Range(-100, 101)));
         }
         if (m_WallCollision && !m_Attacking) {
-            Debug.Log("True");
             m_OnWall -= Time.deltaTime;
             if (m_OnWall <= 0) {
                 m_OnWall = m_MaxOnWallTimer;

@@ -62,7 +62,7 @@ public class DungeonGenerator : MonoBehaviour {
     #region Misc.
     private const int DUNGEON_SIZE = 8;
     private const int NUM_OBJECTIVES = 3;
-    private const float VERTICAL_ROOM_SIZE = 24;
+    private const float VERTICAL_ROOM_SIZE = 28;
     private const float HORIZONTAL_ROOM_SIZE = 36;
     private const float MIN_ROOM_DENSITY_PERC = .34f;
     private const float MAX_ROOM_DENSITY_PERC = .45f;

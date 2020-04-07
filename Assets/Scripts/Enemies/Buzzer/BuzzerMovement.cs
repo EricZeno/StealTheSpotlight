@@ -96,6 +96,11 @@ public class BuzzerMovement : EnemyMovement {
         }
 
         GameObject target = FindClosestTarget();
+
+        if (target == null) {
+            return;
+        }
+
         Vector2 targetPos = target.transform.position;
 
         if (InCloseRange(targetPos)) {

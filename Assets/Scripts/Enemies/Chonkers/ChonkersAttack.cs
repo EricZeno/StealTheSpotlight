@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChonkersAttack : EnemyAttack {
     #region Constants
-    public const int SWEEP_ATTACK_NUM = 0;
+    public const int SHOCKWAVE_ATTACK_NUM = 0;
     public const int RAM_ATTACK_NUM = 1;
     #endregion
 
@@ -28,7 +28,7 @@ public class ChonkersAttack : EnemyAttack {
 
     [SerializeField]
     [Tooltip("How big the ram is")]
-    private float m_RotationTime;
+    private float m_ShockwaveTime;
     #endregion
 
     #region Private Variables
@@ -36,6 +36,7 @@ public class ChonkersAttack : EnemyAttack {
     private float m_RamCurrCD;
     private bool m_Collide;
     private int m_AttackNum;
+    private Animator m_Animator;
 
 
     public bool SetCollide {
@@ -43,7 +44,7 @@ public class ChonkersAttack : EnemyAttack {
             m_Collide = value;
         }
     }
-    public float GetSweepCurrCD {
+    public float GetShockwaveCurrCD {
         get {
             return m_SweepCurrCD;
         }
@@ -56,7 +57,8 @@ public class ChonkersAttack : EnemyAttack {
     #endregion
 
     #region Cached Components
-    private BoxCollider2D m_AttackCollider;
+    private BoxCollider2D m_RamCollider;
+    private CircleCollider2D m_ShockwaveCollider;
     #endregion
     #endregion
 
@@ -66,13 +68,23 @@ public class ChonkersAttack : EnemyAttack {
         m_SweepCurrCD = 0;
         m_RamCurrCD = 0;
         InitializeAttackCollider();
+        m_Animator = GetComponentInParent<Animator>();
     }
 
     public void InitializeAttackCollider() {
-        m_AttackCollider = gameObject.AddComponent<BoxCollider2D>();
-        m_AttackCollider.offset = new Vector2(0, 0);
-        m_AttackCollider.isTrigger = true;
-        m_AttackCollider.enabled = false;
+        m_RamCollider = gameObject.AddComponent<BoxCollider2D>();
+        m_RamCollider.isTrigger = true;
+        m_RamCollider.enabled = false;
+        m_RamCollider.size = new Vector2(m_RamRadius, m_RamRadius);
+        m_RamCollider.offset = new Vector2(-0.3f, 0);
+
+        m_ShockwaveCollider = gameObject.AddComponent<CircleCollider2D>();
+        m_ShockwaveCollider.isTrigger = true;
+        m_ShockwaveCollider.enabled = false;
+        m_ShockwaveCollider.radius = m_SweepRadius;
+        m_ShockwaveCollider.offset = new Vector2(0, 0);
+
+        transform.rotation = Quaternion.Euler(0, 0, 0);
     }
     #endregion
 
@@ -92,11 +104,11 @@ public class ChonkersAttack : EnemyAttack {
     #region External Calls
     public override void Attack(int attackNum, Vector2 target) {
         m_AttackNum = attackNum;
-        SetAttackCollider(m_AttackNum);
         switch (attackNum) {
-            case SWEEP_ATTACK_NUM:
+            case SHOCKWAVE_ATTACK_NUM:
+                Debug.Log("Shockwave");
                 m_SweepCurrCD = m_SweepCD;
-                StartCoroutine(Sweep(target));
+                StartCoroutine(Shockwave(target));
                 break;
             case RAM_ATTACK_NUM:
                 m_RamCurrCD = m_RamCD;
@@ -109,30 +121,19 @@ public class ChonkersAttack : EnemyAttack {
     #endregion
 
     #region Attacks
-    private IEnumerator Sweep(Vector3 target) {
-        SetAttackCollider(SWEEP_ATTACK_NUM);
+    private IEnumerator Shockwave(Vector3 target) {
         //Insert animation
-        yield return new WaitForSeconds(0.5f);
-        //Not sure how to get the initial angle.
-        //transform.rotation = Quaternion.Euler(0, 0, Vector3.Angle(gameObject.GetComponentInParent<Transform>().position, target));
+        m_Animator.SetBool("IsShockwaving", true);
+        yield return new WaitForSeconds(0.8f);
         Quaternion r = transform.rotation;
-        m_AttackCollider.enabled = true;
+        m_ShockwaveCollider.enabled = true;
         float t = 0f;
-        while (t < m_RotationTime / 2) {
-            transform.rotation = Quaternion.Lerp(r, Quaternion.Euler(0, 0, 180), t / (m_RotationTime / 2));
+        while (t < m_ShockwaveTime) {
             t += Time.deltaTime;
             yield return null;
         }
-
-        r = Quaternion.Euler(0, 0, 180);
-        t = 0f;
-        while (t < m_RotationTime / 2) {
-            transform.rotation = Quaternion.Lerp(r, Quaternion.Euler(0, 0, 360), t / (m_RotationTime / 2));
-            t += Time.deltaTime;
-            yield return null;
-        }
-
-        m_AttackCollider.enabled = false;
+        m_Animator.SetBool("IsShockwaving", false);
+        m_ShockwaveCollider.enabled = false;
 
         //Insert recovering phase
         yield return new WaitForSeconds(2);
@@ -141,10 +142,10 @@ public class ChonkersAttack : EnemyAttack {
     }
 
     private IEnumerator Ram(Vector3 target) {
-        SetAttackCollider(RAM_ATTACK_NUM);
         //Insert animation
+        m_Animator.SetBool("IsMoving", false);
         yield return new WaitForSeconds(0.5f);
-        m_AttackCollider.enabled = true;
+        m_RamCollider.enabled = true;
 
         Vector2 dir = target - transform.position;
 
@@ -157,36 +158,12 @@ public class ChonkersAttack : EnemyAttack {
             yield return null;
         }
 
-        m_AttackCollider.enabled = false;
+        m_RamCollider.enabled = false;
 
         //Insert recovering phase
         yield return new WaitForSeconds(2);
 
         ((ChonkersMovement)m_Movement).Attacking = false;
-    }
-    #endregion
-
-    #region Attack Helpers
-    private void SetAttackCollider(int attackNum) {
-        switch (attackNum) {
-            case SWEEP_ATTACK_NUM:
-                m_AttackCollider.size = new Vector2(m_SweepRadius, 1);
-                m_AttackCollider.offset = new Vector2(2, 0);
-                transform.rotation = Quaternion.Euler(0, 0, 0);
-                break;
-            case RAM_ATTACK_NUM:
-                m_AttackCollider.size = new Vector2(m_RamRadius, m_RamRadius);
-                m_AttackCollider.offset = new Vector2(0, 0);
-                transform.rotation = Quaternion.Euler(0, 0, 0);
-                break;
-        }
-    }
-
-    private float signedAngleBetween(Vector3 a, Vector3 b) {
-        float angle = Vector3.Angle(a, b);
-        if (Mathf.Sign(angle) == -1)
-            angle = 360 + angle;
-        return angle;
     }
     #endregion
 
@@ -196,7 +173,7 @@ public class ChonkersAttack : EnemyAttack {
         if (target.CompareTag(Consts.PLAYER_TAG)) {
             Vector2 dir = m_Manager.GetDir();
             switch (m_AttackNum) {
-                case SWEEP_ATTACK_NUM:
+                case SHOCKWAVE_ATTACK_NUM:
                     target.GetComponent<PlayerManager>().TakeDamage(m_Manager.GetEnemyData().Damage);
                     target.GetComponent<PlayerMovement>().ApplyExternalForce(m_Manager.GetDir() * 100);
                     break;
@@ -214,7 +191,7 @@ public class ChonkersAttack : EnemyAttack {
         if (target.CompareTag(Consts.PLAYER_TAG)) {
             Vector2 dir = m_Manager.GetDir();
             switch (m_AttackNum) {
-                case SWEEP_ATTACK_NUM:
+                case SHOCKWAVE_ATTACK_NUM:
                     target.GetComponent<PlayerManager>().TakeDamage(m_Manager.GetEnemyData().Damage);
                     target.GetComponent<PlayerMovement>().ApplyExternalForce(m_Manager.GetDir() * 100);
                     break;

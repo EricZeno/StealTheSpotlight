@@ -44,15 +44,23 @@ public class EnemyGraphics : MonoBehaviour {
     #region Facing Direction
     public void FacingDirection(Vector2 facingDir) {
         bool isFacingLeft = facingDir.x < 0;
-        m_Animator.SetBool("IsFacingLeft", !isFacingLeft);
+        m_Animator.SetBool("IsFacingLeft", isFacingLeft);
     }
     #endregion
 
     #region Color
     public void SetColor(Color c) {
-        m_Body.color = c;
-        m_FrontLeg.color = c;
-        m_BackLeg.color = c;
+        if (m_Body != null) {
+            m_Body.color = c;
+        }
+
+        if (m_FrontLeg != null) {
+            m_FrontLeg.color = c;
+        }
+
+        if (m_BackLeg != null) {
+            m_BackLeg.color = c;
+        }
     }
     #endregion
 }

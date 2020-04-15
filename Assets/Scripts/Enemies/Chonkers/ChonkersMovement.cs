@@ -7,7 +7,7 @@ public class ChonkersMovement : EnemyMovement {
     #region Editor Variables
     [SerializeField]
     [Tooltip("The max distance for Chonkers to sweep")]
-    private float m_MaxSweepDist;
+    private float m_MaxShockwaveDist;
 
     [SerializeField]
     [Tooltip("The max distance for Chonkers to ram")]
@@ -96,9 +96,9 @@ public class ChonkersMovement : EnemyMovement {
         Vector3 targetPos = target.transform.position;
         float dist = Vector2.Distance(transform.position, target.transform.position);
 
-        if (((ChonkersAttack)m_Attack).GetSweepCurrCD <= 0 && dist <= m_MaxSweepDist && !m_Attacking) {
+        if (((ChonkersAttack)m_Attack).GetShockwaveCurrCD <= 0 && dist <= m_MaxShockwaveDist && !m_Attacking) {
             m_Attacking = true;
-            m_Attack.Attack(ChonkersAttack.SWEEP_ATTACK_NUM, targetPos);
+            m_Attack.Attack(ChonkersAttack.SHOCKWAVE_ATTACK_NUM, targetPos);
         }
         else if (((ChonkersAttack)m_Attack).GetRamCurrCD <= 0 && dist <= m_MaxRamDist && !m_Attacking) {
             m_Attacking = true;

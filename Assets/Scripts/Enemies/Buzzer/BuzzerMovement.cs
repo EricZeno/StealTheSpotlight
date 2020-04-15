@@ -80,19 +80,11 @@ public class BuzzerMovement : EnemyMovement {
             m_CurrMoveTime -= Time.fixedDeltaTime;
 
             if (m_CurrMoveTime <= 0) {
-                m_Moving = false;
-                m_CurrMoveTime = m_MoveTime;
-
-                FreezePosition();
+                StopMoving();
             }
             else {
                 return;
             }
-        }
-
-        if (m_CurrStationaryTime > 0) {
-            m_CurrStationaryTime -= Time.fixedDeltaTime;
-            return;
         }
 
         GameObject target = FindClosestTarget();
@@ -102,6 +94,11 @@ public class BuzzerMovement : EnemyMovement {
         }
 
         Vector2 targetPos = target.transform.position;
+
+        if (m_CurrStationaryTime > 0) {
+            m_CurrStationaryTime -= Time.fixedDeltaTime;
+            return;
+        }
 
         if (InCloseRange(targetPos)) {
             m_Attacking = true;
@@ -162,6 +159,14 @@ public class BuzzerMovement : EnemyMovement {
 
         m_Moving = true;
     }
+
+    private void StopMoving() {
+        m_Moving = false;
+        m_CurrMoveTime = m_MoveTime;
+        SetMove(Vector2.zero);
+
+        FreezePosition();
+    }
     #endregion
 
     #region Range Check
@@ -180,9 +185,7 @@ public class BuzzerMovement : EnemyMovement {
     private void OnCollisionEnter2D(Collision2D collision) {
         if (m_Moving && collision.gameObject.layer == LayerMask.NameToLayer("Wall")
              || collision.gameObject.layer == LayerMask.NameToLayer("Object")) {
-            m_Moving = false;
-            m_CurrMoveTime = m_MoveTime;
-            FreezePosition();
+            StopMoving();
         }
     }
     #endregion

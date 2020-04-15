@@ -22,6 +22,7 @@ public class EnemyMovement : MonoBehaviour {
     protected Vector2 m_MoveDir;
     protected Vector3 m_Spawn;
     protected Vector2 m_ExternalForce;
+    protected Vector2 m_TargetDir;
     protected bool m_Reset;
     #endregion
 
@@ -52,6 +53,7 @@ public class EnemyMovement : MonoBehaviour {
         m_Graphics = GetComponent<EnemyGraphics>();
         m_Spawn = transform.position;
         m_ExternalForce = Vector2.zero;
+        m_TargetDir = Vector2.zero;
     }
     #endregion
 
@@ -111,6 +113,11 @@ public class EnemyMovement : MonoBehaviour {
             }
         }
 
+        if (minTarget != null) {
+            m_TargetDir = transform.position - minTarget.transform.position;
+            m_Graphics.FacingDirection(m_TargetDir);
+        }
+
         return minTarget;
     }
     #endregion
@@ -134,7 +141,6 @@ public class EnemyMovement : MonoBehaviour {
     #region Graphics
     protected void UpdateGFX() {
         m_Graphics.Move(m_MoveDir);
-        m_Graphics.FacingDirection(m_MoveDir);
     }
     #endregion
 }

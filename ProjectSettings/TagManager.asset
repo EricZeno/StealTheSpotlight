@@ -8,6 +8,7 @@ TagManager:
   - Chest
   - Bush
   - Pot
+  - Primed
   layers:
   - Default
   - TransparentFX
@@ -30,7 +31,7 @@ TagManager:
   - Enemy
   - Environmental
   - PlayerWeapon
-  - 
+  - Scatterbullet
   - 
   - 
   - 

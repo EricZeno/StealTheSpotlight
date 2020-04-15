@@ -22,9 +22,6 @@ public abstract class BaseWeaponItem : BaseItem {
     [Tooltip("Is it a ranged weapon?")]
     private bool m_IsRanged;
 
-    [SerializeField]
-    [Tooltip("Projectile for ranged weapons.")]
-    private GameObject m_Projectile;
     #endregion
 
     protected PlayerManager m_manager;
@@ -33,7 +30,11 @@ public abstract class BaseWeaponItem : BaseItem {
     public virtual void Attack() { }
     public virtual void RunEverySecond() { }
 
+    public virtual void Fire(BaseWeaponItem weaponData) { }
+
     public virtual void OnKillEnemy() { }
+
+    public virtual void EnemyExplode(Vector3 position) { }
     #endregion
 
     #region Accessors
@@ -67,10 +68,6 @@ public abstract class BaseWeaponItem : BaseItem {
         }
     }
 
-    public GameObject Projectile {
-        get {
-            return m_Projectile;
-        }
-    }
+
     #endregion
 }

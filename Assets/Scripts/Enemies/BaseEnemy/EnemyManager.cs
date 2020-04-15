@@ -66,19 +66,27 @@ public class EnemyManager : MonoBehaviour {
     #region Health Methods
     public void TakeDamage(BaseWeaponItem weaponUsed, int damage, int playerID) {
         m_Data.TakeDamage(damage);
-
         if (!m_IsFlashing) {
             StartCoroutine(DamageFlash());
         }
 
         if (m_Data.CurrHealth <= 0) {
             if (weaponUsed != null) {
-              weaponUsed.OnKillEnemy();
+                weaponUsed.OnKillEnemy();
             }
         
             GetComponentInParent<Room>().EnemyDeath(this, playerID);
             DropItem();
+            if (weaponUsed != null) {
+                if (weaponUsed.GetItemName() == "HeartWand")
+                {
+                    gameObject.tag = Consts.PRIMED;
+                    weaponUsed.EnemyExplode(transform.position);
+                }
+            }
+            
             Destroy(gameObject);
+            
         }
     }
 

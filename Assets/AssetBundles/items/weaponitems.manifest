@@ -1,28 +1,58 @@
 ManifestFileVersion: 0
-CRC: 2697210906
+CRC: 1608048572
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5dcc97d01c844918006afb9ef37232db
+    Hash: 0de862ed36e0ae56812d405738007401
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 529b80dfbf84a063fe24adba664628ad
+    Hash: 09c44c8a732633f0f691d33cb32eb6dd
 HashAppended: 0
 ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
 - Class: 28
   Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 50
+  Script: {instanceID: 0}
+- Class: 58
+  Script: {instanceID: 0}
+- Class: 60
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 26698f61be0047d47a6603900225a66c, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: cb1281d131a411b498a4a2abe2b5288d, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 123340656fea96945a296c15095fa2a2, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: c283ef5a8664a7a4db5278eb10806287, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fa79d33bd9ce9354ea978973c6d83829, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fdc0df9bc80c41f4f900fd584f1502f2, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 750b008cace68764080a92193b968492, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: d92b0ebd61e3ca64eb8f06cc720cd36c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 22068ade6a7f31a49aca339064160880, type: 3}
 - Class: 115
+  Script: {instanceID: 0}
+- Class: 212
   Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
 Assets:
 - Assets/Items/WeaponItems/Pony.asset
+- Assets/Items/WeaponItems/Scattershot.asset
 - Assets/Items/WeaponItems/Greatsword.asset
+- Assets/Items/WeaponItems/HeartWand.asset
 - Assets/Items/WeaponItems/Spear.asset
 Dependencies: []

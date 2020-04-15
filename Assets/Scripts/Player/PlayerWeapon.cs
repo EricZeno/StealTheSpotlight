@@ -140,6 +140,7 @@ public class PlayerWeapon : MonoBehaviour {
     }
 
     private void FireProjectile() {
+        m_WeaponData.Fire(m_WeaponData);
         //Create projectiles here
     }
 

@@ -6,16 +6,20 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Collider2D))]
-public class Projectile : MonoBehaviour {
+public class ScatterBullet : MonoBehaviour {
     #region Private Variables
     private int m_Damage;
+    private float m_Knockback;
+    private int m_MaxBounces;
+    
     #endregion
 
     #region Cached Components
     private Rigidbody2D m_Rb;
     private SpriteRenderer m_Renderer;
     private BoxCollider2D m_Collider;
-    private PlayerManager m_manager;
+    private PlayerManager m_Manager;
+    private BaseWeaponItem m_WeaponData;
     #endregion
 
     #region Initialization
@@ -26,23 +30,20 @@ public class Projectile : MonoBehaviour {
     }
     #endregion
 
+    public int Bounces {
+        get {
+            return m_MaxBounces;
+        }
+    }
+
     #region Projectile Setup Methods
-    public void Setup(int damage, Vector2 dir, float speed, Sprite sprite, Vector2 colliderSize) {
-        SetDamage(damage);
-        SetVelocity(dir, speed);
-        SetSpriteAndCollider(sprite, colliderSize);
-    }
 
-    public void Setup(int damage, Vector2 dir, float speed)
-    {
+    public void Setup(int damage, Vector2 dir, float speed, PlayerManager player, float knockback, int bounces) {
         SetDamage(damage);
         SetVelocity(dir, speed);
-    }
-
-    public void Setup(int damage, Vector2 dir, float speed, PlayerManager player) {
-        SetDamage(damage);
-        SetVelocity(dir, speed);
-        m_manager = player;
+        m_Manager = player;
+        m_Knockback = knockback;
+        m_MaxBounces = bounces;
     }
 
     private void SetDamage(int damage) {
@@ -69,24 +70,42 @@ public class Projectile : MonoBehaviour {
 
         m_Rb.velocity = dir * speed;
     }
-
-    private void SetSpriteAndCollider(Sprite sprite, Vector2 colliderSize) {
-        m_Renderer.sprite = sprite;
-        m_Collider.size = colliderSize;
-    }
     #endregion
 
     #region Collision Methods
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.GetInstanceID() == m_manager.gameObject.GetInstanceID()) {
-            Debug.Log("Hit Self!");
+     
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.GetInstanceID() == m_Manager.gameObject.GetInstanceID())
+        {
             return;
         }
-        if (other.CompareTag(Consts.PLAYER_TAG)) {
+        else if (other.CompareTag(Consts.PLAYER_TAG))
+        {
             other.GetComponent<PlayerManager>().TakeDamage(m_Damage);
+            Vector2 dir = (other.GetComponent<PlayerManager>().transform.position - transform.position).normalized;
+            other.GetComponent<PlayerMovement>().ApplyExternalForce(dir * m_Knockback);
             Destroy(gameObject);
         }
-        else if (other.gameObject.layer == LayerMask.NameToLayer("Wall")) {
+        else if (other.CompareTag(Consts.GENERAL_ENEMY_TAG))
+        {
+            EnemyManager enemyManager = other.GetComponent<EnemyManager>();
+            enemyManager.TakeDamage(m_WeaponData, m_Damage, m_Manager.GetID());
+            Vector2 dir = (enemyManager.transform.position - transform.position).normalized;
+            enemyManager.GetComponent<EnemyMovement>().ApplyExternalForce(dir * m_Knockback);
+            Destroy(gameObject);
+        }
+
+        if (other.CompareTag(Consts.BUSH_PHYSICS_LAYER))
+        {
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+        }
+
+        if (other.CompareTag(Consts.POT_PHYSICS_LAYER))
+        {
+            Destroy(other.gameObject);
             Destroy(gameObject);
         }
     }

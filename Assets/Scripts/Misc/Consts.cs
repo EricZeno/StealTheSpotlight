@@ -10,6 +10,7 @@
     #region Tags
     public const string GENERAL_ENEMY_TAG = "Enemy";
     public const string PLAYER_TAG = "Player";
+    public const string PRIMED = "Primed";
     #endregion
 
     #region Layers

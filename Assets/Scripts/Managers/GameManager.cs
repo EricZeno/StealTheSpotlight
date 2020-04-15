@@ -107,7 +107,6 @@ public class GameManager : MonoBehaviour {
     private void OnEnable() {
         PlayerManager.DeathEvent += Respawn;
         CollisionTrigger.FloorChangeEvent += ResetPlayerLocation;
-        CollisionTrigger.LoadDungeonEvent += DisablePlayers;
         CollisionTrigger.LoadDungeonEvent += PlaySoundtrack;
         DungeonGenerator.DungeonLoadedEvent += StartFloor;
         PointManager.SpotlightEvent += SpotlightChange;
@@ -210,7 +209,6 @@ public class GameManager : MonoBehaviour {
     private void StartFloor(Vector3[] spawnPositions) {
         m_SpawnPositions = spawnPositions;
         ResetPlayerLocation();
-        EnablePlayers();
     }
 
     private void ResetPlayerLocation(int placeholder = -1) {
@@ -246,7 +244,6 @@ public class GameManager : MonoBehaviour {
     private void OnDisable() {
         PlayerManager.DeathEvent -= Respawn;
         CollisionTrigger.FloorChangeEvent -= ResetPlayerLocation;
-        CollisionTrigger.LoadDungeonEvent -= DisablePlayers;
         CollisionTrigger.LoadDungeonEvent -= PlaySoundtrack;
         DungeonGenerator.DungeonLoadedEvent -= StartFloor;
         PointManager.SpotlightEvent -= SpotlightChange;

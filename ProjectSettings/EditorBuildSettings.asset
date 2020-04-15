@@ -14,7 +14,4 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/AlexScene.unity
     guid: 733479ebfe1f74f4fb506a1aadd9a6c5
-  - enabled: 0
-    path: Assets/Scenes/AlexScene2.unity
-    guid: c3ba504c95d322d4fb974dfcee9eca96
   m_configObjects: {}

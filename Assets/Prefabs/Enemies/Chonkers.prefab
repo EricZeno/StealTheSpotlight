@@ -324,6 +324,7 @@ MonoBehaviour:
   m_SweepRadius: 3
   m_RamRadius: 4
   m_ShockwaveTime: 0.1
+--- !u!1 &7508476107595341514
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -583,8 +584,8 @@ MonoBehaviour:
     m_BasePower: 0
     m_BaseMovementSpeed: 3
     m_Tenacity: 0
-    m_BaseHealth: 20
-    m_points: 1
+    m_BaseHealth: 100
+    m_points: 0
     m_AttackSpeed: 0
     m_Damage: 100
     m_AttackRange: 1

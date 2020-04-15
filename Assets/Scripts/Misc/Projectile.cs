@@ -33,8 +33,7 @@ public class Projectile : MonoBehaviour {
         SetSpriteAndCollider(sprite, colliderSize);
     }
 
-    public void Setup(int damage, Vector2 dir, float speed)
-    {
+    public void Setup(int damage, Vector2 dir, float speed) {
         SetDamage(damage);
         SetVelocity(dir, speed);
     }
@@ -78,10 +77,6 @@ public class Projectile : MonoBehaviour {
 
     #region Collision Methods
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.GetInstanceID() == m_manager.gameObject.GetInstanceID()) {
-            Debug.Log("Hit Self!");
-            return;
-        }
         if (other.CompareTag(Consts.PLAYER_TAG)) {
             other.GetComponent<PlayerManager>().TakeDamage(m_Damage);
             Destroy(gameObject);

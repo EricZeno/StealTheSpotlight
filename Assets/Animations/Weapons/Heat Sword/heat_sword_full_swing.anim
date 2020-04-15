@@ -459,6 +459,17 @@ AnimationClip:
     path: Trail
     classID: 212
     script: {fileID: 0}
+  - curve:
+    - time: 0
+      value: {fileID: 1776079761758562271, guid: aa3768e463b053848a3ddf91bdaeea66,
+        type: 3}
+    - time: 0.33333334
+      value: {fileID: 1776079761758562271, guid: aa3768e463b053848a3ddf91bdaeea66,
+        type: 3}
+    attribute: m_Sprite
+    path: Sword
+    classID: 212
+    script: {fileID: 0}
   m_SampleRate: 60
   m_WrapMode: 0
   m_Bounds:
@@ -482,6 +493,13 @@ AnimationClip:
       isPPtrCurve: 0
     - serializedVersion: 2
       path: 1940499083
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+    - serializedVersion: 2
+      path: 1529145355
       attribute: 0
       script: {fileID: 0}
       typeID: 212
@@ -545,12 +563,14 @@ AnimationClip:
       isPPtrCurve: 0
     pptrCurveMapping:
     - {fileID: -6740234475803656882, guid: 4d5fc48cb29555d4abd87984f7cb7d97, type: 3}
+    - {fileID: 1776079761758562271, guid: aa3768e463b053848a3ddf91bdaeea66, type: 3}
+    - {fileID: 1776079761758562271, guid: aa3768e463b053848a3ddf91bdaeea66, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.33333334
+    m_StopTime: 0.35000002
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

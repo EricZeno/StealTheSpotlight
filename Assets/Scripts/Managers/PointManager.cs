@@ -7,6 +7,8 @@ public class PointManager : MonoBehaviour {
     #region Events and Delegates
     public delegate void Spotlight(int player, int playerlost = DEFAULT_SPOTLIGHT);
     public static event Spotlight SpotlightEvent;
+    public delegate void PointsUI(int player, float currpoints, int endpoints);
+    public static event PointsUI PointsUIEvent;
     #endregion
 
     #region Constant
@@ -18,8 +20,8 @@ public class PointManager : MonoBehaviour {
     #region Private Variables
     private static PointManager m_Singleton;
     private float[] m_PlayersPoints;
-    private int[] m_EnemiesKilled;
     private int m_SpotlightPlayer;
+    private GameObject m_dropped;
     #endregion
 
     #region Editor Variables
@@ -32,8 +34,12 @@ public class PointManager : MonoBehaviour {
     private int m_PointGoal;
 
     [SerializeField]
-    [Tooltip("Combo to get spotlight")]
-    private int m_SpotlightCombo;
+    [Tooltip("Point to give spotlight to a player")]
+    private int m_SpotlightPoint;
+
+    [SerializeField]
+    [Tooltip("This is the dropped spotlight")]
+    private GameObject m_Spotlight;
     #endregion
 
     #region Initialization
@@ -46,7 +52,6 @@ public class PointManager : MonoBehaviour {
         m_Singleton = this;
 
         m_PlayersPoints = new float[Consts.NUM_MAX_PLAYERS];
-        m_EnemiesKilled = new int[Consts.NUM_MAX_PLAYERS];
         m_SpotlightPlayer = DEFAULT_SPOTLIGHT;
 
         DontDestroyOnLoad(this);
@@ -59,17 +64,32 @@ public class PointManager : MonoBehaviour {
         PlayerManager.PKEvent += GivePK;
         //Event for when a player clears a room
         Room.MobKilledEvent += GiveMobKill;
+        //Event for when a player dies to something that's not a player
+        PlayerManager.DropSpotlightEvent += DropSpotlight;
+        //Event for when a player picks up the spotlight
+        DroppedSpotlight.PickUpSpotlightEvent += GiveSpotlight;
     }
     #endregion
 
     #region Points
+    private void GiveSpotlight(int player) {
+        m_SpotlightPlayer = player;
+        Destroy(m_dropped);
+        m_dropped = null;
+        SpotlightEvent(player);
+    }
+
     private void GivePK(int player, int playerkilled) {
         if (m_SpotlightPlayer == playerkilled) {
-            Debug.Log($"Player {player} has stolen the spotlight.");
             m_SpotlightPlayer = player;
             SpotlightEvent(player, playerkilled);
         }
         m_PlayersPoints[player] += PK_POINTS;
+        PointsUIEvent(player, m_PlayersPoints[player], m_PointGoal);
+        if (m_PlayersPoints[player] >= m_SpotlightPoint && m_SpotlightPlayer == DEFAULT_SPOTLIGHT && m_dropped == null) {
+            m_SpotlightPlayer = player;
+            SpotlightEvent(player);
+        }
         if (m_PlayersPoints[player] >= m_PointGoal) {
             //Endgame
         }
@@ -77,18 +97,27 @@ public class PointManager : MonoBehaviour {
 
     private void GiveMobKill(int player, float points) {
         if (player == m_SpotlightPlayer) {
-            points = points * m_Multiplier;
+            points *= m_Multiplier;
         }
-        m_EnemiesKilled[player]++;
         m_PlayersPoints[player] += points;
-        if (m_EnemiesKilled[player] == m_SpotlightCombo && m_SpotlightPlayer == DEFAULT_SPOTLIGHT) {
-            Debug.Log($"Player {player} has the spotlight.");
+        PointsUIEvent(player, m_PlayersPoints[player], m_PointGoal);
+        if (m_PlayersPoints[player] >= m_SpotlightPoint && m_SpotlightPlayer == DEFAULT_SPOTLIGHT && m_dropped == null) {
             m_SpotlightPlayer = player;
             SpotlightEvent(player);
         }
         if (m_PlayersPoints[player] >= m_PointGoal) {
             //Endgame
         }
+    }
+
+    private void DropSpotlight(float x, float y) {
+        if (m_SpotlightPlayer == DEFAULT_SPOTLIGHT) {
+            return;
+        }
+        SpotlightEvent(DEFAULT_SPOTLIGHT, m_SpotlightPlayer);
+        m_SpotlightPlayer = DEFAULT_SPOTLIGHT;
+        m_dropped = Instantiate(m_Spotlight);
+        m_dropped.transform.position = new Vector3(x, y, 0);
     }
     #endregion
 
@@ -106,6 +135,7 @@ public class PointManager : MonoBehaviour {
         CollisionTrigger.FloorChangeEvent -= FloorComplete;
         PlayerManager.PKEvent -= GivePK;
         Room.MobKilledEvent -= GiveMobKill;
+        PlayerManager.DropSpotlightEvent -= DropSpotlight;
     }
     #endregion
 }

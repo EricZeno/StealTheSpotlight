@@ -90,6 +90,10 @@ public class PlayerCanvas : MonoBehaviour {
     [SerializeField]
     [Tooltip("Text field for item descriptions")]
     private Text m_InventoryText;
+
+    [SerializeField]
+    [Tooltip("Text field for points")]
+    private Text m_Points;
     #endregion
 
     #region Private Variables
@@ -273,6 +277,12 @@ public class PlayerCanvas : MonoBehaviour {
             m_ActiveItemImage.sprite = ItemManager.GetItem(itemID).GetIcon();
             m_ActiveItemImage.enabled = true;
         }
+    }
+    #endregion
+
+    #region PointsUI
+    public void SetPoints(float curr, int end) {
+        m_Points.text = $"Points: {(int)curr}/{end}";
     }
     #endregion
 

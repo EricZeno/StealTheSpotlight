@@ -45,6 +45,7 @@ public struct PlayerSprites {
 public class GameManager : MonoBehaviour {
     #region Constants
     private const float TIME_TO_WAIT_BEFORE_PLAYER_SETUP = .2f;
+    private const int NULL = -1;
     #endregion
 
     #region Events and Delegates
@@ -110,6 +111,7 @@ public class GameManager : MonoBehaviour {
         CollisionTrigger.LoadDungeonEvent += PlaySoundtrack;
         DungeonGenerator.DungeonLoadedEvent += StartFloor;
         PointManager.SpotlightEvent += SpotlightChange;
+        PointManager.PointsUIEvent += PlayerPointUI;
     }
     #endregion
 
@@ -196,12 +198,21 @@ public class GameManager : MonoBehaviour {
 
     #region Spotlight
     private void SpotlightChange(int player, int playerlost) {
-        if (playerlost != -1) {
+        if (playerlost != NULL) {
             //Add sound here
             m_PlayerObjs[playerlost].GetComponentsInChildren<SpriteRenderer>(true)[0].gameObject.SetActive(false);
         }
+        if (player == NULL) {
+            return;
+        }
         //Add sound here
         m_PlayerObjs[player].GetComponentsInChildren<SpriteRenderer>(true)[0].gameObject.SetActive(true);
+    }
+    #endregion
+
+    #region Points
+    private void PlayerPointUI(int player, float curr, int end) {
+        m_Players[player].PointUI(curr, end);
     }
     #endregion
 
@@ -247,6 +258,7 @@ public class GameManager : MonoBehaviour {
         CollisionTrigger.LoadDungeonEvent -= PlaySoundtrack;
         DungeonGenerator.DungeonLoadedEvent -= StartFloor;
         PointManager.SpotlightEvent -= SpotlightChange;
+        PointManager.PointsUIEvent -= PlayerPointUI;
     }
     #endregion
 }

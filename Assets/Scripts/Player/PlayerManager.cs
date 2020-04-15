@@ -18,6 +18,8 @@ public class PlayerManager : MonoBehaviour {
     public static event Death DeathEvent;
     public delegate void PK(int player, int playerkilled);
     public static event PK PKEvent;
+    public delegate void DropSpotlight(float x, float y);
+    public static event DropSpotlight DropSpotlightEvent;
     #endregion
 
     #region Interface
@@ -281,6 +283,9 @@ public class PlayerManager : MonoBehaviour {
             if (from != null) {
                 PKEvent(from.GetID(), GetID());
             }
+            else {
+                DropSpotlightEvent(gameObject.transform.position.x, gameObject.transform.position.y);
+            }
         }
     }
 
@@ -346,6 +351,12 @@ public class PlayerManager : MonoBehaviour {
     private enum InputMaps {
         INVENTORY,
         GAMEPLAY
+    }
+    #endregion
+
+    #region UI
+    public void PointUI(float curr, int end) {
+        m_PlayerCanvas.SetPoints(curr, end);
     }
     #endregion
 }

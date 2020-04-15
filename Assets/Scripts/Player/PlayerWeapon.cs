@@ -249,6 +249,25 @@ public class PlayerWeapon : MonoBehaviour {
             StopUse();
         }
     }
+
+    // Runs when attack button is held down
+    private void OnHold(InputValue value) {
+        if (m_WeaponData == null) {
+            return;
+        }
+
+        if (value.isPressed) {
+            m_WeaponData.OnHold();
+        }
+    }
+
+    private void OnRelease(InputValue value) {
+        if (m_WeaponData == null) {
+            return;
+        }
+
+        m_WeaponData.OnRelease();
+    }
     #endregion
 
     #region Weapon Positioning

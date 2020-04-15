@@ -35,6 +35,8 @@ public abstract class BaseWeaponItem : BaseItem {
     public virtual void OnKillEnemy() { }
 
     public virtual void EnemyExplode(Vector3 position) { }
+    public virtual void OnHold() { }
+    public virtual void OnRelease() { }
     #endregion
 
     #region Accessors

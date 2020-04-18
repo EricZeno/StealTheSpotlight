@@ -19,7 +19,7 @@ MonoBehaviour:
   m_Limit: 0
   m_Icon: {fileID: 21300000, guid: ade0675de2ae14a4badbcb6099f562ed, type: 3}
   m_Damage: 5
-  m_KnockbackPower: 0
+  m_KnockbackPower: 200
   m_AnimationName: Guandao
   m_IsRanged: 0
   m_MaxCharge: 1000

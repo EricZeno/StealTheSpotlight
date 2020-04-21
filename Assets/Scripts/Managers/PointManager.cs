@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PointManager : MonoBehaviour {
 
@@ -22,6 +24,7 @@ public class PointManager : MonoBehaviour {
     private float[] m_PlayersPoints;
     private int m_SpotlightPlayer;
     private GameObject m_dropped;
+    private int m_floor;
     #endregion
 
     #region Editor Variables
@@ -40,6 +43,14 @@ public class PointManager : MonoBehaviour {
     [SerializeField]
     [Tooltip("This is the dropped spotlight")]
     private GameObject m_Spotlight;
+
+    [SerializeField]
+    [Tooltip("This is the text for floors")]
+    private Text m_floorText;
+
+    [SerializeField]
+    [Tooltip("This is the timer for the text to fade")]
+    private float m_fadetime;
     #endregion
 
     #region Initialization
@@ -53,6 +64,7 @@ public class PointManager : MonoBehaviour {
 
         m_PlayersPoints = new float[Consts.NUM_MAX_PLAYERS];
         m_SpotlightPlayer = DEFAULT_SPOTLIGHT;
+        m_floor = 0;
 
         DontDestroyOnLoad(this);
     }
@@ -60,6 +72,7 @@ public class PointManager : MonoBehaviour {
     private void OnEnable() {
         //Event for moving to the next floor
         CollisionTrigger.FloorChangeEvent += FloorComplete;
+        CollisionTrigger.FloorTextEvent += StartFloor;
         //Event for when a player kills another player
         PlayerManager.PKEvent += GivePK;
         //Event for when a player clears a room
@@ -122,10 +135,38 @@ public class PointManager : MonoBehaviour {
     #endregion
 
     #region Floor Reset
-    public void FloorComplete(int player) {
+    private void StartFloor() {
+        m_floor += 1;
+        m_floorText.text = $"Floor {m_floor}";
+        m_floorText.color = new Color(1, 1, 1, 1);
+        StartCoroutine(FadeOut(m_fadetime));
+    }
+
+    private void FloorComplete(int player) {
         m_PlayersPoints[player] += FLOOR_CLEARED_POINTS;
         if (m_PlayersPoints[player] >= m_PointGoal) {
             //Endgame
+        }
+    }
+
+    IEnumerator FadeOut(float lerpTime) {
+        float timeStartedLerping = Time.time;
+        float timeSinceStarted = Time.time - timeStartedLerping;
+        float percentageComplete = timeSinceStarted / lerpTime;
+
+        while (true) {
+            timeSinceStarted = Time.time - timeStartedLerping;
+            percentageComplete = timeSinceStarted / lerpTime;
+
+            float currentValue = Mathf.Lerp(1, 0, percentageComplete);
+
+            m_floorText.color = new Color(1, 1, 1, currentValue);
+
+            if (percentageComplete >= 1) {
+                break;
+            }
+
+            yield return new WaitForEndOfFrame();
         }
     }
     #endregion
@@ -133,6 +174,7 @@ public class PointManager : MonoBehaviour {
     #region Disable
     private void OnDisable() {
         CollisionTrigger.FloorChangeEvent -= FloorComplete;
+        CollisionTrigger.LoadDungeonEvent -= StartFloor;
         PlayerManager.PKEvent -= GivePK;
         Room.MobKilledEvent -= GiveMobKill;
         PlayerManager.DropSpotlightEvent -= DropSpotlight;

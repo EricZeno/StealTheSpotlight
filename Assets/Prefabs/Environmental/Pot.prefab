@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4899910719258115729}
   - component: {fileID: 4899910719258115732}
   - component: {fileID: 4899910719258115735}
+  - component: {fileID: 6625012350510845957}
   m_Layer: 17
   m_Name: Pot
   m_TagString: Pot
@@ -106,3 +107,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6625012350510845957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4899910719258115728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c78d949f229518a41bb6c1fcf1adc820, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brokenshards:
+  - {fileID: 21300000, guid: 379d7710dc98b554bafe4922caa20b9a, type: 3}
+  - {fileID: 21300000, guid: b6ca1fa7d610be84493362d6c97d3f70, type: 3}
+  - {fileID: 21300000, guid: becb503d65fb3c84388ac3b1ce6d7994, type: 3}
+  - {fileID: 21300000, guid: 4bc50a1bf29cba046bae6cf338577271, type: 3}

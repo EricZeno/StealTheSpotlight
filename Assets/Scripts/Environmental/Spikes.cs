@@ -32,28 +32,42 @@ public class Spikes : MonoBehaviour {
     #region Private Variables
     private SpriteRenderer spriteRenderer;
     private bool m_spike;
+    private PlayerManager[] players;
     #endregion
 
     #region Initialization
     private void Start() {
+        players = new PlayerManager[4];
         spriteRenderer = GetComponent<SpriteRenderer>();
         m_spike = false;
     }
     #endregion
 
+    #region Update
+    private void Update() {
+        if (m_spike) {
+            foreach (PlayerManager player in players) {
+                if (player != null) {
+                    player.TakeDamage(m_damage);
+                }
+            }
+        }
+    }
+    #endregion
+
     #region Collision
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.CompareTag(Consts.PLAYER_TAG) && !m_spike) {
-            StartCoroutine(ActivateSpikes());
-        }
-        else if (collision.CompareTag(Consts.PLAYER_TAG) && m_spike) {
-            collision.GetComponent<PlayerManager>().TakeDamage(5);
+        if (collision.CompareTag(Consts.PLAYER_TAG)) {
+            players[collision.GetComponent<PlayerManager>().GetID()] = collision.GetComponent<PlayerManager>();
+            if (!m_spike) {
+                StartCoroutine(ActivateSpikes());
+            }
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision) {
-        if (collision.CompareTag(Consts.PLAYER_TAG) && m_spike) {
-            collision.GetComponent<PlayerManager>().TakeDamage(5);
+    private void OnTriggerExit2D(Collider2D collision) {
+        if (collision.CompareTag(Consts.PLAYER_TAG)) {
+            players[collision.GetComponent<PlayerManager>().GetID()] = null;
         }
     }
     #endregion

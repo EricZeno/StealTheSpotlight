@@ -9,6 +9,8 @@ public class CollisionTrigger : MonoBehaviour {
     public static event FloorChange FloorChangeEvent;
     public delegate void LoadDungeon();
     public static event LoadDungeon LoadDungeonEvent;
+    public delegate void FloorText();
+    public static event FloorText FloorTextEvent;
     public delegate void Objective(int player, string objective);
     public static event Objective ObjectiveEvent;
     public delegate void RoomCleared(int player);
@@ -28,10 +30,12 @@ public class CollisionTrigger : MonoBehaviour {
             if (m_Level == Consts.DUNGEON_SCENE_NAME) {
                 LoadDungeonEvent();
                 SceneManager.LoadSceneAsync(m_Level);
+                FloorTextEvent();
             }
             else {
                 FloorChangeEvent(collision.GetComponent<PlayerManager>().GetID());
                 SceneManager.LoadScene(m_Level);
+                FloorTextEvent();
             }
         }
     }

@@ -81,7 +81,7 @@ public class Projectile : MonoBehaviour {
             other.GetComponent<PlayerManager>().TakeDamage(m_Damage);
             Destroy(gameObject);
         }
-        else if (other.gameObject.layer == LayerMask.NameToLayer("Wall")) {
+        else if (other.gameObject.layer == LayerMask.NameToLayer("Wall") || other.gameObject.layer == LayerMask.NameToLayer("Object")) {
             Destroy(gameObject);
         }
     }

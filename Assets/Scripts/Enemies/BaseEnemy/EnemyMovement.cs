@@ -114,7 +114,7 @@ public class EnemyMovement : MonoBehaviour {
         }
 
         if (minTarget != null) {
-            m_TargetDir = transform.position - minTarget.transform.position;
+            m_TargetDir = minTarget.transform.position - transform.position;
             m_Graphics.FacingDirection(m_TargetDir);
         }
 

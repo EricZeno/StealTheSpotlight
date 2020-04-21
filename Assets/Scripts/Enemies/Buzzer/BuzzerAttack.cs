@@ -64,14 +64,27 @@ public class BuzzerAttack : EnemyAttack {
     #region Attacks
     private IEnumerator Laser() {
         // Play charging animation
-        yield return new WaitForSeconds(m_LaserChargeTime);
+
+        m_Manager.SetFlash(true);
+
+        int numOfFlashes = 5;
+        float flashDelay = m_LaserChargeTime / numOfFlashes;
+        Color flashColor = Color.red;
+        for (int i = 0; i < numOfFlashes; i++) {
+            m_Graphics.SetColor(flashColor);
+            yield return new WaitForSeconds(flashDelay);
+            m_Graphics.SetColor(Color.white);
+            yield return new WaitForSeconds(flashDelay);
+        }
+
+        m_Manager.SetFlash(false);
 
         Vector2 upOrigin = (Vector2)transform.position + new Vector2(0, LASER_OFFSET);
         Vector2 downOrigin = (Vector2)transform.position + new Vector2(0, -LASER_OFFSET);
         Vector2 rightOrigin = (Vector2)transform.position + new Vector2(LASER_OFFSET, 0);
         Vector2 leftOrigin = (Vector2)transform.position + new Vector2(-LASER_OFFSET, 0);
 
-        LayerMask WallLayer = 1 << LayerMask.NameToLayer("Wall");
+        LayerMask WallLayer = (1 << LayerMask.NameToLayer("Wall")) | (1 << LayerMask.NameToLayer("Object"));
         RaycastHit2D upWall = Physics2D.Raycast(upOrigin, Vector2.up, float.PositiveInfinity, WallLayer);
         RaycastHit2D downWall = Physics2D.Raycast(downOrigin, Vector2.down, float.PositiveInfinity, WallLayer);
         RaycastHit2D rightWall = Physics2D.Raycast(rightOrigin, Vector2.right, float.PositiveInfinity, WallLayer);

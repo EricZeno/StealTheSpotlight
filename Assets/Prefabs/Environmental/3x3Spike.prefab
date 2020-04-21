@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4020865680003182734}
   - component: {fileID: 4020865680003182735}
   - component: {fileID: 4020865680003182732}
-  m_Layer: 17
+  m_Layer: 19
   m_Name: 3x3Spike
   m_TagString: Untagged
   m_Icon: {fileID: 0}

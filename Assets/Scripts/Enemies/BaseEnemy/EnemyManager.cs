@@ -19,7 +19,7 @@ public class EnemyManager : MonoBehaviour {
     private EnemyMovement m_Movement;
     private Room m_Room;
 
-    private bool m_IsFlashing;
+    protected bool m_IsFlashing;
     #endregion
 
     #region Cached Components
@@ -51,6 +51,10 @@ public class EnemyManager : MonoBehaviour {
     public Room GetRoom() {
         return m_Room;
     }
+
+    public void SetFlash(bool flashing) {
+        m_IsFlashing = flashing;
+    }
     #endregion
 
     #region Drops
@@ -74,19 +78,18 @@ public class EnemyManager : MonoBehaviour {
             if (weaponUsed != null) {
                 weaponUsed.OnKillEnemy();
             }
-        
+
             GetComponentInParent<Room>().EnemyDeath(this, playerID);
             DropItem();
             if (weaponUsed != null) {
-                if (weaponUsed.GetItemName() == "HeartWand")
-                {
+                if (weaponUsed.GetItemName() == "HeartWand") {
                     gameObject.tag = Consts.PRIMED;
                     weaponUsed.EnemyExplode(transform.position);
                 }
             }
-            
+
             Destroy(gameObject);
-            
+
         }
     }
 

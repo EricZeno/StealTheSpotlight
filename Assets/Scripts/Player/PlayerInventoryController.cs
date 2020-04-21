@@ -292,6 +292,7 @@ public class PlayerInventoryController : MonoBehaviour {
         bool hasWeapon = curWeaponItem != Consts.NULL_ITEM_ID;
         int replacedWeapon = m_Inventory.PickupItem(itemID);
         if (hasWeapon && curWeaponItem != m_Inventory.CurrentWeapon) {
+            m_Weapon.Unequip();
             m_Weapon.Equip(itemID);
         }
         else if (!hasWeapon) {

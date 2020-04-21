@@ -229,7 +229,7 @@ public class PlayerWeapon : MonoBehaviour {
         }
 
         m_CurrentDirection = dir;
-        
+
         if (m_WeaponID == Consts.NULL_ITEM_ID) {
             return;
         }

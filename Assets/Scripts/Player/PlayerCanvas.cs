@@ -323,9 +323,7 @@ public class PlayerCanvas : MonoBehaviour {
 
     #region ResizeUI
     public void Resize(int numPlayers) {
-        Debug.Log("Reached");
-        if (numPlayers == 2)
-        {
+        if (numPlayers == 2) {
             m_CombatParent.GetChild(0).transform.localScale = new Vector3(LeftGemsScaleTwo, LeftGemsScaleTwo, LeftGemsScaleTwo);
             RectTransform active = m_CombatParent.GetChild(1).GetComponent<RectTransform>();
             active.localScale = new Vector3(LeftGemsScaleTwo, LeftGemsScaleTwo, LeftGemsScaleTwo);

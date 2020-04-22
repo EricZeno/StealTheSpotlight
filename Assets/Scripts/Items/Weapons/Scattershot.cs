@@ -49,5 +49,10 @@ public class Scattershot : BaseWeaponItem
 
         return new Vector2(cos * tx - sin * ty, sin * tx + cos * ty);
     }
+
+    public override string PlayAudio()
+    {
+        return "Scattershot Use";
+    }
     #endregion
 }

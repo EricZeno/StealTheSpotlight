@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1705089899382752050}
   - component: {fileID: 5322941677136500741}
   - component: {fileID: 1849574492747641459}
+  - component: {fileID: 7703949051674816583}
   m_Layer: 21
   m_Name: GameObject
   m_TagString: Untagged
@@ -60,6 +61,25 @@ CircleCollider2D:
   m_Offset: {x: -0.04, y: 0.15291774}
   serializedVersion: 2
   m_Radius: 0.75719595
+--- !u!114 &7703949051674816583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 745627096788689390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41d7687816876d45983ea9e2437011c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Scattershot Bounce
+    clip: {fileID: 8300000, guid: daf14777aba5f9a48a5dcdc9fac79b32, type: 3}
+    volume: 0.078
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &2446968513116726942
 GameObject:
   m_ObjectHideFlags: 0
@@ -74,6 +94,7 @@ GameObject:
   - component: {fileID: 186144602938764347}
   - component: {fileID: 8084407054419092722}
   - component: {fileID: 7658366026707635872}
+  - component: {fileID: 5618636358073185886}
   m_Layer: 9
   m_Name: ScatterBullet
   m_TagString: Untagged
@@ -206,3 +227,28 @@ CircleCollider2D:
   m_Offset: {x: -0.050000012, y: 0.14890772}
   serializedVersion: 2
   m_Radius: 0.76160955
+--- !u!114 &5618636358073185886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2446968513116726942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41d7687816876d45983ea9e2437011c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: potBreak
+    clip: {fileID: 8300000, guid: b9794cc88ceff634db3c79bda996d45f, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Scattershot Impact
+    clip: {fileID: 8300000, guid: 7019ce31728f9914cb216f6e62de318d, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}

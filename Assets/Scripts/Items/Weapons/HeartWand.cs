@@ -83,5 +83,10 @@ public class HeartWand : BaseWeaponItem
         }
 
     }
+
+    public override string PlayAudio()
+    {
+        return "Wand use";
+    }
     #endregion
 }

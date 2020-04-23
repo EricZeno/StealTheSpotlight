@@ -46,28 +46,12 @@
                     "interactions": ""
                 },
                 {
-                    "name": "OpenInventory",
-                    "type": "Button",
-                    "id": "ae72bcb8-32b1-4907-bef7-7cb1ec102755",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "UseActive",
                     "type": "Button",
                     "id": "e80adab4-84d8-4f34-9f85-3e3b720262a8",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press(behavior=2)"
-                },
-                {
-                    "name": "SwitchWeapons",
-                    "type": "Button",
-                    "id": "525ff357-afed-45b0-9103-52fcbd4dbf0a",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": ""
                 },
                 {
                     "name": "Interact",
@@ -311,28 +295,6 @@
                 },
                 {
                     "name": "",
-                    "id": "95a0fa01-ed3d-471a-afd7-340536362d98",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "OpenInventory",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e5e6075f-bfac-4339-b250-f59c10660b2c",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "OpenInventory",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "2c258762-375f-43a7-a472-d8b01809a568",
                     "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
@@ -350,28 +312,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "UseActive",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f87af54d-8839-4f25-a08d-fe9cae567991",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SwitchWeapons",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d9a3cfce-58eb-4f37-97ff-0e3b9c547027",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SwitchWeapons",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

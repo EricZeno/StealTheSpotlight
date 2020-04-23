@@ -87,13 +87,16 @@ public class Inventory {
                 && m_Inventory[m_WeaponStartingIndex + 1] != Consts.NULL_ITEM_ID);
     }
 
+    public bool HasWeapon() {
+        return m_Inventory[m_WeaponStartingIndex] != Consts.NULL_ITEM_ID;
+    }
+
     public bool CanPickUp(int itemID) {
         if (ItemManager.IsActiveItem(itemID) &&
             itemID == CurrentActive) {
             return false;
         }
-        if (HasTwoWeapons() &&
-            ItemManager.IsWeaponItem(itemID) &&
+        if (ItemManager.IsWeaponItem(itemID) &&
             itemID == CurrentWeapon) {
             return false;
         }
@@ -198,10 +201,10 @@ public class Inventory {
         }
 
         // Inserting into second weapon slot
-        else {
-            m_Inventory[m_WeaponStartingIndex + 1] = itemID;
-            m_UI.SetWeaponTwoImage(itemID);
-        }
+        //else {
+        //    m_Inventory[m_WeaponStartingIndex + 1] = itemID;
+        //    m_UI.SetWeaponTwoImage(itemID);
+        //}
     }
 
     private void InsertActiveItemIntoInv(int itemID) {
@@ -300,7 +303,7 @@ public class Inventory {
         if (ItemManager.IsActiveItem(itemID) && HasActive()) {
             return ReplaceCurrentActive(itemID);
         }
-        else if (ItemManager.IsWeaponItem(itemID) && HasTwoWeapons()) {
+        else if (ItemManager.IsWeaponItem(itemID) && HasWeapon()) {
             return ReplaceCurrentWeapon(itemID);
         }
         else if (ItemManager.IsPassiveItem(itemID) && !HasPassiveRoom()) {

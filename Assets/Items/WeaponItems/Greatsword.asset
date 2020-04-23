@@ -24,4 +24,13 @@ MonoBehaviour:
   m_IsRanged: 0
   m_ChargePerSecond: 100
   m_MaxCharge: 500
-  m_PonyAnimation: 
+  m_AttackAnims:
+  - {fileID: 7400000, guid: 059f50c66426baa4fa0cc608689a090d, type: 2}
+  - {fileID: 7400000, guid: 22c74efad853dba4f99e6b90770cc892, type: 2}
+  - {fileID: 7400000, guid: 7079ab0334a5c524cb6a75b1dacec1ea, type: 2}
+  - {fileID: 7400000, guid: 72ff40d7bd3e7e843aec8cdf9fb1e40d, type: 2}
+  m_IdleAnims:
+  - {fileID: 7400000, guid: 3e88ccd7a031e5c43a3416e3a9d42a6b, type: 2}
+  - {fileID: 7400000, guid: 97a65ce7e29a1e5488990e23dedf2f41, type: 2}
+  - {fileID: 7400000, guid: b6bae99002b24db40b249ba3e408d563, type: 2}
+  - {fileID: 7400000, guid: d0c32b61ece8af943a41a56f6644b506, type: 2}

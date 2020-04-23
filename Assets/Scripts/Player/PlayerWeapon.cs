@@ -318,4 +318,8 @@ public class PlayerWeapon : MonoBehaviour {
         }
     }
     #endregion
+
+    public Animator GetWeaponAnimator() {
+        return m_WeaponAnimator;
+    }
 }

@@ -66,6 +66,7 @@ public class Room : MonoBehaviour {
     private IEnumerator AddPlayer(PlayerManager player) {
         yield return new WaitForSeconds(1f);
         m_Players.Add(player);
+        CancelReset();
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
@@ -93,6 +94,12 @@ public class Room : MonoBehaviour {
         }
     }
 
+    private void CancelReset() {
+        foreach (EnemyManager enemy in m_Enemies) {
+            enemy.CancelReset();
+        }
+    }
+
     public void EnemyDeath(EnemyManager enemy, int playerID) {
         // Give player credit for kill
         m_mobkills[playerID]++;
@@ -110,6 +117,10 @@ public class Room : MonoBehaviour {
 
     private void GiveCredit(int playerID, float points) {
         MobKilledEvent(playerID, points);
+    }
+
+    public void AddEnemy(EnemyManager enemy) {
+        m_Enemies.Add(enemy);
     }
     #endregion
 

@@ -106,7 +106,6 @@ public class ChonkersAttack : EnemyAttack {
         m_AttackNum = attackNum;
         switch (attackNum) {
             case SHOCKWAVE_ATTACK_NUM:
-                Debug.Log("Shockwave");
                 m_SweepCurrCD = m_SweepCD;
                 StartCoroutine(Shockwave(target));
                 break;
@@ -144,7 +143,6 @@ public class ChonkersAttack : EnemyAttack {
     private IEnumerator Ram(Vector3 target) {
         //Insert animation
         Vector2 dir = target - transform.position;
-        Debug.Log(dir);
         bool isRammingLeft = dir.x < 0;
         m_Animator.SetBool("IsRammingLeft", isRammingLeft);
         m_Animator.SetBool("IsRamming", true);

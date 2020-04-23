@@ -119,8 +119,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c78d949f229518a41bb6c1fcf1adc820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brokenshards:
+  m_BrokenShards:
   - {fileID: 21300000, guid: 379d7710dc98b554bafe4922caa20b9a, type: 3}
   - {fileID: 21300000, guid: b6ca1fa7d610be84493362d6c97d3f70, type: 3}
   - {fileID: 21300000, guid: becb503d65fb3c84388ac3b1ce6d7994, type: 3}
   - {fileID: 21300000, guid: 4bc50a1bf29cba046bae6cf338577271, type: 3}
+  m_Blob: {fileID: 631284976252667889, guid: 9d5e2d282c07849ab8369ad314d0fd04, type: 3}
+  m_MobChance: 0.2

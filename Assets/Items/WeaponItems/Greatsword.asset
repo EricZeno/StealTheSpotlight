@@ -19,10 +19,9 @@ MonoBehaviour:
   m_Limit: 0
   m_Icon: {fileID: -6449040788438266585, guid: aa3768e463b053848a3ddf91bdaeea66, type: 3}
   m_Damage: 5
-  m_KnockbackPower: 0
+  m_KnockbackPower: 200
   m_AnimationName: Greatsword
   m_IsRanged: 0
-  m_Projectile: {fileID: 0}
   m_ChargePerSecond: 100
   m_MaxCharge: 500
   m_PonyAnimation: 

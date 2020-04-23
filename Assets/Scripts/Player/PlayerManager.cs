@@ -67,6 +67,8 @@ public class PlayerManager : MonoBehaviour {
     private Vector2 m_AimDir;
 
     private int m_PlayerID;
+
+    private bool m_IsFlashing;
     #endregion
 
     #region Cached Components
@@ -273,6 +275,11 @@ public class PlayerManager : MonoBehaviour {
 
     public void TakeDamage(BaseWeaponItem weaponUsed, int damage, PlayerManager from = null) {
         m_Data.TakeDamage(damage);
+
+        if (!m_IsFlashing) {
+            StartCoroutine(DamageFlash());
+        }
+
         m_PlayerCanvas.SliderDamage(damage);
         if (m_Data.CurrHealth <= 0) {
             if (weaponUsed != null) {
@@ -298,6 +305,22 @@ public class PlayerManager : MonoBehaviour {
     public void Die() {
         m_UI.StartDeath(m_Data.RespawnTime);
         DeathEvent(m_PlayerID, m_Data.RespawnTime);
+    }
+
+    private IEnumerator DamageFlash() {
+        m_IsFlashing = true;
+
+        float flashDelay = .1f;
+        Color flashColor = Color.red;
+        int numOfFlashes = 1;
+        for (int i = 0; i < numOfFlashes; i++) {
+            m_Graphics.SetColor(flashColor);
+            yield return new WaitForSeconds(flashDelay);
+            m_Graphics.SetColor(Color.white);
+            yield return new WaitForSeconds(flashDelay);
+        }
+
+        m_IsFlashing = false;
     }
     #endregion
 

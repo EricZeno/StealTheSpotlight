@@ -2129,7 +2129,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8
+  orthographic size: 10
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -2208,7 +2208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Data:
     m_BasePower: 0
-    m_BaseMovementSpeed: 8
+    m_BaseMovementSpeed: 10
     m_Tenacity: 0
     m_BaseHealth: 1000
     m_InteractionRadius: 0.7
@@ -2352,7 +2352,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.00054216385, y: -0.5376508}
+  m_Offset: {x: -0.00054216385, y: -0.92}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2363,7 +2363,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.98502445, y: 1.6544642}
+  m_Size: {x: 0.98502445, y: 0.93}
   m_EdgeRadius: 0
 --- !u!50 &4462817946423847191
 Rigidbody2D:

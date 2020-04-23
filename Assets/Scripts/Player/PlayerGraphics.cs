@@ -72,4 +72,20 @@ public class PlayerGraphics : MonoBehaviour {
         m_Animator.SetBool("IsFacingLeft", isFacingLeft);
     }
     #endregion
+
+    #region Color
+    public void SetColor(Color c) {
+        if (m_Body != null) {
+            m_Body.color = c;
+        }
+
+        if (m_FrontLeg != null) {
+            m_FrontLeg.color = c;
+        }
+
+        if (m_BackLeg != null) {
+            m_BackLeg.color = c;
+        }
+    }
+    #endregion
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5709232278587121126}
   - component: {fileID: 5709232278587121127}
   - component: {fileID: 5709232278587121124}
+  - component: {fileID: -4710669688712005001}
   m_Layer: 19
   m_Name: 1x1Spike
   m_TagString: Untagged
@@ -125,3 +126,28 @@ MonoBehaviour:
   spike_disabled: {fileID: 21300000, guid: 66e8004347df3244090494c8ac817a00, type: 3}
   spike_half: {fileID: 21300000, guid: 60b1b692261869e4bab8bdef44a8d356, type: 3}
   spike_enabled: {fileID: 21300000, guid: 51c81f5b85b031f4e9463de4e1102eb2, type: 3}
+--- !u!114 &-4710669688712005001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5709232278587121120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41d7687816876d45983ea9e2437011c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: spike
+    clip: {fileID: 8300000, guid: 378b962449f1379408314abd1573abcb, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: spike2
+    clip: {fileID: 8300000, guid: 7c92e575f8bf3274c9174ae89bb092cd, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}

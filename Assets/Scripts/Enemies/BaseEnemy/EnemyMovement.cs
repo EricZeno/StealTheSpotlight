@@ -44,6 +44,10 @@ public class EnemyMovement : MonoBehaviour {
         m_MoveDir = value;
         m_MoveDir.Normalize();
     }
+
+    public void SetSpawn(Vector3 spawn) {
+        m_Spawn = spawn;
+    }
     #endregion
 
     #region Initialization
@@ -114,7 +118,7 @@ public class EnemyMovement : MonoBehaviour {
         }
 
         if (minTarget != null) {
-            m_TargetDir = minTarget.transform.position - transform.position;
+            m_TargetDir = transform.position - minTarget.transform.position;
             m_Graphics.FacingDirection(m_TargetDir);
         }
 
@@ -135,6 +139,10 @@ public class EnemyMovement : MonoBehaviour {
     #region Room Logic
     public void Reset() {
         m_Reset = true;
+    }
+
+    public void CancelReset() {
+        m_Reset = false;
     }
     #endregion
 

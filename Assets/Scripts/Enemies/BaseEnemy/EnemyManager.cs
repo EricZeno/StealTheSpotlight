@@ -19,7 +19,7 @@ public class EnemyManager : MonoBehaviour {
     private EnemyMovement m_Movement;
     private Room m_Room;
 
-    protected bool m_IsFlashing;
+    private bool m_IsFlashing;
     #endregion
 
     #region Cached Components
@@ -48,12 +48,16 @@ public class EnemyManager : MonoBehaviour {
         return m_Data;
     }
 
+    public void SetFlash(bool flashing) {
+        m_IsFlashing = flashing;
+    }
+
     public Room GetRoom() {
         return m_Room;
     }
 
-    public void SetFlash(bool flashing) {
-        m_IsFlashing = flashing;
+    public void SetRoom(Room room) {
+        m_Room = room;
     }
     #endregion
 
@@ -141,6 +145,10 @@ public class EnemyManager : MonoBehaviour {
     public void Reset() {
         m_Movement.Reset();
         StartCoroutine(HealToFull());
+    }
+
+    public void CancelReset() {
+        m_Movement.CancelReset();
     }
     #endregion
 }

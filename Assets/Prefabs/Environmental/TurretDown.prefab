@@ -120,9 +120,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_damage: 100
-  m_interval: 5
-  m_timeframe: 2
-  m_bullets: 2
+  m_interval: 0
+  m_timeframe: 1
+  m_bullets: 1
   m_degree: 270
   m_bullet: {fileID: 7612764531837687787, guid: c186850bfae374f139781d027fdfd4a4,
     type: 3}

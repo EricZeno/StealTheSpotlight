@@ -57,18 +57,28 @@ public class Room : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.CompareTag(Consts.PLAYER_TAG)) {
             PlayerManager player = collision.gameObject.GetComponent<PlayerManager>();
-            m_Players.Add(player);
+            StartCoroutine(AddPlayer(player));
         }
+    }
+
+    private IEnumerator AddPlayer(PlayerManager player) {
+        yield return new WaitForSeconds(1f);
+        m_Players.Add(player);
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
         if (collision.gameObject.CompareTag(Consts.PLAYER_TAG)) {
             PlayerManager player = collision.gameObject.GetComponent<PlayerManager>();
-            if (m_Players.Contains(player)) {
-                m_Players.Remove(player);
-                if (m_Players.Count == 0) {
-                    ResetEnemies();
-                }
+            StartCoroutine(RemovePlayer(player));
+        }
+    }
+
+    private IEnumerator RemovePlayer(PlayerManager player) {
+        yield return new WaitForSeconds(1f);
+        if (m_Players.Contains(player)) {
+            m_Players.Remove(player);
+            if (m_Players.Count == 0) {
+                ResetEnemies();
             }
         }
     }

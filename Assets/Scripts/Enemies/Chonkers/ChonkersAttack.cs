@@ -143,11 +143,13 @@ public class ChonkersAttack : EnemyAttack {
 
     private IEnumerator Ram(Vector3 target) {
         //Insert animation
-        m_Animator.SetBool("IsMoving", false);
+        Vector2 dir = target - transform.position;
+        Debug.Log(dir);
+        bool isRammingLeft = dir.x < 0;
+        m_Animator.SetBool("IsRammingLeft", isRammingLeft);
+        m_Animator.SetBool("IsRamming", true);
         yield return new WaitForSeconds(0.5f);
         m_RamCollider.enabled = true;
-
-        Vector2 dir = target - transform.position;
 
         float t = 0f;
         while (!m_Collide) {
@@ -157,7 +159,7 @@ public class ChonkersAttack : EnemyAttack {
             Rb.MovePosition(Rb.position + delta);
             yield return null;
         }
-
+        m_Animator.SetBool("IsRamming", false);
         m_RamCollider.enabled = false;
 
         //Insert recovering phase

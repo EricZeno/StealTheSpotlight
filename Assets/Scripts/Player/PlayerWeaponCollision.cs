@@ -17,7 +17,7 @@ public class PlayerWeaponCollision : MonoBehaviour {
         }
 
         if (collision.CompareTag(Consts.POT_PHYSICS_LAYER)) {
-            Destroy(collision.gameObject);
+            collision.gameObject.GetComponent<Pot>().Break();
         }
     }
 }

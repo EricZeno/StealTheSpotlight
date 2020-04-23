@@ -22,6 +22,7 @@ public class HeartProjectile : MonoBehaviour
     private BaseWeaponItem m_WeaponData;
     private float m_Scale;
     private float m_Radius;
+    private AudioManager m_AudioManager;
     #endregion
 
     #region Initialization
@@ -30,6 +31,7 @@ public class HeartProjectile : MonoBehaviour
         m_Rb = GetComponent<Rigidbody2D>();
         m_Renderer = GetComponent<SpriteRenderer>();
         m_Collider = GetComponent<BoxCollider2D>();
+        m_AudioManager = GetComponent<AudioManager>();
     }
     #endregion
 
@@ -44,6 +46,7 @@ public class HeartProjectile : MonoBehaviour
         m_WeaponData = data;
         m_Scale = scale;
         m_Radius = radius;
+ 
     }
 
     private void SetDamage(int damage)
@@ -88,24 +91,29 @@ public class HeartProjectile : MonoBehaviour
         }
         else if (other.CompareTag(Consts.PLAYER_TAG))
         {
+            m_AudioManager.Play("Wand Hit");
             Explode(other);
         }
         else if (other.CompareTag(Consts.GENERAL_ENEMY_TAG))
         {
+            m_AudioManager.Play("Wand Hit");
             Explode(other);
         }
 
         if (other.CompareTag(Consts.BUSH_PHYSICS_LAYER))
         {
+            m_AudioManager.Play("Wand Hit");
             Explode(other);
         }
 
         if (other.CompareTag(Consts.POT_PHYSICS_LAYER))
         {
+            m_AudioManager.Play("Wand Hit");
             Explode(other);
         }
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Wall")) {
+            m_AudioManager.Play("Wand Hit");
             Explode(other);
         }
     }
@@ -127,7 +135,6 @@ public class HeartProjectile : MonoBehaviour
             if (colls.CompareTag(Consts.PLAYER_TAG))
             {
                 colls.GetComponent<PlayerManager>().TakeDamage((int)(m_Damage * (m_Scale * 2)));
-                Debug.Log("Dealing " + (int)(m_Damage * (m_Scale * 2)) + " initial self damage");
             }
 
             if (colls.CompareTag(Consts.BUSH_PHYSICS_LAYER))
@@ -137,6 +144,8 @@ public class HeartProjectile : MonoBehaviour
 
             if (colls.CompareTag(Consts.POT_PHYSICS_LAYER))
             {
+                m_AudioManager.Play("potBreak");
+                m_AudioManager.Play("Wand Hit");
                 Destroy(colls.gameObject);
             }
         }

@@ -84,6 +84,7 @@ public class PlayerManager : MonoBehaviour {
     #region Cached References
     private PlayerCanvas m_PlayerCanvas;
     private GameObject m_WeaponObject;
+    private AudioManager m_AudioManager;
     #endregion
     #endregion
 
@@ -98,6 +99,7 @@ public class PlayerManager : MonoBehaviour {
         SetupBasicVariables();
         SetupCachedComponents();
         SetupCachedReferences();
+        m_AudioManager = GetComponent<AudioManager>();
     }
 
     private void SetupBasicVariables() {
@@ -271,6 +273,7 @@ public class PlayerManager : MonoBehaviour {
     #region Health Methods
     public void TakeDamage(int damage, PlayerManager from = null) {
         TakeDamage(null, damage, from);
+        TakeDamageSounds();
     }
 
     public void TakeDamage(BaseWeaponItem weaponUsed, int damage, PlayerManager from = null) {
@@ -280,6 +283,7 @@ public class PlayerManager : MonoBehaviour {
             StartCoroutine(DamageFlash());
         }
 
+        TakeDamageSounds();
         m_PlayerCanvas.SliderDamage(damage);
         if (m_Data.CurrHealth <= 0) {
             if (weaponUsed != null) {
@@ -287,12 +291,32 @@ public class PlayerManager : MonoBehaviour {
             }
 
             Die();
+            m_AudioManager.Play("Death_Player");
             if (from != null) {
                 PKEvent(from.GetID(), GetID());
             }
             else {
                 DropSpotlightEvent(gameObject.transform.position.x, gameObject.transform.position.y);
             }
+        }
+    }
+
+    private void TakeDamageSounds() {
+        int randomNumber = UnityEngine.Random.Range(1, 4);
+        float randomPitch = UnityEngine.Random.Range(0.8f, 1.3f);
+        switch (randomNumber) {
+            case 1:
+                m_AudioManager.Play("Light Hit 1", randomPitch);
+                break;
+            case 2:
+                m_AudioManager.Play("Heavy Hit 1", randomPitch);
+                break;
+            case 3:
+                m_AudioManager.Play("Heavy Hit 2", randomPitch);
+                break;
+            default:
+                m_AudioManager.Play("Light Hit 1", randomPitch);
+                break;
         }
     }
 

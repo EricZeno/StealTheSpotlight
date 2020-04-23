@@ -2431,9 +2431,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
+  - name: Death_Player
+    clip: {fileID: 8300000, guid: 6c917a1a843268342ad70b1008d1a578, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
   - name: Light Hit 1
     clip: {fileID: 8300000, guid: 2f45b72e28c91a748bebb3ba0ffcbad0, type: 3}
-    volume: 0.25
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Heavy Hit 1
+    clip: {fileID: 8300000, guid: c6e1d81d26e019d408e2ef3bd9a2ed4c, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Heavy Hit 2
+    clip: {fileID: 8300000, guid: 8eb32c00c339af64ebd194c7ad6f6903, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Scattershot Use
+    clip: {fileID: 8300000, guid: ac535341eb016eb4bb6359b866cd19ff, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Wand use
+    clip: {fileID: 8300000, guid: 246e3aabd6397ea4cb16577dbc799f4b, type: 3}
+    volume: 0.15
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -2858,6 +2888,7 @@ GameObject:
   - component: {fileID: 2168759095974483902}
   - component: {fileID: 8594619472164873170}
   - component: {fileID: 1654940296048858940}
+  - component: {fileID: 4987538931734168782}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -2965,6 +2996,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98f769fd2753c1949b7b5bde7bde933e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4987538931734168782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5204634543954287223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41d7687816876d45983ea9e2437011c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: 
+    clip: {fileID: 8300000, guid: b9794cc88ceff634db3c79bda996d45f, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &5621529883772597056
 GameObject:
   m_ObjectHideFlags: 0

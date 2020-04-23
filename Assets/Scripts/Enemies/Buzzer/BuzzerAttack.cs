@@ -43,6 +43,10 @@ public class BuzzerAttack : EnemyAttack {
     [SerializeField]
     [Tooltip("The bullet prefab")]
     private GameObject m_Bullet;
+
+    [SerializeField]
+    [Tooltip("AudioManager")]
+    private AudioManager m_AudioManager;
     #endregion
     #endregion
 
@@ -64,8 +68,8 @@ public class BuzzerAttack : EnemyAttack {
     #region Attacks
     private IEnumerator Laser() {
         // Play charging animation
-
         m_Manager.SetFlash(true);
+        m_AudioManager.Play("BuzzCharge");
 
         int numOfFlashes = 5;
         float flashDelay = m_LaserChargeTime / numOfFlashes;
@@ -97,6 +101,8 @@ public class BuzzerAttack : EnemyAttack {
 
         int damage = m_Manager.GetEnemyData().Damage;
 
+
+        m_AudioManager.Play("BuzzLazer");
         GameObject upLaser = Instantiate(m_Laser, transform);
         upLaser.GetComponent<BuzzerLaser>().SetupAndFire(upOrigin, upDistance, m_LaserWidth, Vector2.up, damage);
 
@@ -132,6 +138,7 @@ public class BuzzerAttack : EnemyAttack {
         int damage = m_Manager.GetEnemyData().Damage;
 
         for (int i = 0; i < m_NumBullets; i++) {
+            m_AudioManager.Play("BuzzFire");
             GameObject bullet = Instantiate(m_Bullet, transform);
             bullet.GetComponent<Projectile>().Setup(damage, firingVector, m_ShotSpeed);
 

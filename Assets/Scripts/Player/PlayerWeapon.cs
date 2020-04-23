@@ -47,7 +47,8 @@ public class PlayerWeapon : MonoBehaviour {
     private GameObject m_Weapon;
     private SpriteRenderer m_WeaponSprite;
     private Animator m_WeaponAnimator;
-    private AudioManager m_Audio;
+    private AudioManager m_AudioManager;
+
     #endregion
     #endregion
 
@@ -65,7 +66,8 @@ public class PlayerWeapon : MonoBehaviour {
         m_OnAttackEffects = new List<ItemAndEffect>();
 
         m_Manager = GetComponent<PlayerManager>();
-        m_Audio = GetComponent<AudioManager>();
+
+        m_AudioManager = GetComponent<AudioManager>();
     }
 
     private void Start() {
@@ -131,8 +133,12 @@ public class PlayerWeapon : MonoBehaviour {
 
         //Special attack effects
         m_WeaponData.Attack();
+        //To Jasmine: Feel free to uncomment this line below, and then look at my comment below
+        //m_AudioManager.Play(m_WeaponData.PlayAudio());
 
         if (m_WeaponData.IsRanged) {
+            //To Jasmine: delete the line below once you've taken care of the above.
+            m_AudioManager.Play(m_WeaponData.PlayAudio());
             FireProjectile();
         }
 
@@ -161,8 +167,6 @@ public class PlayerWeapon : MonoBehaviour {
             Vector2 dir = (enemyManager.transform.position - transform.position).normalized;
             enemyManager.GetComponent<EnemyMovement>().ApplyExternalForce(dir * data.KnockbackPower);
         }
-
-        m_Audio.Play("Light Hit 1");
     }
 
     private WeaponBaseData ApplyOnAttackEffects(WeaponBaseData origValues) {

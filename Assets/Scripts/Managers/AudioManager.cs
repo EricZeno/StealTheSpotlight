@@ -113,6 +113,15 @@ public class AudioManager : MonoBehaviour {
     #region Play Sounds
     public void Play(string name) {
         Sound s = Array.Find(sounds, sounds => sounds.Name == name);
+        if (s.Source == null) {
+            return;
+        }
+        s.Source.Play();
+    }
+
+    public void Play(string name, float pitch) {
+        Sound s = Array.Find(sounds, sounds => sounds.Name == name);
+        s.Pitch = pitch;
         s.Source.Play();
     }
     #endregion

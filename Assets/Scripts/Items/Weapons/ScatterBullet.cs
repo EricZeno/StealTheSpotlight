@@ -20,6 +20,7 @@ public class ScatterBullet : MonoBehaviour {
     private BoxCollider2D m_Collider;
     private PlayerManager m_Manager;
     private BaseWeaponItem m_WeaponData;
+    private AudioManager m_AudioManager;
     #endregion
 
     #region Initialization
@@ -27,6 +28,8 @@ public class ScatterBullet : MonoBehaviour {
         m_Rb = GetComponent<Rigidbody2D>();
         m_Renderer = GetComponent<SpriteRenderer>();
         m_Collider = GetComponent<BoxCollider2D>();
+        m_AudioManager = GetComponent<AudioManager>();
+
     }
     #endregion
 
@@ -44,6 +47,7 @@ public class ScatterBullet : MonoBehaviour {
         m_Manager = player;
         m_Knockback = knockback;
         m_MaxBounces = bounces;
+
     }
 
     private void SetDamage(int damage) {
@@ -86,6 +90,7 @@ public class ScatterBullet : MonoBehaviour {
             other.GetComponent<PlayerManager>().TakeDamage(m_Damage);
             Vector2 dir = (other.GetComponent<PlayerManager>().transform.position - transform.position).normalized;
             other.GetComponent<PlayerMovement>().ApplyExternalForce(dir * m_Knockback);
+            m_AudioManager.Play("Scattershot Impact");
             Destroy(gameObject);
         }
         else if (other.CompareTag(Consts.GENERAL_ENEMY_TAG))
@@ -94,17 +99,21 @@ public class ScatterBullet : MonoBehaviour {
             enemyManager.TakeDamage(m_WeaponData, m_Damage, m_Manager.GetID());
             Vector2 dir = (enemyManager.transform.position - transform.position).normalized;
             enemyManager.GetComponent<EnemyMovement>().ApplyExternalForce(dir * m_Knockback);
+            m_AudioManager.Play("Scattershot Impact");
             Destroy(gameObject);
         }
 
         if (other.CompareTag(Consts.BUSH_PHYSICS_LAYER))
         {
+            m_AudioManager.Play("Scattershot Impact");
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
 
         if (other.CompareTag(Consts.POT_PHYSICS_LAYER))
         {
+            m_AudioManager.Play("potBreak");
+            m_AudioManager.Play("Scattershot Impact");
             Destroy(other.gameObject);
             Destroy(gameObject);
         }

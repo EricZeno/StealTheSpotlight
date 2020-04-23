@@ -33,6 +33,7 @@ public class Spikes : MonoBehaviour {
     private SpriteRenderer spriteRenderer;
     private bool m_spike;
     private PlayerManager[] players;
+    private AudioManager m_AudioManager;
     #endregion
 
     #region Initialization
@@ -40,6 +41,7 @@ public class Spikes : MonoBehaviour {
         players = new PlayerManager[4];
         spriteRenderer = GetComponent<SpriteRenderer>();
         m_spike = false;
+        m_AudioManager = GetComponent<AudioManager>();
     }
     #endregion
 
@@ -76,9 +78,11 @@ public class Spikes : MonoBehaviour {
     private IEnumerator ActivateSpikes() {
         spriteRenderer.sprite = spike_half;
         yield return new WaitForSeconds(m_armtime);
+        m_AudioManager.Play("spike");
         spriteRenderer.sprite = spike_enabled;
         m_spike = true;
         yield return new WaitForSeconds(m_disarmtime);
+        m_AudioManager.Play("spike2");
         spriteRenderer.sprite = spike_disabled;
         m_spike = false;
     }

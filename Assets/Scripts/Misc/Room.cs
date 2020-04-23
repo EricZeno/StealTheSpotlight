@@ -16,12 +16,14 @@ public class Room : MonoBehaviour {
     private List<GameObject> m_Doors;
     private int[] m_mobkills;
     private int m_totalmobs;
+    private AudioManager m_AudioManager;
     #endregion
 
     #region Initialization
     private void Awake() {
         m_Players = new List<PlayerManager>();
         m_Doors = new List<GameObject>();
+        m_AudioManager = GetComponent<AudioManager>();
     }
 
     private void Start() {
@@ -117,6 +119,8 @@ public class Room : MonoBehaviour {
             // Play door opening animation
             door.SetActive(false);
         }
+        m_AudioManager.Play("Opendoor");
+
     }
     #endregion
 }

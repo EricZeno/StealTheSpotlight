@@ -87,6 +87,7 @@ public class DropManager : MonoBehaviour
 	private static Dictionary<EDropSourceCategory, int[]> m_DropCategoryLists;
 	private static Dictionary<EDropSourceCategory, float> m_DropCategoryDropRates;
 	private static Dictionary<int, int> m_UniqueItemsLeft;
+	private static AudioManager m_AudioManager;
 	#endregion
 
 	#region Initialization
@@ -104,6 +105,7 @@ public class DropManager : MonoBehaviour
 		InitRarityToDR();
 		InitDropCatLists();
 		InitDropCatDR();
+		m_AudioManager = GetComponent<AudioManager>();
 	}
 
 	private void InitRarityToDR()
@@ -284,8 +286,13 @@ public class DropManager : MonoBehaviour
 	#region Dropping Methods
 	public static void DropItem(int itemID, Vector3 position)
 	{
+		PlayDropSound();
 		GameObject item = Instantiate(m_Singleton.m_ItemGO, position, Quaternion.identity);
 		item.GetComponent<ItemGameObject>().SetupGameObject(itemID);
+	}
+
+	private static void PlayDropSound() {
+		m_AudioManager.Play("ItemDrop");
 	}
 	#endregion
 }

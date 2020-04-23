@@ -25,6 +25,7 @@ public class PointManager : MonoBehaviour {
     private int m_SpotlightPlayer;
     private GameObject m_dropped;
     private int m_floor;
+    private AudioManager m_AudioManager;
     #endregion
 
     #region Editor Variables
@@ -65,6 +66,7 @@ public class PointManager : MonoBehaviour {
         m_PlayersPoints = new float[Consts.NUM_MAX_PLAYERS];
         m_SpotlightPlayer = DEFAULT_SPOTLIGHT;
         m_floor = 0;
+        m_AudioManager = GetComponent<AudioManager>();
 
         DontDestroyOnLoad(this);
     }
@@ -98,6 +100,7 @@ public class PointManager : MonoBehaviour {
             SpotlightEvent(player, playerkilled);
         }
         m_PlayersPoints[player] += PK_POINTS;
+        m_AudioManager.Play("PointGain");
         PointsUIEvent(player, m_PlayersPoints[player], m_PointGoal);
         if (m_PlayersPoints[player] >= m_SpotlightPoint && m_SpotlightPlayer == DEFAULT_SPOTLIGHT && m_dropped == null) {
             m_SpotlightPlayer = player;
@@ -113,6 +116,7 @@ public class PointManager : MonoBehaviour {
             points *= m_Multiplier;
         }
         m_PlayersPoints[player] += points;
+        m_AudioManager.Play("PointGain");
         PointsUIEvent(player, m_PlayersPoints[player], m_PointGoal);
         if (m_PlayersPoints[player] >= m_SpotlightPoint && m_SpotlightPlayer == DEFAULT_SPOTLIGHT && m_dropped == null) {
             m_SpotlightPlayer = player;
@@ -144,6 +148,8 @@ public class PointManager : MonoBehaviour {
 
     private void FloorComplete(int player) {
         m_PlayersPoints[player] += FLOOR_CLEARED_POINTS;
+        m_AudioManager.Play("PointGain");
+        m_AudioManager.Play("Win1");
         if (m_PlayersPoints[player] >= m_PointGoal) {
             //Endgame
         }

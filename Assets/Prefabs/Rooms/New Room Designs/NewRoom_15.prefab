@@ -13038,6 +13038,7 @@ GameObject:
   - component: {fileID: 986030905003034492}
   - component: {fileID: 8379954877822412397}
   - component: {fileID: 2819845466658913262}
+  - component: {fileID: -6371133071848571193}
   m_Layer: 0
   m_Name: NewRoom_15
   m_TagString: Untagged
@@ -13160,6 +13161,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bcd7d74470a65a408504bf5ec3ef63e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-6371133071848571193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7719668683417936377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41d7687816876d45983ea9e2437011c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Opendoor
+    clip: {fileID: 8300000, guid: 4b67fa08a87101c4087042e738bb9775, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!1001 &161562919531164923
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13317,6 +13337,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 986030905003034492}
     m_Modifications:
+    - target: {fileID: 8839419801574549575, guid: 1b1346c10637eff4895487fa6240ffce,
+        type: 3}
+      propertyPath: m_Name
+      value: TurretRight Variant (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 8839419801574549568, guid: 1b1346c10637eff4895487fa6240ffce,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13371,11 +13396,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8839419801574549575, guid: 1b1346c10637eff4895487fa6240ffce,
-        type: 3}
-      propertyPath: m_Name
-      value: TurretRight Variant (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b1346c10637eff4895487fa6240ffce, type: 3}
@@ -15717,6 +15737,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 986030905003034492}
     m_Modifications:
+    - target: {fileID: 6849667809695074959, guid: 1ad5335c86fe74d4a8371ea4055ee68d,
+        type: 3}
+      propertyPath: m_Name
+      value: TurretDown
+      objectReference: {fileID: 0}
     - target: {fileID: 6849667809695074952, guid: 1ad5335c86fe74d4a8371ea4055ee68d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15771,11 +15796,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6849667809695074959, guid: 1ad5335c86fe74d4a8371ea4055ee68d,
-        type: 3}
-      propertyPath: m_Name
-      value: TurretDown
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ad5335c86fe74d4a8371ea4055ee68d, type: 3}
@@ -16542,6 +16562,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 986030905003034492}
     m_Modifications:
+    - target: {fileID: 8839419801574549575, guid: 1b1346c10637eff4895487fa6240ffce,
+        type: 3}
+      propertyPath: m_Name
+      value: TurretRight Variant
+      objectReference: {fileID: 0}
     - target: {fileID: 8839419801574549568, guid: 1b1346c10637eff4895487fa6240ffce,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -16596,11 +16621,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8839419801574549575, guid: 1b1346c10637eff4895487fa6240ffce,
-        type: 3}
-      propertyPath: m_Name
-      value: TurretRight Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b1346c10637eff4895487fa6240ffce, type: 3}
@@ -16842,6 +16862,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 986030905003034492}
     m_Modifications:
+    - target: {fileID: 5709232278587121120, guid: 96e4ec5c572f99b40929fd80ab9adedf,
+        type: 3}
+      propertyPath: m_Name
+      value: Spike
+      objectReference: {fileID: 0}
     - target: {fileID: 5709232278587121125, guid: 96e4ec5c572f99b40929fd80ab9adedf,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -16896,11 +16921,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5709232278587121120, guid: 96e4ec5c572f99b40929fd80ab9adedf,
-        type: 3}
-      propertyPath: m_Name
-      value: Spike
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96e4ec5c572f99b40929fd80ab9adedf, type: 3}

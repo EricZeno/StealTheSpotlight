@@ -9290,6 +9290,7 @@ GameObject:
   - component: {fileID: 3757884528900073711}
   - component: {fileID: -441854948713668898}
   - component: {fileID: 3841040449928905361}
+  - component: {fileID: 1351933433362463688}
   m_Layer: 0
   m_Name: Room_016
   m_TagString: Untagged
@@ -9356,6 +9357,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bcd7d74470a65a408504bf5ec3ef63e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1351933433362463688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5956116299633413738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41d7687816876d45983ea9e2437011c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Opendoor
+    clip: {fileID: 8300000, guid: 4b67fa08a87101c4087042e738bb9775, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &7070095432866805171
 GameObject:
   m_ObjectHideFlags: 0

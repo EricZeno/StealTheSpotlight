@@ -8637,7 +8637,7 @@ Tilemap:
   - first: {x: 3, y: -18, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 4
+      m_TileSpriteIndex: 11
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -9339,7 +9339,7 @@ Tilemap:
   - first: {x: 3, y: -2, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileSpriteIndex: 4
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -10065,9 +10065,8 @@ Tilemap:
   m_TileSpriteArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 6095402231189942217, guid: 20443dae55511134180153749068d0e3,
-      type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: -6138418904002696234, guid: 20443dae55511134180153749068d0e3,
       type: 3}
@@ -10075,7 +10074,7 @@ Tilemap:
     m_Data: {fileID: -6285246469005429230, guid: 20443dae55511134180153749068d0e3,
       type: 3}
   - m_RefCount: 1
-    m_Data: {fileID: -4186141779824747519, guid: 20443dae55511134180153749068d0e3,
+    m_Data: {fileID: 6095402231189942217, guid: 20443dae55511134180153749068d0e3,
       type: 3}
   - m_RefCount: 2
     m_Data: {fileID: -3697342814668796739, guid: 20443dae55511134180153749068d0e3,
@@ -10095,8 +10094,9 @@ Tilemap:
   - m_RefCount: 6
     m_Data: {fileID: 6671886275073567000, guid: 20443dae55511134180153749068d0e3,
       type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -4186141779824747519, guid: 20443dae55511134180153749068d0e3,
+      type: 3}
   - m_RefCount: 50
     m_Data: {fileID: -2167075864626566054, guid: 20443dae55511134180153749068d0e3,
       type: 3}
@@ -11341,6 +11341,7 @@ GameObject:
   - component: {fileID: 629323350422700839}
   - component: {fileID: 8169335303881269814}
   - component: {fileID: 2465370197691580341}
+  - component: {fileID: 6929196493467977089}
   m_Layer: 0
   m_Name: NewRoom_03
   m_TagString: Untagged
@@ -11501,6 +11502,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bcd7d74470a65a408504bf5ec3ef63e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6929196493467977089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7941286944097166754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41d7687816876d45983ea9e2437011c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Opendoor
+    clip: {fileID: 8300000, guid: 4b67fa08a87101c4087042e738bb9775, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!1001 &253059433821695759
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -17,6 +17,7 @@ public class EnemyAttack : MonoBehaviour {
     #region Cached Components
     protected EnemyManager m_Manager;
     protected EnemyMovement m_Movement;
+    protected EnemyGraphics m_Graphics;
     #endregion
     #endregion
 
@@ -24,6 +25,7 @@ public class EnemyAttack : MonoBehaviour {
     protected virtual void Awake() {
         m_Manager = GetComponentInParent<EnemyManager>();
         m_Movement = GetComponentInParent<EnemyMovement>();
+        m_Graphics = GetComponentInParent<EnemyGraphics>();
     }
     #endregion
 

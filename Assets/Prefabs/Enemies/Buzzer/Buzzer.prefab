@@ -480,12 +480,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Attack: {fileID: 6985350199722870457}
-  m_MinStationaryTime: 2
-  m_MaxStationaryTime: 4
+  m_MinStationaryTime: 1
+  m_MaxStationaryTime: 3
   m_MinCloseAttackRange: 0
-  m_MaxCloseAttackRange: 5
-  m_MinLongAttackRange: 10
-  m_MaxLongAttackRange: 18
+  m_MaxCloseAttackRange: 4
+  m_MinLongAttackRange: 5
+  m_MaxLongAttackRange: 10
   m_RetreatChance: 0.3
   m_MovementNoise: 3
   m_MoveTime: 1

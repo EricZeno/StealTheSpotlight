@@ -37,11 +37,7 @@ public class Pony : BaseWeaponItem
             m_CurrentCharge -= m_ChargeLostPerSecond;
 
             if (m_CurrentCharge <= 0) {
-                m_CurrentCharge = 0;
-                m_PonyMode = false;
-
-                m_manager.m_Weapon.SetAnimationBool(m_PonyClipBool, false);
-                m_manager.GetPlayerData().SubtractXPercBaseSpeed(m_SpeedMultiplier);
+                ResetPony();
             }
         } else {
             m_CurrentCharge += m_ChargeGainedPerSecond;
@@ -54,5 +50,17 @@ public class Pony : BaseWeaponItem
                 m_manager.GetPlayerData().AddXPercBaseSpeed(m_SpeedMultiplier);
             }
         }
+    }
+
+    public override void OnUnequip() {
+        ResetPony();
+    }
+
+    private void ResetPony() {
+        m_CurrentCharge = 0;
+        m_PonyMode = false;
+
+        m_manager.m_Weapon.SetAnimationBool(m_PonyClipBool, false);
+        m_manager.GetPlayerData().SubtractXPercBaseSpeed(m_SpeedMultiplier);
     }
 }

@@ -25,5 +25,5 @@ MonoBehaviour:
   m_ChargeGainedPerSecond: 20
   m_ChargeLostPerSecond: 10
   m_MaxCharge: 100
-  m_SpeedMultiplier: 3
+  m_SpeedMultiplier: 2
   m_PonyClipBool: RidePony

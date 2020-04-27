@@ -74,4 +74,6 @@ public abstract class BaseWeaponItem : BaseItem {
 
 
     #endregion
+
+    public virtual void OnUnequip() { }
 }

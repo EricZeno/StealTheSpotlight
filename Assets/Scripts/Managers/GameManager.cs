@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.PlayerInput;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [System.Serializable]
 public struct PlayerSprites {
@@ -46,6 +47,8 @@ public class GameManager : MonoBehaviour {
     #region Constants
     private const float TIME_TO_WAIT_BEFORE_PLAYER_SETUP = .2f;
     private const int NULL = -1;
+    private const int STARTSCENE = 0;
+    private const int ENDSCENE = 3;
     #endregion
 
     #region Events and Delegates
@@ -81,6 +84,11 @@ public class GameManager : MonoBehaviour {
 
     private PlayerManager[] m_Players;
     private GameObject[] m_PlayerObjs;
+
+    private string[] m_commands;
+
+    private bool m_paused;
+    private int m_select;
     #endregion
 
     #region Cached Components
@@ -91,8 +99,13 @@ public class GameManager : MonoBehaviour {
     #region Initialization
     private void Awake() {
         if (m_Singleton != null) {
-            Destroy(gameObject);
-            return;
+            if (SceneManager.GetActiveScene().buildIndex != 0) {
+                Destroy(gameObject);
+                return;
+            }
+            else {
+                Destroy(m_Singleton.gameObject);
+            }
         }
         m_Singleton = this;
 
@@ -101,6 +114,12 @@ public class GameManager : MonoBehaviour {
         m_NumPlayers = 0;
         m_GameInProgress = false;
         m_AudioManager = GetComponent<AudioManager>();
+        m_paused = false;
+        m_select = 0;
+
+        m_commands = new string[2];
+        m_commands[0] = "resume";
+        m_commands[1] = "exit";
 
         DontDestroyOnLoad(this);
     }
@@ -112,6 +131,8 @@ public class GameManager : MonoBehaviour {
         DungeonGenerator.DungeonLoadedEvent += StartFloor;
         PointManager.SpotlightEvent += SpotlightChange;
         PointManager.PointsUIEvent += PlayerPointUI;
+        PlayerManager.PauseEvent += Pause;
+        PlayerManager.SelectEvent += Select;
     }
     #endregion
 
@@ -128,6 +149,69 @@ public class GameManager : MonoBehaviour {
         get {
             return m_HittableLayers;
         }
+    }
+    #endregion
+
+    #region Pause Screen
+    private void Pause() {
+        if (SceneManager.GetActiveScene().buildIndex != STARTSCENE && SceneManager.GetActiveScene().buildIndex != ENDSCENE) {
+            if (!m_paused) {
+                for (int i = 0; i < m_NumPlayers; i++) {
+                    m_Players[i].PauseMap();
+                }
+                m_paused = true;
+                Time.timeScale = 0;
+                GetComponentInChildren<Canvas>(true).gameObject.SetActive(true);
+            }
+            else if (m_paused) {
+                for (int i = 0; i < m_NumPlayers; i++) {
+                    m_Players[i].RegularMap();
+                }
+                m_paused = false;
+                Time.timeScale = 1;
+                GetComponentInChildren<Canvas>(true).gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void Select(string input) {
+        if (input == "up") {
+            GetComponentInChildren<Canvas>(true).gameObject.GetComponentsInChildren<Image>(true)[2 * (m_select + 1)].enabled = false;
+            m_select--;
+            if (m_select < 0) {
+                m_select += m_commands.Length;
+            }
+            GetComponentInChildren<Canvas>(true).gameObject.GetComponentsInChildren<Image>(true)[2 * (m_select + 1)].enabled = true;
+        }
+        else if (input == "down") {
+            GetComponentInChildren<Canvas>(true).gameObject.GetComponentsInChildren<Image>(true)[2 * (m_select + 1)].enabled = false;
+            m_select++;
+            if (m_select > m_commands.Length - 1) {
+                m_select -= m_commands.Length;
+            }
+            GetComponentInChildren<Canvas>(true).gameObject.GetComponentsInChildren<Image>(true)[2 * (m_select + 1)].enabled = true;
+        }
+        else if (input == "choose") {
+            switch (m_commands[m_select]) {
+                case "resume":
+                    Pause();
+                    break;
+                case "exit":
+                    Exit();
+                    break;
+            }
+        }
+    }
+
+    private void Exit() {
+        Time.timeScale = 1;
+        Pause();
+        for (int i = 0; i < m_Players.Length; i++) {
+            if (m_PlayerObjs[i] != null) {
+                Destroy(m_PlayerObjs[i].gameObject);
+            }
+        }
+        SceneManager.LoadScene(0);
     }
     #endregion
 
@@ -259,6 +343,8 @@ public class GameManager : MonoBehaviour {
         DungeonGenerator.DungeonLoadedEvent -= StartFloor;
         PointManager.SpotlightEvent -= SpotlightChange;
         PointManager.PointsUIEvent -= PlayerPointUI;
+        PlayerManager.PauseEvent -= Pause;
+        PlayerManager.SelectEvent -= Select;
     }
     #endregion
 }

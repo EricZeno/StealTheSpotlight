@@ -98,7 +98,7 @@
                 {
                     "name": "",
                     "id": "d10c6070-e2c3-4227-91cc-b9b96dd5ca7f",
-                    "path": "<Gamepad>/select",
+                    "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1166,6 +1166,90 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "Pause",
+            "id": "79d2bcb6-f47d-4cf7-8504-301ce6ee20c9",
+            "actions": [
+                {
+                    "name": "Unpause",
+                    "type": "Button",
+                    "id": "d28302d9-6238-4ff5-94dc-35bb175f08ae",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Up",
+                    "type": "Button",
+                    "id": "ca717a8a-6ec2-442f-bea4-d6d264465060",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Down",
+                    "type": "Button",
+                    "id": "f3984ec4-af20-47f2-8636-290ec7e10773",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Choose",
+                    "type": "Button",
+                    "id": "644cff95-a269-4e26-892e-f732e566ca99",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ac8a840c-fae9-4766-bf8b-1531bd58972c",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Unpause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2c77c62d-908e-4049-8a21-f65d50bb05b9",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "029ca4af-40b1-4767-bc53-d34e62319850",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8f3756c2-f6ff-4f13-aaeb-7c03fa0edc4a",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Choose",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PointManager : MonoBehaviour {
@@ -58,8 +59,13 @@ public class PointManager : MonoBehaviour {
     // Start is called before the first frame update
     private void Awake() {
         if (m_Singleton != null) {
-            Destroy(gameObject);
-            return;
+            if (SceneManager.GetActiveScene().buildIndex != 0) {
+                Destroy(gameObject);
+                return;
+            }
+            else {
+                Destroy(m_Singleton.gameObject);
+            }
         }
         m_Singleton = this;
 

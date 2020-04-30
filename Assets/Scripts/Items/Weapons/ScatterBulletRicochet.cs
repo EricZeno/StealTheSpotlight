@@ -21,8 +21,8 @@ public class ScatterBulletRicochet : MonoBehaviour
     #region Bouncy Utils
     private void OnCollisionEnter2D(Collision2D collision) {
         Collider2D other = collision.collider;
-
-        if (other.gameObject.layer == LayerMask.NameToLayer("Wall")) {
+        Debug.Log(other.gameObject);
+        if (other.gameObject.layer == LayerMask.NameToLayer("Wall") || other.gameObject.CompareTag("Turret") || other.gameObject.CompareTag("Rock")) {
             if (m_Bounces == 0) {
                 m_AudioManager.Play("Scattershot Bounce");
                 BeginDestroy();

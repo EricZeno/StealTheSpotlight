@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[DisallowMultipleComponent]
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(Collider2D))]
-public class HeartProjectile : MonoBehaviour
+public class FidgeProjectile : MonoBehaviour
 {
     #region Private Variables
     private int m_Damage;
@@ -20,9 +16,10 @@ public class HeartProjectile : MonoBehaviour
     private BoxCollider2D m_Collider;
     private PlayerManager m_Manager;
     private BaseWeaponItem m_WeaponData;
-    private float m_Scale;
-    private float m_Radius;
     private AudioManager m_AudioManager;
+    private Transform spinner;
+    private bool m_Outbound;
+    private Vector3 m_PlayerLocation;
     #endregion
 
     #region Initialization
@@ -32,21 +29,19 @@ public class HeartProjectile : MonoBehaviour
         m_Renderer = GetComponent<SpriteRenderer>();
         m_Collider = GetComponent<BoxCollider2D>();
         m_AudioManager = GetComponent<AudioManager>();
+        spinner = GetComponent<Transform>();
     }
     #endregion
 
     #region Projectile Setup Methods
 
-    public void Setup(int damage, Vector2 dir, float speed, PlayerManager player, float knockback, BaseWeaponItem data, float scale, float radius)
+    public void Setup(int damage, Vector2 dir, float speed, PlayerManager player, float knockback )
     {
         SetDamage(damage);
         SetVelocity(dir, speed);
         m_Manager = player;
         m_Knockback = knockback;
-        m_WeaponData = data;
-        m_Scale = scale;
-        m_Radius = radius;
- 
+        m_Outbound = true;
     }
 
     private void SetDamage(int damage)
@@ -58,6 +53,14 @@ public class HeartProjectile : MonoBehaviour
                 "zero");
         }
         m_Damage = damage;
+    }
+
+    IEnumerator BoomerangReturn() {
+        yield return new WaitForSeconds(2);
+        if (m_Outbound) {
+            m_Outbound = false;
+            m_Rb.velocity = Vector2.zero;
+        }
     }
 
     private void SetVelocity(Vector2 dir, float speed)
@@ -77,6 +80,17 @@ public class HeartProjectile : MonoBehaviour
         }
 
         m_Rb.velocity = dir * speed;
+        StartCoroutine(BoomerangReturn());
+    }
+
+    private void Update()
+    {
+        m_PlayerLocation = m_Manager.transform.position;
+        spinner.Rotate(0, 0, 500*Time.deltaTime);
+        if (!m_Outbound) {
+    
+            spinner.position = Vector3.MoveTowards(spinner.position, m_PlayerLocation, 0.3f);
+        }
     }
     #endregion
 
@@ -85,72 +99,48 @@ public class HeartProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.gameObject);
+
         if (other.gameObject.GetInstanceID() == m_Manager.gameObject.GetInstanceID())
         {
-            return;
+            if (m_Outbound)
+            {
+                return;
+            }
+            else {
+                Destroy(gameObject);
+            }
         }
         else if (other.CompareTag(Consts.PLAYER_TAG))
         {
-            m_AudioManager.Play("Wand Hit");
-            Explode(other);
+            other.GetComponent<PlayerManager>().TakeDamage(m_Damage);
+            Vector2 dir = (other.GetComponent<PlayerManager>().transform.position - transform.position).normalized;
+            other.GetComponent<PlayerMovement>().ApplyExternalForce(dir * m_Knockback);
         }
         else if (other.CompareTag(Consts.GENERAL_ENEMY_TAG))
         {
-            m_AudioManager.Play("Wand Hit");
-            Explode(other);
+            EnemyManager enemyManager = other.GetComponent<EnemyManager>();
+            enemyManager.TakeDamage(m_WeaponData, m_Damage, m_Manager.GetID());
+            Vector2 dir = (enemyManager.transform.position - transform.position).normalized;
+            enemyManager.GetComponent<EnemyMovement>().ApplyExternalForce(dir * m_Knockback);
         }
 
         if (other.CompareTag(Consts.BUSH_PHYSICS_LAYER))
         {
-            m_AudioManager.Play("Wand Hit");
-            Explode(other);
+            m_AudioManager.Play("Scattershot Impact");
+            Destroy(other.gameObject);
         }
 
         if (other.CompareTag(Consts.POT_PHYSICS_LAYER))
         {
-            m_AudioManager.Play("Wand Hit");
-            Explode(other);
+            m_AudioManager.Play("potBreak");
+            m_AudioManager.Play("Scattershot Impact");
+            Destroy(other.gameObject);
         }
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Wall") || other.CompareTag("Rock") || other.CompareTag("Turret")) {
-            m_AudioManager.Play("Wand Hit");
-            Explode(other);
+            m_Outbound = false;
+            m_Rb.velocity = Vector2.zero;
         }
-    }
-
-    private void Explode(Collider2D other) {
-        Vector3 position = other.transform.position;
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(position, m_Radius * m_Scale);
-
-        foreach (Collider2D colls in hitColliders)
-        {
-
-            if (colls.CompareTag(Consts.GENERAL_ENEMY_TAG))
-            {
-
-                EnemyManager enemyManager = colls.GetComponent<EnemyManager>();
-                enemyManager.TakeDamage(m_WeaponData, (int)(m_Damage * (m_Scale * 2)), m_Manager.GetID());
-
-            }
-            if (colls.CompareTag(Consts.PLAYER_TAG))
-            {
-                colls.GetComponent<PlayerManager>().TakeDamage((int)(m_Damage * (m_Scale * 2)));
-            }
-
-            if (colls.CompareTag(Consts.BUSH_PHYSICS_LAYER))
-            {
-                Destroy(colls.gameObject);
-            }
-
-            if (colls.CompareTag(Consts.POT_PHYSICS_LAYER))
-            {
-                m_AudioManager.Play("potBreak");
-                m_AudioManager.Play("Wand Hit");
-                Destroy(colls.gameObject);
-            }
-        }
-        Destroy(gameObject);
     }
     #endregion
 }

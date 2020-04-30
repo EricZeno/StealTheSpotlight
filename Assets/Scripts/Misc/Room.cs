@@ -126,11 +126,12 @@ public class Room : MonoBehaviour {
 
     #region Doors
     public void OpenDoors() {
+        m_AudioManager.Play("Opendoor");
         foreach (GameObject door in m_Doors) {
             // Play door opening animation
             door.SetActive(false);
         }
-        m_AudioManager.Play("Opendoor");
+
 
     }
     #endregion

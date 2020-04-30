@@ -146,12 +146,7 @@ public class Inventory {
             case m_WeaponStartingIndex:
                 m_UI.ClearWeaponOneImage();
                 break;
-            case m_WeaponStartingIndex + 1:
-                m_UI.ClearWeaponTwoImage();
-                break;
-            case m_ActiveItemIndex:
-                m_UI.ClearActiveImage();
-                break;
+
         }
 
         // If the item was a passive, decrement the number of passives
@@ -220,7 +215,6 @@ public class Inventory {
         }
 
         // Insert active item into active item slot
-        m_UI.SetActiveItemImage(itemID);
         m_Inventory[m_ActiveItemIndex] = itemID;
     }
 
@@ -375,7 +369,6 @@ public class Inventory {
             return;
         }
 
-        m_UI.SwapWeaponImage();
         int temp = m_Inventory[m_WeaponStartingIndex];
         m_Inventory[m_WeaponStartingIndex] = m_Inventory[m_WeaponStartingIndex + 1];
         m_Inventory[m_WeaponStartingIndex + 1] = temp;

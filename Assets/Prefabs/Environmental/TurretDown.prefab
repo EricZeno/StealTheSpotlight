@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 6849667809695074955}
   - component: {fileID: 6849667809695074954}
   - component: {fileID: 6849667809695074953}
+  - component: {fileID: 899120466195496551}
   m_Layer: 17
   m_Name: TurretDown
-  m_TagString: Untagged
+  m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,3 +128,24 @@ MonoBehaviour:
   m_bullet: {fileID: 7612764531837687787, guid: c186850bfae374f139781d027fdfd4a4,
     type: 3}
   m_shotspeed: 5
+--- !u!50 &899120466195496551
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6849667809695074959}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

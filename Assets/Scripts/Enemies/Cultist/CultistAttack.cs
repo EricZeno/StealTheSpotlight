@@ -26,7 +26,7 @@ public class CultistAttack : EnemyAttack {
     private void Awake() {
         base.Awake();
         m_Damage = m_Manager.GetEnemyData().Damage;
-        m_Rune.transform.localScale = new Vector3(m_RuneRadius, m_RuneRadius, 1);
+        //m_Rune.transform.localScale = new Vector3(m_RuneRadius, m_RuneRadius, 1);
     }
     #endregion
 
@@ -45,7 +45,7 @@ public class CultistAttack : EnemyAttack {
         rune.SetActive(true);
         yield return new WaitForSeconds(m_CastTime);
 
-        RaycastHit2D[] targets = Physics2D.CircleCastAll(rune.transform.position, m_RuneRadius / 10, Vector3.up, 0.01f);
+        RaycastHit2D[] targets = Physics2D.CircleCastAll(rune.transform.position, m_RuneRadius, Vector3.up, 0.01f);
         foreach (RaycastHit2D hit in targets) {
             if (hit.collider.gameObject.tag == Consts.PLAYER_TAG) {
                 PlayerManager player = hit.collider.gameObject.GetComponent<PlayerManager>();

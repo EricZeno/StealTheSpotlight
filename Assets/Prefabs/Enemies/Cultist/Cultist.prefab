@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Data:
     m_BasePower: 0
-    m_BaseMovementSpeed: 1
+    m_BaseMovementSpeed: 2
     m_Tenacity: 0
     m_BaseHealth: 20
     m_points: 0
@@ -232,7 +232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Rune: {fileID: 4390007218831384845, guid: 6ba7eb6c00bcaec4dabfe736aa752281, type: 3}
   m_CastTime: 2
-  m_RuneRadius: 50
+  m_RuneRadius: 3.5
 --- !u!1 &5559357316559676992
 GameObject:
   m_ObjectHideFlags: 0

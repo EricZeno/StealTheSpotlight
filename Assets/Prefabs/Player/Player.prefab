@@ -2211,7 +2211,7 @@ MonoBehaviour:
     m_BaseMovementSpeed: 10
     m_Tenacity: 0
     m_BaseHealth: 1000
-    m_InteractionRadius: 0.7
+    m_InteractionRadius: 1
     m_RespawnTime: 3
   m_ScriptsToDisable:
   - {fileID: 4462817946423847186}
@@ -2975,7 +2975,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5, y: 5}
+    oldSize: {x: 3.3333333, y: 3.3333333}
     newSize: {x: 1.25, y: 2.79}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

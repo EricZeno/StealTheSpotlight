@@ -114,4 +114,13 @@ public class Greatsword : BaseWeaponItem {
         anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(oldClip, newClip));
     }
     #endregion
+
+    public override void OnUnequip() {
+        m_CurrentCharge = 0;
+
+        m_PrevThreshold = 0;
+        m_PrevThresholdIndex = 0;
+        m_PassedThreshold = false;
+        OverrideAnimations();
+    }
 }

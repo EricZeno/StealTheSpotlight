@@ -277,7 +277,9 @@ public class PlayerManager : MonoBehaviour {
     }
 
     public void TakeDamage(BaseWeaponItem weaponUsed, int damage, PlayerManager from = null) {
-        m_Data.TakeDamage(damage);
+        //m_Data.TakeDamage(damage);
+
+        m_Data.TakeDamage(300);
 
         if (!m_IsFlashing) {
             StartCoroutine(DamageFlash());

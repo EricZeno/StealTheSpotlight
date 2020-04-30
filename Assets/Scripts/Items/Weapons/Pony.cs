@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Pony", menuName = "Items/Weapons/Pony")]
-public class Pony : BaseWeaponItem
-{
+public class Pony : BaseWeaponItem {
     #region Editor Variables
     [SerializeField]
     [Tooltip("Charge gained per second.")]
@@ -37,13 +36,10 @@ public class Pony : BaseWeaponItem
             m_CurrentCharge -= m_ChargeLostPerSecond;
 
             if (m_CurrentCharge <= 0) {
-                m_CurrentCharge = 0;
-                m_PonyMode = false;
-
-                m_manager.m_Weapon.SetAnimationBool(m_PonyClipBool, false);
-                m_manager.GetPlayerData().SubtractXPercBaseSpeed(m_SpeedMultiplier);
+                ResetPony();
             }
-        } else {
+        }
+        else {
             m_CurrentCharge += m_ChargeGainedPerSecond;
 
             if (m_CurrentCharge > m_MaxCharge) {
@@ -54,5 +50,21 @@ public class Pony : BaseWeaponItem
                 m_manager.GetPlayerData().AddXPercBaseSpeed(m_SpeedMultiplier);
             }
         }
+    }
+
+    public override void OnUnequip() {
+        ResetPony();
+    }
+
+    private void ResetPony() {
+        m_CurrentCharge = 0;
+
+        if (m_PonyMode) {
+            m_manager.GetPlayerData().SubtractXPercBaseSpeed(m_SpeedMultiplier);
+        }
+
+        m_PonyMode = false;
+        m_manager.m_Weapon.SetAnimationBool(m_PonyClipBool, false);
+
     }
 }

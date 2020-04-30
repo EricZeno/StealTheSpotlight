@@ -82,6 +82,10 @@ public class PlayerWeapon : MonoBehaviour {
 
     #region Main Updates
     private void Update() {
+        if (m_HasWeaponEquipped && !m_WeaponAnimator.GetBool(m_WeaponData.AnimationBool)) {
+            m_WeaponAnimator.SetBool(m_WeaponData.AnimationBool, true);
+        }
+
         if (m_IsInUse && CanUse()) {
             StartCoroutine(UseWeapon());
         }
@@ -209,6 +213,8 @@ public class PlayerWeapon : MonoBehaviour {
     }
 
     public void Unequip() {
+        m_WeaponData.OnUnequip();
+
         m_HasWeaponEquipped = false;
         m_WeaponSprite.sprite = null;
         m_WeaponAnimator.SetBool(m_WeaponData.AnimationBool, false);
@@ -315,11 +321,17 @@ public class PlayerWeapon : MonoBehaviour {
     private void OnEnable() {
         if (m_HasWeaponEquipped) {
             StopAllCoroutines();
+
             m_IsInUse = false;
             m_WeaponAnimator.ResetTrigger("Attack");
             m_WeaponAnimator.SetTrigger("Reset");
+            m_WeaponAnimator.enabled = true;
             m_WeaponAnimator.SetBool(m_WeaponData.AnimationBool, true);
         }
+    }
+
+    private void OnDisable() {
+        m_WeaponData.OnUnequip();
     }
     #endregion
 

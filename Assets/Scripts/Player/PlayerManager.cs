@@ -20,6 +20,10 @@ public class PlayerManager : MonoBehaviour {
     public static event PK PKEvent;
     public delegate void DropSpotlight(float x, float y);
     public static event DropSpotlight DropSpotlightEvent;
+    public delegate void Pause();
+    public static event Pause PauseEvent;
+    public delegate void Select(string input);
+    public static event Select SelectEvent;
     #endregion
 
     #region Interface
@@ -184,11 +188,41 @@ public class PlayerManager : MonoBehaviour {
             m_AimDir = dir;
         }
     }
+
+    private void OnPause(InputValue value) {
+        Debug.Log("Pause");
+        PauseEvent();
+    }
+
+    private void OnUnpause(InputValue value) {
+        Debug.Log("Unpause");
+        PauseEvent();
+    }
+
+    private void OnUp(InputValue value) {
+        SelectEvent("up");
+    }
+
+    private void OnDown(InputValue value) {
+        SelectEvent("down");
+    }
+
+    private void OnChoose(InputValue value) {
+        SelectEvent("choose");
+    }
     #endregion
 
-    #region For Matthew
+    #region Swap Input Maps
     private void OnSwapToMatthew() {
         m_Input.SwitchCurrentActionMap("MatthewGameplay");
+    }
+
+    public void PauseMap() {
+        m_Input.SwitchCurrentActionMap("Pause");
+    }
+
+    public void RegularMap() {
+        SwitchInputMap(InputMaps.GAMEPLAY);
     }
 
     private void OnSwapToRegular() {

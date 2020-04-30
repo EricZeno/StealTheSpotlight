@@ -47,7 +47,7 @@ public class Spikes : MonoBehaviour {
 
     #region Update
     private void Update() {
-        if (m_spike) {
+        if (m_spike && Time.timeScale != 0) {
             foreach (PlayerManager player in players) {
                 if (player != null) {
                     player.TakeDamage(m_damage);

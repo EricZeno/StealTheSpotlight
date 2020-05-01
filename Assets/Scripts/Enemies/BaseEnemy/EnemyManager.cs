@@ -24,6 +24,7 @@ public class EnemyManager : MonoBehaviour {
 
     #region Cached Components
     private EnemyGraphics m_Graphics;
+    private ParticleSystem m_DeathParticles;
     #endregion
 
     #region Initialization
@@ -32,6 +33,7 @@ public class EnemyManager : MonoBehaviour {
         m_Room = GetComponentInParent<Room>();
         m_Data.ResetAllStatsDefault();
         m_Graphics = GetComponent<EnemyGraphics>();
+        m_DeathParticles = GetComponentInChildren<ParticleSystem>();
     }
     #endregion
 
@@ -83,7 +85,7 @@ public class EnemyManager : MonoBehaviour {
                 weaponUsed.OnKillEnemy();
             }
 
-            GetComponentInParent<Room>().EnemyDeath(this, playerID);
+            GetComponentInParent<Room>().EnemyDeath(this, playerID, transform.position);
             DropItem();
             if (weaponUsed != null) {
                 if (weaponUsed.GetItemName() == "HeartWand") {

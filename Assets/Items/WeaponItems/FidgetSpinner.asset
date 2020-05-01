@@ -20,7 +20,7 @@ MonoBehaviour:
   m_Icon: {fileID: 21300000, guid: 410337a7753d7fd44adae48e05cfc0ee, type: 3}
   m_Damage: 5
   m_KnockbackPower: 10
-  m_AnimationName: 
+  m_AnimationName: Fidget
   m_IsRanged: 1
   m_Projectile: {fileID: 4994506223826775271, guid: 19647c7969f24704595f99dc21b21587,
     type: 3}

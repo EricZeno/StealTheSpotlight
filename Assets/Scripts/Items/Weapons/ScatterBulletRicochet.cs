@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScatterBulletRicochet : MonoBehaviour
-{
+public class ScatterBulletRicochet : MonoBehaviour {
     #region Variables
     private Vector2 bulletVelocity;
     private int m_Bounces;
@@ -12,7 +11,7 @@ public class ScatterBulletRicochet : MonoBehaviour
 
     #region Initialization
     private void Start() {
-        bulletVelocity =  GetComponentInParent<Rigidbody2D>().velocity;
+        bulletVelocity = GetComponentInParent<Rigidbody2D>().velocity;
         m_Bounces = GetComponentInParent<ScatterBullet>().Bounces;
         m_AudioManager = GetComponent<AudioManager>();
     }
@@ -21,7 +20,6 @@ public class ScatterBulletRicochet : MonoBehaviour
     #region Bouncy Utils
     private void OnCollisionEnter2D(Collision2D collision) {
         Collider2D other = collision.collider;
-        Debug.Log(other.gameObject);
         if (other.gameObject.layer == LayerMask.NameToLayer("Wall") || other.gameObject.CompareTag("Turret") || other.gameObject.CompareTag("Rock")) {
             if (m_Bounces == 0) {
                 m_AudioManager.Play("Scattershot Bounce");

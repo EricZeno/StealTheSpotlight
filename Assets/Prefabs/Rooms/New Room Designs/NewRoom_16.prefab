@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6968223106731101036}
   - component: {fileID: 1824125604741196413}
   - component: {fileID: 5348330901808887806}
+  - component: {fileID: 8767322285005546393}
   m_Layer: 0
   m_Name: NewRoom_16
   m_TagString: Untagged
@@ -180,6 +181,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bcd7d74470a65a408504bf5ec3ef63e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_DeathParticles: {fileID: 5458558877504068428, guid: 8d2d57157c1a04dfb9fa8043f858c5dd,
+    type: 3}
+--- !u!114 &8767322285005546393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448893046939348457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41d7687816876d45983ea9e2437011c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Opendoor
+    clip: {fileID: 8300000, guid: 4b67fa08a87101c4087042e738bb9775, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &3930709783359067696
 GameObject:
   m_ObjectHideFlags: 0
@@ -13570,11 +13592,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6968223106731101036}
     m_Modifications:
-    - target: {fileID: 8316486599802924195, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
-        type: 3}
-      propertyPath: m_Name
-      value: Buzzer (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 6985350199106987680, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13629,6 +13646,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316486599802924195, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
+        type: 3}
+      propertyPath: m_Name
+      value: Buzzer (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d5f771f906a647b1b6f8c13bcfbb232, type: 3}
@@ -14545,11 +14567,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6968223106731101036}
     m_Modifications:
-    - target: {fileID: 8316486599802924195, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
-        type: 3}
-      propertyPath: m_Name
-      value: Buzzer (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 6985350199106987680, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14604,6 +14621,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316486599802924195, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
+        type: 3}
+      propertyPath: m_Name
+      value: Buzzer (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d5f771f906a647b1b6f8c13bcfbb232, type: 3}
@@ -18070,11 +18092,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6968223106731101036}
     m_Modifications:
-    - target: {fileID: 8316486599802924195, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
-        type: 3}
-      propertyPath: m_Name
-      value: Buzzer (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 6985350199106987680, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -18129,6 +18146,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316486599802924195, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
+        type: 3}
+      propertyPath: m_Name
+      value: Buzzer (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d5f771f906a647b1b6f8c13bcfbb232, type: 3}
@@ -21070,11 +21092,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6968223106731101036}
     m_Modifications:
-    - target: {fileID: 8316486599802924195, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
-        type: 3}
-      propertyPath: m_Name
-      value: Buzzer
-      objectReference: {fileID: 0}
     - target: {fileID: 6985350199106987680, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -21129,6 +21146,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316486599802924195, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
+        type: 3}
+      propertyPath: m_Name
+      value: Buzzer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d5f771f906a647b1b6f8c13bcfbb232, type: 3}

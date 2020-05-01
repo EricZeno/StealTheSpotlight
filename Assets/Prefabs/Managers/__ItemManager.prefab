@@ -62,7 +62,7 @@ MonoBehaviour:
   m_MiniBossDrops: 
   m_HardEnemyDrops: 
   m_MedEnemyDrops: 
-  m_EasyEnemyDrops: 0b1a00000c1a00000d1a00000e1a00000f1a0000101a0000
+  m_EasyEnemyDrops: 0b1a00000c1a00000d1a00000e1a00000f1a0000101a0000111a0000
   m_SwarmEnemyDrops: 
   m_EasyObjectiveDrops: 
   m_MediumObjectiveDrops: 

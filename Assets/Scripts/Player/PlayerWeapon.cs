@@ -137,12 +137,9 @@ public class PlayerWeapon : MonoBehaviour {
 
         //Special attack effects
         m_WeaponData.Attack();
-        //To Jasmine: Feel free to uncomment this line below, and then look at my comment below
-        //m_AudioManager.Play(m_WeaponData.PlayAudio());
+        m_AudioManager.Play(m_WeaponData.PlayAudio());
 
         if (m_WeaponData.IsRanged) {
-            //To Jasmine: delete the line below once you've taken care of the above.
-            m_AudioManager.Play(m_WeaponData.PlayAudio());
             FireProjectile();
         }
 

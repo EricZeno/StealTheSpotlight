@@ -9,6 +9,10 @@ public class Spikes : MonoBehaviour {
     private int m_damage;
 
     [SerializeField]
+    [Tooltip("The gap between damage ticks")]
+    private float m_DamageDelay;
+
+    [SerializeField]
     [Tooltip("How much spike takes to arm")]
     private float m_armtime;
 
@@ -34,6 +38,8 @@ public class Spikes : MonoBehaviour {
     private bool m_spike;
     private PlayerManager[] players;
     private AudioManager m_AudioManager;
+    private bool m_Damaging;
+    private float m_CurrDmgTime;
     #endregion
 
     #region Initialization
@@ -42,15 +48,26 @@ public class Spikes : MonoBehaviour {
         spriteRenderer = GetComponent<SpriteRenderer>();
         m_spike = false;
         m_AudioManager = GetComponent<AudioManager>();
+        m_CurrDmgTime = m_DamageDelay;
     }
     #endregion
 
     #region Update
     private void Update() {
+        if (m_CurrDmgTime > 0) {
+            m_CurrDmgTime -= Time.deltaTime;
+        }
+
+        if (m_CurrDmgTime <= 0) {
+            m_Damaging = true;
+        }
+
         if (m_spike && Time.timeScale != 0) {
             foreach (PlayerManager player in players) {
-                if (player != null) {
+                if (player != null && m_Damaging) {
                     player.TakeDamage(m_damage);
+                    m_Damaging = false;
+                    m_CurrDmgTime = m_DamageDelay;
                 }
             }
         }

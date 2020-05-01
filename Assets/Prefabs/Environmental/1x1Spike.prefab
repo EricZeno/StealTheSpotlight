@@ -120,7 +120,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1140a793719ad7f48add61b35fd49e5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_damage: 10
+  m_damage: 1
+  m_DamageDelay: 0.1
   m_armtime: 0.5
   m_disarmtime: 2
   spike_disabled: {fileID: 21300000, guid: 66e8004347df3244090494c8ac817a00, type: 3}

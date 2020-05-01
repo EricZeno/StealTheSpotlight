@@ -16,7 +16,7 @@ public class PointManager : MonoBehaviour {
 
     #region Constant
     private const int DEFAULT_SPOTLIGHT = -1;
-    private const int FLOOR_CLEARED_POINTS = 20;
+    private const int FLOOR_CLEARED_POINTS = 100;
     private const int PK_POINTS = 10;
     #endregion
 

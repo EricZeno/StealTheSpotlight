@@ -584,10 +584,10 @@ MonoBehaviour:
     m_BasePower: 0
     m_BaseMovementSpeed: 3
     m_Tenacity: 0
-    m_BaseHealth: 100
+    m_BaseHealth: 250
     m_points: 10
     m_AttackSpeed: 0
-    m_Damage: 100
+    m_Damage: 10
     m_AttackRange: 1
     m_AttackCone: 45
   m_DropCategory: 4

@@ -10,6 +10,12 @@ public class Room : MonoBehaviour {
     public static event MobKilled MobKilledEvent;
     #endregion
 
+    #region Editor Variables
+    [SerializeField]
+    [Tooltip("The particle system that appears on enemy death")]
+    private GameObject m_DeathParticles;
+    #endregion
+
     #region Private Variables
     private List<PlayerManager> m_Players;
     private List<EnemyManager> m_Enemies;
@@ -100,7 +106,7 @@ public class Room : MonoBehaviour {
         }
     }
 
-    public void EnemyDeath(EnemyManager enemy, int playerID) {
+    public void EnemyDeath(EnemyManager enemy, int playerID, Vector2 position) {
         // Give player credit for kill
         m_mobkills[playerID]++;
         m_Enemies.Remove(enemy);
@@ -108,6 +114,11 @@ public class Room : MonoBehaviour {
         if (m_Enemies.Count == 0) {
             // Give room clear points
             OpenDoors();
+        }
+
+        // Poof
+        if (m_DeathParticles != null) {
+            Instantiate(m_DeathParticles, position, Quaternion.identity);
         }
     }
 
@@ -126,11 +137,12 @@ public class Room : MonoBehaviour {
 
     #region Doors
     public void OpenDoors() {
+        m_AudioManager.Play("Opendoor");
         foreach (GameObject door in m_Doors) {
             // Play door opening animation
             door.SetActive(false);
         }
-        m_AudioManager.Play("Opendoor");
+
 
     }
     #endregion

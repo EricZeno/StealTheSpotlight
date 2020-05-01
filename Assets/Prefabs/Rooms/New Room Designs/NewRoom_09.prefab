@@ -13366,6 +13366,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bcd7d74470a65a408504bf5ec3ef63e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_DeathParticles: {fileID: 5458558877504068428, guid: 8d2d57157c1a04dfb9fa8043f858c5dd,
+    type: 3}
 --- !u!114 &-7569135238038318250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14651,11 +14653,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3196538927829589433}
     m_Modifications:
-    - target: {fileID: 631284976252667889, guid: f43f221ba52176f4985405e1bdf58916,
-        type: 3}
-      propertyPath: m_Name
-      value: Cultist
-      objectReference: {fileID: 0}
     - target: {fileID: 1970374141594930674, guid: f43f221ba52176f4985405e1bdf58916,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14710,6 +14707,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 631284976252667889, guid: f43f221ba52176f4985405e1bdf58916,
+        type: 3}
+      propertyPath: m_Name
+      value: Cultist
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f43f221ba52176f4985405e1bdf58916, type: 3}

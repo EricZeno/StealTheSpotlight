@@ -12,7 +12,7 @@ public class PointManager : MonoBehaviour {
     public static event Spotlight SpotlightEvent;
     public delegate void PointsUI(int player, float currpoints, int endpoints);
     public static event PointsUI PointsUIEvent;
-    public delegate void GameEnd(int first, int second, int third, int fourth);
+    public delegate void GameEnd(float[] playerpoints);
     public static event GameEnd GameEndEvent;
     #endregion
 
@@ -116,8 +116,7 @@ public class PointManager : MonoBehaviour {
             SpotlightEvent(player);
         }
         if (m_PlayersPoints[player] >= m_PointGoal) {
-            RankPlayers();
-            GameEndEvent(m_sorted[0], m_sorted[1], m_sorted[2], m_sorted[3]);
+            GameEndEvent(m_PlayersPoints);
         }
     }
 
@@ -133,8 +132,7 @@ public class PointManager : MonoBehaviour {
             SpotlightEvent(player);
         }
         if (m_PlayersPoints[player] >= m_PointGoal) {
-            RankPlayers();
-            GameEndEvent(m_sorted[0], m_sorted[1], m_sorted[2], m_sorted[3]);
+            GameEndEvent(m_PlayersPoints);
         }
     }
 
@@ -146,46 +144,6 @@ public class PointManager : MonoBehaviour {
         m_SpotlightPlayer = DEFAULT_SPOTLIGHT;
         m_dropped = Instantiate(m_Spotlight);
         m_dropped.transform.position = new Vector3(x, y, 0);
-    }
-
-    private void RankPlayers() {
-        m_sorted = new int[4];
-        float highest = 0;
-        int highestplayer = -1;
-        for (int i = 0; i < m_PlayersPoints.Length; i++) {
-            if (m_PlayersPoints[i] > highest) {
-                highest = m_PlayersPoints[i];
-                highestplayer = i;
-            }
-        }
-        m_sorted[0] = highestplayer;
-        highest = 0;
-        highestplayer = -1;
-        for (int i = 0; i < m_PlayersPoints.Length; i++) {
-            if (m_PlayersPoints[i] > highest && i != m_sorted[0]) {
-                highest = m_PlayersPoints[i];
-                highestplayer = i;
-            }
-        }
-        m_sorted[1] = highestplayer;
-        highest = 0;
-        highestplayer = -1;
-        for (int i = 0; i < m_PlayersPoints.Length; i++) {
-            if (m_PlayersPoints[i] > highest && i != m_sorted[0] && i != m_sorted[1]) {
-                highest = m_PlayersPoints[i];
-                highestplayer = i;
-            }
-        }
-        m_sorted[2] = highestplayer;
-        highest = 0;
-        highestplayer = -1;
-        for (int i = 0; i < m_PlayersPoints.Length; i++) {
-            if (m_PlayersPoints[i] > highest && i != m_sorted[0] && i != m_sorted[1] && i != m_sorted[2]) {
-                highest = m_PlayersPoints[i];
-                highestplayer = i;
-            }
-        }
-        m_sorted[3] = highestplayer;
     }
     #endregion
 

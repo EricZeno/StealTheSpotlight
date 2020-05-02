@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour {
 
     private void OnEnable() {
         PlayerManager.DeathEvent += Respawn;
-        PointManager.GameEndEvent += End;
+        PointManager.GameEndEvent += RankPlayers;
         CollisionTrigger.FloorChangeEvent += ResetPlayerLocation;
         CollisionTrigger.LoadDungeonEvent += PlaySoundtrack;
         DungeonGenerator.DungeonLoadedEvent += StartFloor;
@@ -298,6 +298,47 @@ public class GameManager : MonoBehaviour {
     private void PlayerPointUI(int player, float curr, int end) {
         m_Players[player].PointUI(curr, end);
     }
+
+    private void RankPlayers(float[] playerpoints) {
+        int[] sorted = new int[4];
+        float highest = 0;
+        int highestplayer = -1;
+        for (int i = 0; i < m_NumPlayers; i++) {
+            if (playerpoints[i] >= highest) {
+                highest = playerpoints[i];
+                highestplayer = i;
+            }
+        }
+        playerpoints[0] = highestplayer;
+        highest = 0;
+        highestplayer = -1;
+        for (int i = 0; i < m_NumPlayers; i++) {
+            if (playerpoints[i] >= highest && i != sorted[0]) {
+                highest = playerpoints[i];
+                highestplayer = i;
+            }
+        }
+        sorted[1] = highestplayer;
+        highest = 0;
+        highestplayer = -1;
+        for (int i = 0; i < m_NumPlayers; i++) {
+            if (playerpoints[i] >= highest && i != sorted[0] && i != sorted[1]) {
+                highest = playerpoints[i];
+                highestplayer = i;
+            }
+        }
+        sorted[2] = highestplayer;
+        highest = 0;
+        highestplayer = -1;
+        for (int i = 0; i < m_NumPlayers; i++) {
+            if (playerpoints[i] >= highest && i != sorted[0] && i != sorted[1] && i != sorted[2]) {
+                highest = playerpoints[i];
+                highestplayer = i;
+            }
+        }
+        sorted[3] = highestplayer;
+        End(sorted[0], sorted[1], sorted[2], sorted[3]);
+    }
     #endregion
 
     #region Changing Floors
@@ -364,7 +405,7 @@ public class GameManager : MonoBehaviour {
     #region Disable/Enders
     private void OnDisable() {
         PlayerManager.DeathEvent -= Respawn;
-        PointManager.GameEndEvent += End;
+        PointManager.GameEndEvent -= RankPlayers;
         CollisionTrigger.FloorChangeEvent -= ResetPlayerLocation;
         CollisionTrigger.LoadDungeonEvent -= PlaySoundtrack;
         DungeonGenerator.DungeonLoadedEvent -= StartFloor;

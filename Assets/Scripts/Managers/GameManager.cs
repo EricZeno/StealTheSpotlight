@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour {
     private const float TIME_TO_WAIT_BEFORE_PLAYER_SETUP = .2f;
     private const int NULL = -1;
     private const int STARTSCENE = 0;
-    private const int ENDSCENE = 3;
     #endregion
 
     #region Events and Delegates
@@ -126,6 +125,7 @@ public class GameManager : MonoBehaviour {
 
     private void OnEnable() {
         PlayerManager.DeathEvent += Respawn;
+        PointManager.GameEndEvent += End;
         CollisionTrigger.FloorChangeEvent += ResetPlayerLocation;
         CollisionTrigger.LoadDungeonEvent += PlaySoundtrack;
         DungeonGenerator.DungeonLoadedEvent += StartFloor;
@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour {
 
     #region Pause Screen
     private void Pause() {
-        if (SceneManager.GetActiveScene().buildIndex != STARTSCENE && SceneManager.GetActiveScene().buildIndex != ENDSCENE) {
+        if (SceneManager.GetActiveScene().buildIndex != STARTSCENE) {
             if (!m_paused) {
                 for (int i = 0; i < m_NumPlayers; i++) {
                     m_Players[i].PauseMap();
@@ -333,11 +333,38 @@ public class GameManager : MonoBehaviour {
     private void PlaySoundtrack() {
         m_AudioManager.Play("Soundtrack");
     }
+
+    private void End(int first, int second, int third, int fourth) {
+        m_Players[first].transform.position = new Vector3(1.54f, 1.14f, 0);
+        m_PlayerObjs[first].GetComponentInChildren<Camera>().enabled = false;
+        m_PlayerObjs[first].GetComponentInChildren<CapsuleCollider2D>().gameObject.SetActive(false);
+        m_PlayerObjs[first].GetComponentsInChildren<Canvas>()[1].gameObject.SetActive(false);
+        if (second != -1) {
+            m_Players[second].transform.position = new Vector3(-2.03f, -0.17f, 0);
+            m_PlayerObjs[second].GetComponentInChildren<Camera>().enabled = false;
+            m_PlayerObjs[second].GetComponentInChildren<CapsuleCollider2D>().gameObject.SetActive(false);
+            m_PlayerObjs[second].GetComponentsInChildren<Canvas>()[1].gameObject.SetActive(false);
+        }
+        if (third != -1) {
+            m_Players[third].transform.position = new Vector3(5.04f, -0.66f, 0);
+            m_PlayerObjs[third].GetComponentInChildren<Camera>().enabled = false;
+            m_PlayerObjs[third].GetComponentInChildren<CapsuleCollider2D>().gameObject.SetActive(false);
+            m_PlayerObjs[third].GetComponentsInChildren<Canvas>()[1].gameObject.SetActive(false);
+        }
+        if (fourth != -1) {
+            m_Players[fourth].transform.position = new Vector3(-5.18f, -1.05f, 0);
+            m_PlayerObjs[fourth].GetComponentInChildren<Camera>().enabled = false;
+            m_PlayerObjs[fourth].GetComponentInChildren<CapsuleCollider2D>().gameObject.SetActive(false);
+            m_PlayerObjs[fourth].GetComponentsInChildren<Canvas>()[1].gameObject.SetActive(false);
+        }
+        SceneManager.LoadScene(2);
+    }
     #endregion
 
     #region Disable/Enders
     private void OnDisable() {
         PlayerManager.DeathEvent -= Respawn;
+        PointManager.GameEndEvent += End;
         CollisionTrigger.FloorChangeEvent -= ResetPlayerLocation;
         CollisionTrigger.LoadDungeonEvent -= PlaySoundtrack;
         DungeonGenerator.DungeonLoadedEvent -= StartFloor;

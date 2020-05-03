@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Turret : MonoBehaviour
-{
+public class Turret : MonoBehaviour {
     #region Editor Variables
     [SerializeField]
     [Tooltip("How much damage do you take")]
@@ -32,6 +31,10 @@ public class Turret : MonoBehaviour
     [SerializeField]
     [Tooltip("How fast the bullets will travel")]
     private float m_shotspeed;
+
+    [SerializeField]
+    [Tooltip("Offset to make bullet spawn outside of turret")]
+    private Vector3 m_Offset;
     #endregion
 
     #region Private Variable
@@ -62,7 +65,7 @@ public class Turret : MonoBehaviour
 
     #region Shoot
     private IEnumerator Shoot() {
-        float timeBetweenShots = m_timeframe/ m_bullets;
+        float timeBetweenShots = m_timeframe / m_bullets;
         Vector2 firingVector = Vector2.up;
         //Fix direction
         firingVector = Quaternion.Euler(0, 0, m_degree) * firingVector;
@@ -70,6 +73,7 @@ public class Turret : MonoBehaviour
 
         for (int i = 0; i < m_bullets; i++) {
             GameObject bullet = Instantiate(m_bullet, transform);
+            bullet.transform.position = bullet.transform.position + m_Offset;
             bullet.GetComponent<Projectile>().Setup(m_damage, firingVector, m_shotspeed);
 
             yield return new WaitForSeconds(timeBetweenShots);

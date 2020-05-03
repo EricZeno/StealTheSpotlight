@@ -76,7 +76,17 @@ PrefabInstance:
     - target: {fileID: 6849667809695074953, guid: 1ad5335c86fe74d4a8371ea4055ee68d,
         type: 3}
       propertyPath: m_degree
-      value: 180
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849667809695074953, guid: 1ad5335c86fe74d4a8371ea4055ee68d,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849667809695074953, guid: 1ad5335c86fe74d4a8371ea4055ee68d,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ad5335c86fe74d4a8371ea4055ee68d, type: 3}

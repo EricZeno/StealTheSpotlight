@@ -120,14 +120,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a66b2b558010a8429e7625fc822d6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_damage: 100
+  m_damage: 10
   m_interval: 0
-  m_timeframe: 1
+  m_timeframe: 2
   m_bullets: 1
-  m_degree: 270
+  m_degree: 180
   m_bullet: {fileID: 7612764531837687787, guid: c186850bfae374f139781d027fdfd4a4,
     type: 3}
   m_shotspeed: 5
+  m_Offset: {x: 0, y: -1, z: 0}
 --- !u!50 &899120466195496551
 Rigidbody2D:
   serializedVersion: 4

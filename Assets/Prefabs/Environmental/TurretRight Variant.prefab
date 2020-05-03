@@ -73,5 +73,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 8f7f810056f5f7f449f92d8b14431472,
         type: 3}
+    - target: {fileID: 6604957587256893465, guid: b59d681e5008d5f4d929190a6df1ae4e,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604957587256893465, guid: b59d681e5008d5f4d929190a6df1ae4e,
+        type: 3}
+      propertyPath: m_degree
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604957587256893465, guid: b59d681e5008d5f4d929190a6df1ae4e,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b59d681e5008d5f4d929190a6df1ae4e, type: 3}

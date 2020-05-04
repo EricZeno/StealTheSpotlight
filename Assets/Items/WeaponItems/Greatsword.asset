@@ -19,7 +19,7 @@ MonoBehaviour:
   m_Limit: 0
   m_Icon: {fileID: -6449040788438266585, guid: aa3768e463b053848a3ddf91bdaeea66, type: 3}
   m_Damage: 10
-  m_KnockbackPower: 300
+  m_KnockbackPower: 200
   m_AnimationName: Greatsword
   m_IsRanged: 0
   m_ChargePerSecond: 20

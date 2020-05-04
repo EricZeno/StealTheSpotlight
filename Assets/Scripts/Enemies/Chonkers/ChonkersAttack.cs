@@ -180,7 +180,7 @@ public class ChonkersAttack : EnemyAttack {
                 case RAM_ATTACK_NUM:
                     target.GetComponent<PlayerManager>().TakeDamage(m_Manager.GetEnemyData().Damage);
                     target.GetComponent<PlayerMovement>().ApplyExternalForce(m_Manager.GetDir() * 200);
-                    target.GetComponent<PlayerMovement>().ApplyExternalForce(new Vector2(-dir.y, dir.x) * 100);
+                    target.GetComponent<PlayerMovement>().ApplyExternalForce(new Vector2(-dir.y, dir.x) * 125);
                     break;
             }
         }

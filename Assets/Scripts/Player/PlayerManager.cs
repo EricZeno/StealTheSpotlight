@@ -219,6 +219,10 @@ public class PlayerManager : MonoBehaviour {
         m_Input.SwitchCurrentActionMap("Pause");
     }
 
+    public void EndMap() {
+        m_Input.SwitchCurrentActionMap("End");
+    }
+
     public void RegularMap() {
         SwitchInputMap(InputMaps.GAMEPLAY);
     }

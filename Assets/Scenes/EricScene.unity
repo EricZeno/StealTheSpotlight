@@ -4376,7 +4376,7 @@ MonoBehaviour:
   sounds:
   - name: Opendoor
     clip: {fileID: 8300000, guid: 4b67fa08a87101c4087042e738bb9775, type: 3}
-    volume: 0.15
+    volume: 0
     pitch: 1
     loop: 0
     source: {fileID: 0}

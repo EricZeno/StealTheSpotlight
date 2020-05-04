@@ -11515,7 +11515,7 @@ MonoBehaviour:
   sounds:
   - name: Opendoor
     clip: {fileID: 8300000, guid: 4b67fa08a87101c4087042e738bb9775, type: 3}
-    volume: 0.15
+    volume: 0.3
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -13160,6 +13160,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3317021756888670623}
     m_Modifications:
+    - target: {fileID: 8316486599802924195, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
+        type: 3}
+      propertyPath: m_Name
+      value: Buzzer
+      objectReference: {fileID: 0}
     - target: {fileID: 6985350199106987680, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13214,11 +13219,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8316486599802924195, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
-        type: 3}
-      propertyPath: m_Name
-      value: Buzzer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d5f771f906a647b1b6f8c13bcfbb232, type: 3}
@@ -14810,6 +14810,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3317021756888670623}
     m_Modifications:
+    - target: {fileID: 8316486599802924195, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
+        type: 3}
+      propertyPath: m_Name
+      value: Buzzer (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 6985350199106987680, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14864,11 +14869,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8316486599802924195, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
-        type: 3}
-      propertyPath: m_Name
-      value: Buzzer (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d5f771f906a647b1b6f8c13bcfbb232, type: 3}

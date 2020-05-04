@@ -14329,7 +14329,7 @@ MonoBehaviour:
   sounds:
   - name: Opendoor
     clip: {fileID: 8300000, guid: 4b67fa08a87101c4087042e738bb9775, type: 3}
-    volume: 0.15
+    volume: 0.3
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -14415,6 +14415,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1947543494943738675}
     m_Modifications:
+    - target: {fileID: 631284976252667889, guid: cf3b143cb6ca4c5408c4458b1194192f,
+        type: 3}
+      propertyPath: m_Name
+      value: Goblin (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 1970374141594930674, guid: cf3b143cb6ca4c5408c4458b1194192f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14470,11 +14475,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 631284976252667889, guid: cf3b143cb6ca4c5408c4458b1194192f,
-        type: 3}
-      propertyPath: m_Name
-      value: Goblin (2)
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf3b143cb6ca4c5408c4458b1194192f, type: 3}
 --- !u!4 &2302850138115195655 stripped
@@ -14490,6 +14490,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1947543494943738675}
     m_Modifications:
+    - target: {fileID: 8316486599802924195, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
+        type: 3}
+      propertyPath: m_Name
+      value: Buzzer
+      objectReference: {fileID: 0}
     - target: {fileID: 6985350199106987680, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14544,11 +14549,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8316486599802924195, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
-        type: 3}
-      propertyPath: m_Name
-      value: Buzzer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d5f771f906a647b1b6f8c13bcfbb232, type: 3}
@@ -14865,6 +14865,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1947543494943738675}
     m_Modifications:
+    - target: {fileID: 8316486599802924195, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
+        type: 3}
+      propertyPath: m_Name
+      value: Buzzer (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 6985350199106987680, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14919,11 +14924,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8316486599802924195, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
-        type: 3}
-      propertyPath: m_Name
-      value: Buzzer (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d5f771f906a647b1b6f8c13bcfbb232, type: 3}
@@ -15315,6 +15315,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1947543494943738675}
     m_Modifications:
+    - target: {fileID: 631284976252667889, guid: cf3b143cb6ca4c5408c4458b1194192f,
+        type: 3}
+      propertyPath: m_Name
+      value: Goblin (3)
+      objectReference: {fileID: 0}
     - target: {fileID: 1970374141594930674, guid: cf3b143cb6ca4c5408c4458b1194192f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15369,11 +15374,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 631284976252667889, guid: cf3b143cb6ca4c5408c4458b1194192f,
-        type: 3}
-      propertyPath: m_Name
-      value: Goblin (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf3b143cb6ca4c5408c4458b1194192f, type: 3}
@@ -15465,6 +15465,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1947543494943738675}
     m_Modifications:
+    - target: {fileID: 631284976252667889, guid: cf3b143cb6ca4c5408c4458b1194192f,
+        type: 3}
+      propertyPath: m_Name
+      value: Goblin (4)
+      objectReference: {fileID: 0}
     - target: {fileID: 1970374141594930674, guid: cf3b143cb6ca4c5408c4458b1194192f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15519,11 +15524,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 631284976252667889, guid: cf3b143cb6ca4c5408c4458b1194192f,
-        type: 3}
-      propertyPath: m_Name
-      value: Goblin (4)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf3b143cb6ca4c5408c4458b1194192f, type: 3}
@@ -16215,6 +16215,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1947543494943738675}
     m_Modifications:
+    - target: {fileID: 6604957587256893471, guid: b59d681e5008d5f4d929190a6df1ae4e,
+        type: 3}
+      propertyPath: m_Name
+      value: TurretUp Variant
+      objectReference: {fileID: 0}
     - target: {fileID: 6604957587256893464, guid: b59d681e5008d5f4d929190a6df1ae4e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -16270,11 +16275,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6604957587256893471, guid: b59d681e5008d5f4d929190a6df1ae4e,
-        type: 3}
-      propertyPath: m_Name
-      value: TurretUp Variant
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b59d681e5008d5f4d929190a6df1ae4e, type: 3}
 --- !u!4 &2453208581679376027 stripped
@@ -16290,6 +16290,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1947543494943738675}
     m_Modifications:
+    - target: {fileID: 6604957587256893471, guid: b59d681e5008d5f4d929190a6df1ae4e,
+        type: 3}
+      propertyPath: m_Name
+      value: TurretUp Variant (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 6604957587256893464, guid: b59d681e5008d5f4d929190a6df1ae4e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -16344,11 +16349,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6604957587256893471, guid: b59d681e5008d5f4d929190a6df1ae4e,
-        type: 3}
-      propertyPath: m_Name
-      value: TurretUp Variant (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b59d681e5008d5f4d929190a6df1ae4e, type: 3}

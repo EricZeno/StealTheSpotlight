@@ -403,29 +403,29 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 269824
   m_PlayerSprites:
+  - m_Body: {fileID: 2767554632071913825, guid: ecf34c71b08a1482a8d2dcea975c41cc,
+      type: 3}
+    m_FrontLeg: {fileID: 2916934976778784899, guid: ecf34c71b08a1482a8d2dcea975c41cc,
+      type: 3}
+    m_BackLeg: {fileID: 7168489883931044081, guid: ecf34c71b08a1482a8d2dcea975c41cc,
+      type: 3}
+  - m_Body: {fileID: 3029804271020777020, guid: a5ff7f1b5233d4a0292f9a7dad578e71,
+      type: 3}
+    m_FrontLeg: {fileID: 1939139695423058989, guid: a5ff7f1b5233d4a0292f9a7dad578e71,
+      type: 3}
+    m_BackLeg: {fileID: -5743797532235334526, guid: a5ff7f1b5233d4a0292f9a7dad578e71,
+      type: 3}
   - m_Body: {fileID: -6251451809504726511, guid: b09a0ba786867844a8751d6fb997bf62,
       type: 3}
     m_FrontLeg: {fileID: -5666552777093224069, guid: b09a0ba786867844a8751d6fb997bf62,
       type: 3}
     m_BackLeg: {fileID: 7183195401824034768, guid: b09a0ba786867844a8751d6fb997bf62,
       type: 3}
-  - m_Body: {fileID: -1624966033272146146, guid: 30b950466e860c64cb6cd84fc615b8ce,
+  - m_Body: {fileID: -9198693368498527680, guid: df6f54f3b5a2d437fad9a732d3d93f67,
       type: 3}
-    m_FrontLeg: {fileID: -1554091803409064086, guid: 30b950466e860c64cb6cd84fc615b8ce,
+    m_FrontLeg: {fileID: 90847466997892385, guid: df6f54f3b5a2d437fad9a732d3d93f67,
       type: 3}
-    m_BackLeg: {fileID: -4433656585021795512, guid: 30b950466e860c64cb6cd84fc615b8ce,
-      type: 3}
-  - m_Body: {fileID: -3904387762387675012, guid: f2bc1f30e5ec5414a9d8080c19d50d66,
-      type: 3}
-    m_FrontLeg: {fileID: -6245907786405937765, guid: f2bc1f30e5ec5414a9d8080c19d50d66,
-      type: 3}
-    m_BackLeg: {fileID: 2744216982289079020, guid: f2bc1f30e5ec5414a9d8080c19d50d66,
-      type: 3}
-  - m_Body: {fileID: -2253152059789895653, guid: dee79e17c9bdf7c4a89d7f0136a3f04d,
-      type: 3}
-    m_FrontLeg: {fileID: 3076507176171165903, guid: dee79e17c9bdf7c4a89d7f0136a3f04d,
-      type: 3}
-    m_BackLeg: {fileID: -3976944033501616264, guid: dee79e17c9bdf7c4a89d7f0136a3f04d,
+    m_BackLeg: {fileID: -1098090903750019631, guid: df6f54f3b5a2d437fad9a732d3d93f67,
       type: 3}
 --- !u!114 &829974643921148582
 MonoBehaviour:

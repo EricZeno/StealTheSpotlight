@@ -1120,6 +1120,7 @@ GameObject:
   - component: {fileID: 4712431623432209335}
   - component: {fileID: 4071653141686641318}
   - component: {fileID: 7775716515978870565}
+  - component: {fileID: 5181345673654022446}
   m_Layer: 0
   m_Name: NewRoom_14
   m_TagString: Untagged
@@ -1643,6 +1644,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bcd7d74470a65a408504bf5ec3ef63e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_DeathParticles: {fileID: 5458558877504068428, guid: 8d2d57157c1a04dfb9fa8043f858c5dd,
+    type: 3}
+--- !u!114 &5181345673654022446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2876458474544866610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41d7687816876d45983ea9e2437011c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Opendoor
+    clip: {fileID: 8300000, guid: 4b67fa08a87101c4087042e738bb9775, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &7719538154157476878
 GameObject:
   m_ObjectHideFlags: 0
@@ -10236,7 +10258,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2034081425
   m_SortingLayer: -1
-  m_SortingOrder: -1
+  m_SortingOrder: -2
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -43224,11 +43246,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4712431623432209335}
     m_Modifications:
-    - target: {fileID: 631284976252667889, guid: cf3b143cb6ca4c5408c4458b1194192f,
-        type: 3}
-      propertyPath: m_Name
-      value: Goblin
-      objectReference: {fileID: 0}
     - target: {fileID: 1970374141594930674, guid: cf3b143cb6ca4c5408c4458b1194192f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -43283,6 +43300,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 631284976252667889, guid: cf3b143cb6ca4c5408c4458b1194192f,
+        type: 3}
+      propertyPath: m_Name
+      value: Goblin
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf3b143cb6ca4c5408c4458b1194192f, type: 3}

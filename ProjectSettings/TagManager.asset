@@ -9,6 +9,8 @@ TagManager:
   - Bush
   - Pot
   - Primed
+  - Rock
+  - Turret
   layers:
   - Default
   - TransparentFX

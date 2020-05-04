@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Multiplier: 2
-  m_PointGoal: 100
+  m_PointGoal: 1000
   m_SpotlightPoint: 0
   m_Spotlight: {fileID: 1245937366230377475, guid: 2e92279af574f0c419831c889741ea51,
     type: 3}

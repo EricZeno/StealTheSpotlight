@@ -6399,7 +6399,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2034081425
   m_SortingLayer: -1
-  m_SortingOrder: -1
+  m_SortingOrder: -2
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -11498,6 +11498,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bcd7d74470a65a408504bf5ec3ef63e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_DeathParticles: {fileID: 5458558877504068428, guid: 8d2d57157c1a04dfb9fa8043f858c5dd,
+    type: 3}
 --- !u!114 &-2417260470833264796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13158,11 +13160,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3317021756888670623}
     m_Modifications:
-    - target: {fileID: 8316486599802924195, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
-        type: 3}
-      propertyPath: m_Name
-      value: Buzzer
-      objectReference: {fileID: 0}
     - target: {fileID: 6985350199106987680, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13217,6 +13214,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316486599802924195, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
+        type: 3}
+      propertyPath: m_Name
+      value: Buzzer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d5f771f906a647b1b6f8c13bcfbb232, type: 3}
@@ -14808,11 +14810,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3317021756888670623}
     m_Modifications:
-    - target: {fileID: 8316486599802924195, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
-        type: 3}
-      propertyPath: m_Name
-      value: Buzzer (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 6985350199106987680, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14867,6 +14864,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316486599802924195, guid: 4d5f771f906a647b1b6f8c13bcfbb232,
+        type: 3}
+      propertyPath: m_Name
+      value: Buzzer (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d5f771f906a647b1b6f8c13bcfbb232, type: 3}

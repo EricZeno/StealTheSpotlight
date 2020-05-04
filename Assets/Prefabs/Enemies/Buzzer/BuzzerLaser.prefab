@@ -139,4 +139,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f46222f0b54384339bb533a28c237b4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LaserDamageMultiplier: 3
+  m_LaserDamageMultiplier: 5

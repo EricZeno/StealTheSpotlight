@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3603242942
+CRC: 3151383294
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 28b3dc9b3d7708676cdc84db694a6bb8
+    Hash: 43c4f47e0a6b15799d491693e33146b8
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 6c3815ce781ccd88363d1f423e47f213
+    Hash: bc4313f8c7b0102ee5d66e6e3ba435ac
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -30,9 +30,13 @@ ClassTypes:
 - Class: 83
   Script: {instanceID: 0}
 - Class: 114
+  Script: {fileID: 11500000, guid: b2488780bddfd2a41807dc64e1f14899, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 26698f61be0047d47a6603900225a66c, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: cb1281d131a411b498a4a2abe2b5288d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 6ab9aff292cf21b439122d010a3a3199, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 123340656fea96945a296c15095fa2a2, type: 3}
 - Class: 114
@@ -58,6 +62,7 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
+- Assets/Items/WeaponItems/FidgetSpinner.asset
 - Assets/Items/WeaponItems/Pony.asset
 - Assets/Items/WeaponItems/Guandao.asset
 - Assets/Items/WeaponItems/Scattershot.asset

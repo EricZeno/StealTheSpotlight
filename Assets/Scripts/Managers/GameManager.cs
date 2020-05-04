@@ -128,9 +128,7 @@ public class GameManager : MonoBehaviour {
         RightCurtain = transform.GetChild(0).GetChild(5).GetComponent<RectTransform>();
         transitioning = false;
 
-        //Debug.Log("Opening Curtains");
-        //StartCoroutine(BeginOpeningCurtains());
-
+        PlaySoundtrack();
         DontDestroyOnLoad(this);
     }
 
@@ -138,7 +136,6 @@ public class GameManager : MonoBehaviour {
         PlayerManager.DeathEvent += Respawn;
         PointManager.GameEndEvent += RankPlayers;
         CollisionTrigger.FloorChangeEvent += ResetPlayerLocation;
-        CollisionTrigger.LoadDungeonEvent += PlaySoundtrack;
         DungeonGenerator.DungeonLoadedEvent += StartFloor;
         PointManager.SpotlightEvent += SpotlightChange;
         PointManager.PointsUIEvent += PlayerPointUI;
@@ -331,6 +328,7 @@ public class GameManager : MonoBehaviour {
         m_Players[playerID].transform.position = m_SpawnPositions[playerID];
         m_Players[playerID].enabled = true;
         m_Players[playerID].Heal(100f);
+        m_AudioManager.Play("Respawn");
     }
     #endregion
 
@@ -460,6 +458,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private void End(int first, int second, int third, int fourth) {
+        m_AudioManager.Fade("Soundtrack", 2.5f);
         StartCoroutine(EndCoroutine(first, second, third, fourth));
     }
 
@@ -489,6 +488,7 @@ public class GameManager : MonoBehaviour {
             m_PlayerObjs[fourth].GetComponentInChildren<CapsuleCollider2D>().gameObject.SetActive(false);
             m_PlayerObjs[fourth].GetComponentsInChildren<Canvas>()[1].gameObject.SetActive(false);
         }
+        m_AudioManager.Play("WinMusic");
         SceneManager.LoadScene(2);
     }
     #endregion
@@ -498,7 +498,6 @@ public class GameManager : MonoBehaviour {
         PlayerManager.DeathEvent -= Respawn;
         PointManager.GameEndEvent -= RankPlayers;
         CollisionTrigger.FloorChangeEvent -= ResetPlayerLocation;
-        CollisionTrigger.LoadDungeonEvent -= PlaySoundtrack;
         DungeonGenerator.DungeonLoadedEvent -= StartFloor;
         PointManager.SpotlightEvent -= SpotlightChange;
         PointManager.PointsUIEvent -= PlayerPointUI;

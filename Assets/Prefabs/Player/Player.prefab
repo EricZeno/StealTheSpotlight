@@ -771,7 +771,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -919,7 +919,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1068,7 +1068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2445,19 +2445,19 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Heavy Hit 1
     clip: {fileID: 8300000, guid: c6e1d81d26e019d408e2ef3bd9a2ed4c, type: 3}
-    volume: 0.15
+    volume: 0.179
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: Heavy Hit 2
     clip: {fileID: 8300000, guid: 8eb32c00c339af64ebd194c7ad6f6903, type: 3}
-    volume: 0.15
+    volume: 0.176
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: Scattershot Use
-    clip: {fileID: 8300000, guid: ac535341eb016eb4bb6359b866cd19ff, type: 3}
-    volume: 0.15
+    clip: {fileID: 8300000, guid: 1a8e66c9dc656e74fbb76353658aa146, type: 3}
+    volume: 0.1
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -3610,7 +3610,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

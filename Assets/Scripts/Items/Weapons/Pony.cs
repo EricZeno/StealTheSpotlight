@@ -67,4 +67,9 @@ public class Pony : BaseWeaponItem {
         m_manager.m_Weapon.SetAnimationBool(m_PonyClipBool, false);
 
     }
+
+    public override string PlayAudio()
+    {
+        return "Heavy Hit 2";
+    }
 }

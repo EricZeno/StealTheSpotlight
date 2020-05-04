@@ -51,4 +51,9 @@ public class Guandao : BaseWeaponItem
         m_CurrentCharge = 0;
         m_Holding = false;
     }
+
+    public override string PlayAudio()
+    {
+        return "Light Hit 1";
+    }
 }

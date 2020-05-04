@@ -75,3 +75,9 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: SpotlightOn
+    clip: {fileID: 8300000, guid: d76d17016ffd11546a0c20ecf091c755, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}

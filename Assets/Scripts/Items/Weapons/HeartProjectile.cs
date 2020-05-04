@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,11 @@ public class HeartProjectile : MonoBehaviour {
     private int m_Damage;
     private float m_Knockback;
 
+    [SerializeField]
+    private GameObject uwuLarge;
+    [SerializeField]
+    private GameObject uwuSmall;
+
     #endregion
 
     #region Cached Components
@@ -22,6 +28,7 @@ public class HeartProjectile : MonoBehaviour {
     private float m_Scale;
     private float m_Radius;
     private AudioManager m_AudioManager;
+    private bool big;
     #endregion
 
     #region Initialization
@@ -35,7 +42,7 @@ public class HeartProjectile : MonoBehaviour {
 
     #region Projectile Setup Methods
 
-    public void Setup(int damage, Vector2 dir, float speed, PlayerManager player, float knockback, BaseWeaponItem data, float scale, float radius) {
+    public void Setup(int damage, Vector2 dir, float speed, PlayerManager player, float knockback, BaseWeaponItem data, float scale, float radius, bool big) {
         SetDamage(damage);
         SetVelocity(dir, speed);
         m_Manager = player;
@@ -100,13 +107,21 @@ public class HeartProjectile : MonoBehaviour {
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Wall") || other.CompareTag("Rock") || other.CompareTag("Turret")) {
             m_AudioManager.Play("Wand Hit");
-            Explode(other);
+            Destroy(gameObject);
         }
     }
 
     private void Explode(Collider2D other) {
         Vector3 position = other.transform.position;
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(position, m_Radius * m_Scale);
+        if (big)
+        {
+            GameObject particles = Instantiate(uwuLarge, transform.position, Quaternion.identity);
+        }
+        else {
+            GameObject particles = Instantiate(uwuLarge, transform.position, Quaternion.identity);
+        }
+        
 
         foreach (Collider2D colls in hitColliders) {
 

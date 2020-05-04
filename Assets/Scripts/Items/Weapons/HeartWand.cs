@@ -46,11 +46,11 @@ public class HeartWand : BaseWeaponItem
         HeartProjectile projectile = Instantiate(m_Projectile, m_manager.transform.position, Quaternion.Euler(0, 0, angle1));
         if (huge)
         {
-            projectile.transform.localScale = projectile.transform.localScale * 4;
-            projectile.Setup(m_Damage, m_manager.GetAimDir().normalized, m_ProjectileSpeed, m_manager, KnockbackPower, weaponData, m_Scale, m_ExplodeRadius);
+            projectile.transform.localScale = projectile.transform.localScale * 3;
+            projectile.Setup(m_Damage, m_manager.GetAimDir().normalized, m_ProjectileSpeed, m_manager, KnockbackPower, weaponData, m_Scale, m_ExplodeRadius, true);
         }
         else {
-            projectile.Setup(m_Damage, m_manager.GetAimDir().normalized, m_ProjectileSpeed, m_manager, KnockbackPower, weaponData, 1, m_ExplodeRadius);
+            projectile.Setup(m_Damage, m_manager.GetAimDir().normalized, m_ProjectileSpeed, m_manager, KnockbackPower, weaponData, 1, m_ExplodeRadius, false);
         }
         
     }

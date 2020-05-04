@@ -141,14 +141,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: spike
-    clip: {fileID: 8300000, guid: 378b962449f1379408314abd1573abcb, type: 3}
-    volume: 0.15
+    clip: {fileID: 8300000, guid: c745f52cb1e3e9149b775375b016c53d, type: 3}
+    volume: 0.07
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: spike2
     clip: {fileID: 8300000, guid: 7c92e575f8bf3274c9174ae89bb092cd, type: 3}
-    volume: 0.15
+    volume: 0.07
     pitch: 1
     loop: 0
     source: {fileID: 0}

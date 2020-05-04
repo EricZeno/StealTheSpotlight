@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -59,7 +58,6 @@ public class CollisionTrigger : MonoBehaviour {
         m_GameManager.CallCurtainsCoroutine();
         yield return new WaitForSeconds(3f);
         if (m_Level == Consts.DUNGEON_SCENE_NAME) {
-            LoadDungeonEvent();
             SceneManager.LoadSceneAsync(m_Level);
         }
         else {

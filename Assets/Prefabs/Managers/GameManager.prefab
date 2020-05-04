@@ -442,9 +442,21 @@ MonoBehaviour:
   sounds:
   - name: Soundtrack
     clip: {fileID: 8300000, guid: 05b8b4caa719b41e89952e2b92908397, type: 3}
-    volume: 0.5
+    volume: 0.2
     pitch: 1
     loop: 1
+    source: {fileID: 0}
+  - name: WinMusic
+    clip: {fileID: 8300000, guid: 19485663886cb7d4fa5769fc9eee8999, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Respawn
+    clip: {fileID: 8300000, guid: 3de2785cac8f1c243b024533269b039f, type: 3}
+    volume: 0.7
+    pitch: 1
+    loop: 0
     source: {fileID: 0}
 --- !u!1 &5795975974921478551
 GameObject:

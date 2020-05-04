@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine.Audio;
 using UnityEngine;
+using System.Collections;
 
 [System.Serializable]
 public struct Sound {
@@ -114,6 +115,7 @@ public class AudioManager : MonoBehaviour {
     public void Play(string name) {
         Sound s = Array.Find(sounds, sounds => sounds.Name == name);
         if (s.Source == null) {
+            Debug.LogWarning("Cannot find sound: " + name);
             return;
         }
         s.Source.Play();
@@ -123,6 +125,23 @@ public class AudioManager : MonoBehaviour {
         Sound s = Array.Find(sounds, sounds => sounds.Name == name);
         s.Pitch = pitch;
         s.Source.Play();
+    }
+
+    public void Fade(string name, float fadeTime) {
+        StartCoroutine(BeginFade(name, fadeTime));
+    }
+    
+    IEnumerator BeginFade(string name, float fadeTime)
+    {
+        Sound s = Array.Find(sounds, sounds => sounds.Name == name);
+        float startVolume = s.Source.volume;
+
+        while (s.Source.volume > 0)
+        {
+            s.Source.volume -= startVolume * Time.deltaTime / fadeTime;
+
+            yield return null;
+        }
     }
     #endregion
 

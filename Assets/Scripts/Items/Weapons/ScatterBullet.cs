@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -30,6 +32,7 @@ public class ScatterBullet : MonoBehaviour {
         m_Collider = GetComponent<BoxCollider2D>();
         m_AudioManager = GetComponent<AudioManager>();
 
+        StartCoroutine(CheckIdle());
     }
     #endregion
 
@@ -119,4 +122,21 @@ public class ScatterBullet : MonoBehaviour {
         }
     }
     #endregion
+
+    IEnumerator CheckIdle() {
+        Vector3 lastPosition = transform.position;
+        Vector3 currentPosition = transform.position;
+        bool idle = false;
+        while (!idle) {
+            lastPosition = transform.position;
+            yield return new WaitForSeconds(0.5f);
+            currentPosition = transform.position;
+            float delta = Vector3.Distance(currentPosition, lastPosition);
+            delta = Mathf.Abs(delta);
+            if (delta < .3f) {
+                Destroy(gameObject);
+            }
+        }
+
+    }
 }

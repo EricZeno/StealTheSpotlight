@@ -123,4 +123,9 @@ public class Greatsword : BaseWeaponItem {
         m_PassedThreshold = false;
         OverrideAnimations();
     }
+
+    public override string PlayAudio()
+    {
+        return "Heavy Hit 1";
+    }
 }

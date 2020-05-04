@@ -144,7 +144,6 @@ public class GameManager : MonoBehaviour {
         PointManager.PointsUIEvent += PlayerPointUI;
         PlayerManager.PauseEvent += Pause;
         PlayerManager.SelectEvent += Select;
-        Debug.Log("Opening Curtains");
         StartCoroutine(BeginOpeningCurtains());
     }
     #endregion
@@ -237,17 +236,15 @@ public class GameManager : MonoBehaviour {
     #endregion
 
     #region Curtain Logic
-    public void CallCoroutine() {
+    public void CallCurtainsCoroutine() {
         StartCoroutine(BeginClosingCurtains());
     }
-     IEnumerator BeginClosingCurtains() {
+    IEnumerator BeginClosingCurtains() {
         transitioning = true;
         bool startedClose = false;
         transform.GetChild(0).gameObject.SetActive(true);
-        while (transitioning)
-        {
-            if (!startedClose)
-            {
+        while (transitioning) {
+            if (!startedClose) {
                 StartCoroutine(CloseCurtains());
                 startedClose = true;
             }
@@ -256,14 +253,11 @@ public class GameManager : MonoBehaviour {
         StartCoroutine(BeginOpeningCurtains());
     }
 
-    IEnumerator BeginOpeningCurtains()
-    {
+    IEnumerator BeginOpeningCurtains() {
         transitioning = true;
         bool startedOpen = false;
-        while (transitioning)
-        {
-            if (!startedOpen)
-            {
+        while (transitioning) {
+            if (!startedOpen) {
                 StartCoroutine(OpenCurtains());
                 startedOpen = true;
             }
@@ -272,13 +266,12 @@ public class GameManager : MonoBehaviour {
         transform.GetChild(0).gameObject.SetActive(false);
     }
 
-    IEnumerator OpenCurtains()
-    {
+    IEnumerator OpenCurtains() {
+        yield return new WaitForSeconds(1);
         float elapsedTime = 0;
         Vector3 minScale = LeftCurtain.localScale;
         Vector3 maxScale = new Vector3(0, 1, 0);
-        while (LeftCurtain.localScale.x > 0)
-        {
+        while (LeftCurtain.localScale.x > 0) {
             LeftCurtain.localScale = Vector3.Lerp(minScale, maxScale, elapsedTime / 3);
             RightCurtain.localScale = Vector3.Lerp(minScale, maxScale, elapsedTime / 3);
             elapsedTime += Time.deltaTime;
@@ -287,13 +280,11 @@ public class GameManager : MonoBehaviour {
         transitioning = false;
     }
 
-    IEnumerator CloseCurtains()
-    {
+    IEnumerator CloseCurtains() {
         float elapsedTime = 0;
         Vector3 minScale = LeftCurtain.localScale;
         Vector3 maxScale = new Vector3(1, 1, 0);
-        while (LeftCurtain.localScale.x < 1)
-        {
+        while (LeftCurtain.localScale.x < 1) {
             LeftCurtain.localScale = Vector3.Lerp(minScale, maxScale, elapsedTime / 3);
             RightCurtain.localScale = Vector3.Lerp(minScale, maxScale, elapsedTime / 3);
             elapsedTime += Time.deltaTime;
@@ -436,6 +427,11 @@ public class GameManager : MonoBehaviour {
     }
 
     private void ResetPlayerLocation(int placeholder = -1) {
+        PointManager pointManager = FindObjectOfType<PointManager>();
+        if (pointManager.GetSingleton().GoalReached()) {
+            return;
+        }
+
         for (int i = 0; i < m_Players.Length; i++) {
             if (m_Players[i]) {
                 m_Players[i].transform.position = m_SpawnPositions[i];
@@ -464,6 +460,13 @@ public class GameManager : MonoBehaviour {
     }
 
     private void End(int first, int second, int third, int fourth) {
+        StartCoroutine(EndCoroutine(first, second, third, fourth));
+    }
+
+    private IEnumerator EndCoroutine(int first, int second, int third, int fourth) {
+        CallCurtainsCoroutine();
+        yield return new WaitForSeconds(3f);
+
         m_Players[first].transform.position = new Vector3(1.54f, 1.14f, 0);
         m_PlayerObjs[first].GetComponentInChildren<Camera>().enabled = false;
         m_PlayerObjs[first].GetComponentInChildren<CapsuleCollider2D>().gameObject.SetActive(false);

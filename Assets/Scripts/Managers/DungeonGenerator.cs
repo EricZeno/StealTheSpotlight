@@ -60,12 +60,12 @@ public class DungeonGenerator : MonoBehaviour {
 
     #region Constants
     #region Misc.
-    private const int DUNGEON_SIZE = 8;
-    private const int NUM_OBJECTIVES = 3;
+    private const int DUNGEON_SIZE = 7;
+    private const int NUM_OBJECTIVES = 2;
     private const float VERTICAL_ROOM_SIZE = 28;
     private const float HORIZONTAL_ROOM_SIZE = 36;
-    private const float MIN_ROOM_DENSITY_PERC = .34f;
-    private const float MAX_ROOM_DENSITY_PERC = .45f;
+    private const float MIN_ROOM_DENSITY_PERC = .12f;
+    private const float MAX_ROOM_DENSITY_PERC = .19f;
     private const float ROW_MULTIPLIER = 5.2f;
     private const float COL_MULTIPLIER = 3299.653f;
     #endregion
@@ -90,10 +90,10 @@ public class DungeonGenerator : MonoBehaviour {
     private const int MAX_BOSS_ROW = 6;
 
     private const int MIN_SHOP_ROW = 0;
-    private const int MAX_SHOP_ROW = 7;
+    private const int MAX_SHOP_ROW = 5;
 
     private const int MIN_OBJECTIVE_ROW = 0;
-    private const int MAX_OBJECTIVE_ROW = 7;
+    private const int MAX_OBJECTIVE_ROW = 6;
     #endregion
     #endregion
 

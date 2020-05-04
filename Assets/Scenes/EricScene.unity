@@ -675,6 +675,11 @@ PrefabInstance:
       propertyPath: m_SpawnPositions.Array.data[3].y
       value: -10
       objectReference: {fileID: 0}
+    - target: {fileID: 7834413499432343812, guid: 94479c9e2b54647e9a08f2660159e8d1,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94479c9e2b54647e9a08f2660159e8d1, type: 3}
 --- !u!1001 &1350011615
@@ -815,13 +820,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6321197853261728736, guid: 19f9a071b623641ce83b933abefcbcda,
         type: 3}
-      propertyPath: m_PointGoal
+      propertyPath: m_SpotlightPoint
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6321197853261728736, guid: 19f9a071b623641ce83b933abefcbcda,
         type: 3}
-      propertyPath: m_SpotlightPoint
-      value: 1
+      propertyPath: m_PointGoal
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19f9a071b623641ce83b933abefcbcda, type: 3}
@@ -1207,6 +1212,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6699573925213664570}
     m_Modifications:
+    - target: {fileID: 1686058511724571081, guid: 892c4b1e9e2fd4a62a46db37d2eaa52a,
+        type: 3}
+      propertyPath: m_Name
+      value: FloorTransition
+      objectReference: {fileID: 0}
     - target: {fileID: 3881546361156701353, guid: 892c4b1e9e2fd4a62a46db37d2eaa52a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1261,11 +1271,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1686058511724571081, guid: 892c4b1e9e2fd4a62a46db37d2eaa52a,
-        type: 3}
-      propertyPath: m_Name
-      value: FloorTransition
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 892c4b1e9e2fd4a62a46db37d2eaa52a, type: 3}

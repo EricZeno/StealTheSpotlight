@@ -264,7 +264,10 @@ public class GameManager : MonoBehaviour {
     }
 
     IEnumerator OpenCurtains() {
-        yield return new WaitForSeconds(1);
+        if (SceneManager.GetActiveScene().buildIndex != 0) {
+            yield return new WaitForSeconds(1);
+        }
+
         float elapsedTime = 0;
         Vector3 minScale = LeftCurtain.localScale;
         Vector3 maxScale = new Vector3(0, 1, 0);

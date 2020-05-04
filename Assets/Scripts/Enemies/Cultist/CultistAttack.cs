@@ -20,13 +20,16 @@ public class CultistAttack : EnemyAttack {
     [SerializeField]
     [Tooltip("Radius of the rune")]
     private float m_RuneRadius;
+
+    [SerializeField]
+    [Tooltip("The sprite that the rune flashes to when damaging")]
+    private Sprite m_FlashSprite;
     #endregion
 
     #region Initialization
     private void Awake() {
         base.Awake();
         m_Damage = m_Manager.GetEnemyData().Damage;
-        //m_Rune.transform.localScale = new Vector3(m_RuneRadius, m_RuneRadius, 1);
     }
     #endregion
 
@@ -41,9 +44,10 @@ public class CultistAttack : EnemyAttack {
         m_AttackLocked = true;
         GameObject rune = Instantiate(m_Rune, target, Quaternion.identity);
         rune.transform.position = target;
-        rune.GetComponent<RuneDestroyer>().time = m_CastTime;
         rune.SetActive(true);
         yield return new WaitForSeconds(m_CastTime);
+
+        StartCoroutine(RuneFlash(rune));
 
         RaycastHit2D[] targets = Physics2D.CircleCastAll(rune.transform.position, m_RuneRadius, Vector3.up, 0.01f);
         foreach (RaycastHit2D hit in targets) {
@@ -53,9 +57,25 @@ public class CultistAttack : EnemyAttack {
             }
         }
 
+        yield return new WaitForSeconds(.4f);
         Destroy(rune);
         m_AttackLocked = false;
         ((CultistMovement)m_Movement).Attacking = false;
+    }
+
+    private IEnumerator RuneFlash(GameObject rune) {
+        float flashDelay = .2f;
+        int numOfFlashes = 1;
+
+        SpriteRenderer runeSR = rune.GetComponent<SpriteRenderer>();
+        Sprite currSprite = runeSR.sprite;
+
+        for (int i = 0; i < numOfFlashes; i++) {
+            runeSR.sprite = m_FlashSprite;
+            yield return new WaitForSeconds(flashDelay);
+            runeSR.sprite = currSprite;
+            yield return new WaitForSeconds(flashDelay);
+        }
     }
     #endregion
 

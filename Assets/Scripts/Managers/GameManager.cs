@@ -470,6 +470,23 @@ public class GameManager : MonoBehaviour {
 
     private IEnumerator EndCoroutine(int first, int second, int third, int fourth) {
         CallCurtainsCoroutine();
+
+        if (first != -1) {
+            m_Players[first].Heal(100f);
+        }
+
+        if (second != -1) {
+            m_Players[second].Heal(100f);
+        }
+
+        if (third != -1) {
+            m_Players[third].Heal(100f);
+        }
+
+        if (fourth != -1) {
+            m_Players[fourth].Heal(100f);
+        }
+
         yield return new WaitForSeconds(3f);
 
         m_Players[first].EndMap();

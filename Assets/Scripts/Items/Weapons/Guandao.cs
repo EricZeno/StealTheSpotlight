@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Guandao", menuName = "Items/Weapons/Guandao")]
-public class Guandao : BaseWeaponItem
-{
+public class Guandao : BaseWeaponItem {
     #region Editor Variables
     [SerializeField]
     [Tooltip("Max charge for shooting forwards.")]
@@ -43,8 +42,6 @@ public class Guandao : BaseWeaponItem
 
     private void Release() {
         m_manager.m_Weapon.SetAnimationBool(m_ChargeBool, false);
-
-        Debug.Log(m_CurrentCharge);
 
         m_manager.GetComponent<PlayerMovement>().ApplyExternalForce(m_manager.GetAimDir() * m_CurrentCharge);
 

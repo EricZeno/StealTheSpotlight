@@ -135,7 +135,6 @@ public class GameManager : MonoBehaviour {
     private void OnEnable() {
         PlayerManager.DeathEvent += Respawn;
         PointManager.GameEndEvent += RankPlayers;
-        CollisionTrigger.FloorChangeEvent += ResetPlayerLocation;
         DungeonGenerator.DungeonLoadedEvent += StartFloor;
         PointManager.SpotlightEvent += SpotlightChange;
         PointManager.PointsUIEvent += PlayerPointUI;
@@ -498,7 +497,6 @@ public class GameManager : MonoBehaviour {
     private void OnDisable() {
         PlayerManager.DeathEvent -= Respawn;
         PointManager.GameEndEvent -= RankPlayers;
-        CollisionTrigger.FloorChangeEvent -= ResetPlayerLocation;
         DungeonGenerator.DungeonLoadedEvent -= StartFloor;
         PointManager.SpotlightEvent -= SpotlightChange;
         PointManager.PointsUIEvent -= PlayerPointUI;

@@ -156,6 +156,7 @@ public class PointManager : MonoBehaviour {
     #region Floor Reset
     private void FloorComplete(int player) {
         m_PlayersPoints[player] += FLOOR_CLEARED_POINTS;
+        PointsUIEvent(player, m_PlayersPoints[player], m_PointGoal);
         m_AudioManager.Play("PointGain");
         m_AudioManager.Play("Win1");
         if (m_PlayersPoints[player] >= m_PointGoal) {

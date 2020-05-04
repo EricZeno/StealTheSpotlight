@@ -8,7 +8,7 @@ public class GoblinAttack : EnemyAttack {
         GameObject target = collision.gameObject;
         if (target.CompareTag(Consts.PLAYER_TAG)) {
             target.GetComponent<PlayerManager>().TakeDamage(m_Manager.GetEnemyData().Damage);
-            target.GetComponent<PlayerMovement>().ApplyExternalForce(m_Manager.GetDir() * 200);
+            target.GetComponent<PlayerMovement>().ApplyExternalForce(m_Manager.GetDir() * 150);
         }
     }
     #endregion

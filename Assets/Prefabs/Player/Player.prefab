@@ -1764,7 +1764,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -82.00006, y: -54}
-  m_SizeDelta: {x: 286.80005, y: 53.799988}
+  m_SizeDelta: {x: 423.82, y: 53.799988}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &2202365628039888530
 CanvasRenderer:
@@ -1795,12 +1795,12 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
+    m_Font: {fileID: 12800000, guid: 56fca12f91b8945fab973b0f6ba1de00, type: 3}
+    m_FontSize: 50
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
-    m_MaxSize: 40
+    m_MaxSize: 50
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1

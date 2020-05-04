@@ -135,7 +135,6 @@ public class GameManager : MonoBehaviour {
     private void OnEnable() {
         PlayerManager.DeathEvent += Respawn;
         PointManager.GameEndEvent += RankPlayers;
-        CollisionTrigger.FloorChangeEvent += ResetPlayerLocation;
         DungeonGenerator.DungeonLoadedEvent += StartFloor;
         PointManager.SpotlightEvent += SpotlightChange;
         PointManager.PointsUIEvent += PlayerPointUI;
@@ -265,6 +264,7 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator OpenCurtains() {
         yield return new WaitForSeconds(1);
+
         float elapsedTime = 0;
         Vector3 minScale = LeftCurtain.localScale;
         Vector3 maxScale = new Vector3(0, 1, 0);
@@ -454,6 +454,12 @@ public class GameManager : MonoBehaviour {
     }
 
     private void PlaySoundtrack() {
+        StartCoroutine(SoundtrackCoroutine());
+    }
+
+    private IEnumerator SoundtrackCoroutine() {
+        yield return new WaitForSeconds(.1f);
+
         m_AudioManager.Play("Soundtrack");
     }
 
@@ -466,23 +472,27 @@ public class GameManager : MonoBehaviour {
         CallCurtainsCoroutine();
         yield return new WaitForSeconds(3f);
 
+        m_Players[first].EndMap();
         m_Players[first].transform.position = new Vector3(1.54f, 1.14f, 0);
         m_PlayerObjs[first].GetComponentInChildren<Camera>().enabled = false;
         m_PlayerObjs[first].GetComponentInChildren<CapsuleCollider2D>().gameObject.SetActive(false);
         m_PlayerObjs[first].GetComponentsInChildren<Canvas>()[1].gameObject.SetActive(false);
         if (second != -1) {
+            m_Players[second].EndMap();
             m_Players[second].transform.position = new Vector3(-2.03f, -0.17f, 0);
             m_PlayerObjs[second].GetComponentInChildren<Camera>().enabled = false;
             m_PlayerObjs[second].GetComponentInChildren<CapsuleCollider2D>().gameObject.SetActive(false);
             m_PlayerObjs[second].GetComponentsInChildren<Canvas>()[1].gameObject.SetActive(false);
         }
         if (third != -1) {
+            m_Players[third].EndMap();
             m_Players[third].transform.position = new Vector3(5.04f, -0.66f, 0);
             m_PlayerObjs[third].GetComponentInChildren<Camera>().enabled = false;
             m_PlayerObjs[third].GetComponentInChildren<CapsuleCollider2D>().gameObject.SetActive(false);
             m_PlayerObjs[third].GetComponentsInChildren<Canvas>()[1].gameObject.SetActive(false);
         }
         if (fourth != -1) {
+            m_Players[fourth].EndMap();
             m_Players[fourth].transform.position = new Vector3(-5.18f, -1.05f, 0);
             m_PlayerObjs[fourth].GetComponentInChildren<Camera>().enabled = false;
             m_PlayerObjs[fourth].GetComponentInChildren<CapsuleCollider2D>().gameObject.SetActive(false);
@@ -497,7 +507,6 @@ public class GameManager : MonoBehaviour {
     private void OnDisable() {
         PlayerManager.DeathEvent -= Respawn;
         PointManager.GameEndEvent -= RankPlayers;
-        CollisionTrigger.FloorChangeEvent -= ResetPlayerLocation;
         DungeonGenerator.DungeonLoadedEvent -= StartFloor;
         PointManager.SpotlightEvent -= SpotlightChange;
         PointManager.PointsUIEvent -= PlayerPointUI;

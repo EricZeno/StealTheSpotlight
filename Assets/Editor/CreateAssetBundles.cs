@@ -11,7 +11,6 @@ public class CreateAssetBundles {
         if (!Directory.Exists(dir)) {
             Directory.CreateDirectory(dir);
         }
-        //BuildPipeline.BuildAssetBundles(dir, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows);
         BuildPipeline.BuildAssetBundles(dir, BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
     }
     #endregion

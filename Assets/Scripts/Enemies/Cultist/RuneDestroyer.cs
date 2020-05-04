@@ -10,7 +10,7 @@ public class RuneDestroyer : MonoBehaviour {
         }
     }
 
-    // Start is called before the first frame update
+    // Start is called before the first frame update	
     void Start() {
         StartCoroutine(Delete());
     }

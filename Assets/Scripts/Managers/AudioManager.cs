@@ -95,6 +95,8 @@ public class AudioManager : MonoBehaviour {
     [SerializeField]
     [Tooltip("The list of sounds to be played")]
     private Sound[] sounds;
+
+    private bool m_EndScreen;
     #endregion
 
     #region Initialization
@@ -108,14 +110,20 @@ public class AudioManager : MonoBehaviour {
             sounds[i].Source.pitch = s.Pitch;
             sounds[i].Source.loop = s.Loop;
         }
+
+        m_EndScreen = false;
     }
     #endregion
 
     #region Play Sounds
     public void Play(string name) {
+        if (m_EndScreen && name != "WinMusic") {
+            return;
+        }
+
         Sound s = Array.Find(sounds, sounds => sounds.Name == name);
         if (s.Source == null) {
-            Debug.LogWarning("Cannot find sound: " + name);
+            //Debug.LogWarning("Cannot find sound: " + name);
             return;
         }
         s.Source.Play();
@@ -130,14 +138,12 @@ public class AudioManager : MonoBehaviour {
     public void Fade(string name, float fadeTime) {
         StartCoroutine(BeginFade(name, fadeTime));
     }
-    
-    IEnumerator BeginFade(string name, float fadeTime)
-    {
+
+    IEnumerator BeginFade(string name, float fadeTime) {
         Sound s = Array.Find(sounds, sounds => sounds.Name == name);
         float startVolume = s.Source.volume;
 
-        while (s.Source.volume > 0)
-        {
+        while (s.Source.volume > 0) {
             s.Source.volume -= startVolume * Time.deltaTime / fadeTime;
 
             yield return null;
@@ -145,4 +151,17 @@ public class AudioManager : MonoBehaviour {
     }
     #endregion
 
+    #region Events and Delegates
+    private void OnEnable() {
+        PointManager.GameEndEvent += EndGame;
+    }
+
+    private void OnDisable() {
+        PointManager.GameEndEvent -= EndGame;
+    }
+
+    private void EndGame(float[] playerpoints) {
+        m_EndScreen = true;
+    }
+    #endregion
 }

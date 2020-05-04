@@ -79,7 +79,7 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: IsMoving
     m_EventTreshold: 0
-  - m_ConditionMode: 2
+  - m_ConditionMode: 1
     m_ConditionEvent: IsFacingLeft
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
@@ -107,7 +107,7 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: IsMoving
     m_EventTreshold: 0
-  - m_ConditionMode: 1
+  - m_ConditionMode: 2
     m_ConditionEvent: IsFacingLeft
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
@@ -201,7 +201,7 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: IsMoving
     m_EventTreshold: 0
-  - m_ConditionMode: 1
+  - m_ConditionMode: 2
     m_ConditionEvent: IsFacingLeft
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
@@ -319,7 +319,7 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: IsMoving
     m_EventTreshold: 0
-  - m_ConditionMode: 2
+  - m_ConditionMode: 1
     m_ConditionEvent: IsFacingLeft
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}

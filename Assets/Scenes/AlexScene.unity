@@ -1174,6 +1174,11 @@ PrefabInstance:
     - target: {fileID: 6321197853261728736, guid: 19f9a071b623641ce83b933abefcbcda,
         type: 3}
       propertyPath: m_SpotlightPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6321197853261728736, guid: 19f9a071b623641ce83b933abefcbcda,
+        type: 3}
+      propertyPath: m_PointGoal
       value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []

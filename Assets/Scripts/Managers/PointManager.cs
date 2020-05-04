@@ -30,7 +30,17 @@ public class PointManager : MonoBehaviour {
     private int m_floor;
     private int[] m_sorted;
     private AudioManager m_AudioManager;
-    private Text m_floorText;
+    private bool m_GoalReached;
+    #endregion
+
+    #region Accessors
+    public bool GoalReached() {
+        return m_GoalReached;
+    }
+
+    public PointManager GetSingleton() {
+        return m_Singleton;
+    }
     #endregion
 
     #region Editor Variables
@@ -73,7 +83,6 @@ public class PointManager : MonoBehaviour {
         m_SpotlightPlayer = DEFAULT_SPOTLIGHT;
         m_floor = 0;
         m_AudioManager = GetComponent<AudioManager>();
-        m_floorText = GetComponentInChildren<Text>();
 
         DontDestroyOnLoad(this);
     }
@@ -81,7 +90,6 @@ public class PointManager : MonoBehaviour {
     private void OnEnable() {
         //Event for moving to the next floor
         CollisionTrigger.FloorChangeEvent += FloorComplete;
-        CollisionTrigger.FloorTextEvent += StartFloor;
         //Event for when a player kills another player
         PlayerManager.PKEvent += GivePK;
         //Event for when a player clears a room
@@ -146,41 +154,13 @@ public class PointManager : MonoBehaviour {
     #endregion
 
     #region Floor Reset
-    private void StartFloor() {
-        m_floor += 1;
-        Debug.Log(m_floorText);
-        m_floorText.text = $"Floor {m_floor}";
-        m_floorText.color = new Color(1, 1, 1, 1);
-        StartCoroutine(FadeOut(m_fadetime));
-    }
-
     private void FloorComplete(int player) {
         m_PlayersPoints[player] += FLOOR_CLEARED_POINTS;
         m_AudioManager.Play("PointGain");
         m_AudioManager.Play("Win1");
         if (m_PlayersPoints[player] >= m_PointGoal) {
+            m_GoalReached = true;
             GameEndEvent(m_PlayersPoints);
-        }
-    }
-
-    IEnumerator FadeOut(float lerpTime) {
-        float timeStartedLerping = Time.time;
-        float timeSinceStarted = Time.time - timeStartedLerping;
-        float percentageComplete = timeSinceStarted / lerpTime;
-
-        while (true) {
-            timeSinceStarted = Time.time - timeStartedLerping;
-            percentageComplete = timeSinceStarted / lerpTime;
-
-            float currentValue = Mathf.Lerp(1, 0, percentageComplete);
-
-            m_floorText.color = new Color(1, 1, 1, currentValue);
-
-            if (percentageComplete >= 1) {
-                break;
-            }
-
-            yield return new WaitForEndOfFrame();
         }
     }
     #endregion
@@ -188,7 +168,6 @@ public class PointManager : MonoBehaviour {
     #region Disable
     private void OnDisable() {
         CollisionTrigger.FloorChangeEvent -= FloorComplete;
-        CollisionTrigger.LoadDungeonEvent -= StartFloor;
         PlayerManager.PKEvent -= GivePK;
         Room.MobKilledEvent -= GiveMobKill;
         PlayerManager.DropSpotlightEvent -= DropSpotlight;

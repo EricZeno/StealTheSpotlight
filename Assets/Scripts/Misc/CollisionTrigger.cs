@@ -31,8 +31,7 @@ public class CollisionTrigger : MonoBehaviour {
     private bool transitioning;
     #endregion
 
-    private void Start()
-    {
+    private void Start() {
         m_GameManager = FindObjectOfType<GameManager>();
         LeftCurtain = m_GameManager.transform.GetChild(0).GetChild(4).GetComponent<RectTransform>();
         RightCurtain = m_GameManager.transform.GetChild(0).GetChild(5).GetComponent<RectTransform>();
@@ -49,63 +48,24 @@ public class CollisionTrigger : MonoBehaviour {
     }
 
     IEnumerator BeginClosing(Collider2D collision) {
-        m_GameManager.CallCoroutine();
+        if (SceneManager.GetActiveScene().name == Consts.DUNGEON_SCENE_NAME) {
+            FloorChangeEvent(collision.GetComponent<PlayerManager>().GetID());
+            PointManager pointManager = FindObjectOfType<PointManager>();
+            if (pointManager.GetSingleton().GoalReached()) {
+                yield break;
+            }
+        }
+
+        m_GameManager.CallCurtainsCoroutine();
         yield return new WaitForSeconds(3f);
-        if (m_Level == Consts.DUNGEON_SCENE_NAME)
-        {
+        if (m_Level == Consts.DUNGEON_SCENE_NAME) {
             LoadDungeonEvent();
             SceneManager.LoadSceneAsync(m_Level);
-            FloorTextEvent();
         }
-        else
-        {
+        else {
             FloorChangeEvent(collision.GetComponent<PlayerManager>().GetID());
             SceneManager.LoadScene(m_Level);
-            FloorTextEvent();
         }
     }
-
-    //IEnumerator BeginOpening() {
-    //    transitioning = true;
-    //    bool startedOpen = false;
-    //    while (transitioning)
-    //    {
-    //        if (!startedOpen)
-    //        {
-    //            StartCoroutine(OpenCurtains());
-    //            startedOpen = true;
-    //        }
-    //        yield return null;
-    //    }
-    //    m_GameManager = FindObjectOfType<GameManager>();
-    //    m_GameManager.transform.GetChild(0).gameObject.SetActive(false);
-    //}
-
-    //IEnumerator CloseCurtains() {
-    //    float elapsedTime = 0;
-    //    Vector3 minScale = LeftCurtain.localScale;
-    //    Vector3 maxScale = new Vector3(3, 1, 0);
-    //    while (LeftCurtain.localScale.x < 3) {
-    //        LeftCurtain.localScale = Vector3.Lerp(minScale, maxScale, elapsedTime / 3);
-    //        RightCurtain.localScale = Vector3.Lerp(minScale, maxScale, elapsedTime / 3);
-    //        elapsedTime += Time.deltaTime;
-    //        yield return null;
-    //    }
-    //    transitioning = false;
-    //}
-
-    //IEnumerator OpenCurtains() {
-    //    float elapsedTime = 0;
-    //    Vector3 minScale = LeftCurtain.localScale;
-    //    Vector3 maxScale = new Vector3(0, 1, 0);
-    //    while (LeftCurtain.localScale.x > 0)
-    //    {
-    //        LeftCurtain.localScale = Vector3.Lerp(minScale, maxScale, elapsedTime / 3);
-    //        RightCurtain.localScale = Vector3.Lerp(minScale, maxScale, elapsedTime / 3);
-    //        elapsedTime += Time.deltaTime;
-    //        yield return null;
-    //    }
-    //    transitioning = false;
-    //}
     #endregion
 }

@@ -190,12 +190,10 @@ public class PlayerManager : MonoBehaviour {
     }
 
     private void OnPause(InputValue value) {
-        Debug.Log("Pause");
         PauseEvent();
     }
 
     private void OnUnpause(InputValue value) {
-        Debug.Log("Unpause");
         PauseEvent();
     }
 

@@ -67,12 +67,12 @@ MonoBehaviour:
   m_EasyObjectiveDrops: 
   m_MediumObjectiveDrops: 
   m_HardObjectiveDrops: 
-  m_ChestDrops: 01000000030000000400000005000000060000000700000008000000060d0000070d0000080d00000b1a00000c1a00000d1a00000e1a00000f1a0000
+  m_ChestDrops: 0b1a00000c1a00000d1a00000e1a00000f1a0000101a0000111a0000
   m_BossDropRate: 0
   m_MinibossDropRate: 0
   m_HardEnemyDropRate: 0
   m_MediumEnemyDropRate: 0
-  m_EasyEnemyDropRate: 0.4
+  m_EasyEnemyDropRate: 0.2
   m_SwarmEnemyDropRate: 0
   m_ChestDropRate: 1
   m_HardObjectiveDropRate: 0

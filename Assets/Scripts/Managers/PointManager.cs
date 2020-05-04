@@ -30,6 +30,7 @@ public class PointManager : MonoBehaviour {
     private int m_floor;
     private int[] m_sorted;
     private AudioManager m_AudioManager;
+    private Text m_floorText;
     #endregion
 
     #region Editor Variables
@@ -48,10 +49,6 @@ public class PointManager : MonoBehaviour {
     [SerializeField]
     [Tooltip("This is the dropped spotlight")]
     private GameObject m_Spotlight;
-
-    [SerializeField]
-    [Tooltip("This is the text for floors")]
-    private Text m_floorText;
 
     [SerializeField]
     [Tooltip("This is the timer for the text to fade")]
@@ -76,6 +73,7 @@ public class PointManager : MonoBehaviour {
         m_SpotlightPlayer = DEFAULT_SPOTLIGHT;
         m_floor = 0;
         m_AudioManager = GetComponent<AudioManager>();
+        m_floorText = GetComponentInChildren<Text>();
 
         DontDestroyOnLoad(this);
     }
@@ -150,6 +148,7 @@ public class PointManager : MonoBehaviour {
     #region Floor Reset
     private void StartFloor() {
         m_floor += 1;
+        Debug.Log(m_floorText);
         m_floorText.text = $"Floor {m_floor}";
         m_floorText.color = new Color(1, 1, 1, 1);
         StartCoroutine(FadeOut(m_fadetime));
@@ -160,7 +159,7 @@ public class PointManager : MonoBehaviour {
         m_AudioManager.Play("PointGain");
         m_AudioManager.Play("Win1");
         if (m_PlayersPoints[player] >= m_PointGoal) {
-            //Endgame
+            GameEndEvent(m_PlayersPoints);
         }
     }
 

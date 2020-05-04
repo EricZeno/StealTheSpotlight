@@ -30,11 +30,13 @@ public class CollisionTrigger : MonoBehaviour {
             if (m_Level == Consts.DUNGEON_SCENE_NAME) {
                 LoadDungeonEvent();
                 SceneManager.LoadSceneAsync(m_Level);
+                Debug.Log("Event was called");
                 FloorTextEvent();
             }
             else {
                 FloorChangeEvent(collision.GetComponent<PlayerManager>().GetID());
                 SceneManager.LoadScene(m_Level);
+                Debug.Log("Event was called");
                 FloorTextEvent();
             }
         }

@@ -454,6 +454,12 @@ public class GameManager : MonoBehaviour {
     }
 
     private void PlaySoundtrack() {
+        StartCoroutine(SoundtrackCoroutine());
+    }
+
+    private IEnumerator SoundtrackCoroutine() {
+        yield return new WaitForSeconds(.1f);
+
         m_AudioManager.Play("Soundtrack");
     }
 

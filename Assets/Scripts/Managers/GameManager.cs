@@ -89,6 +89,10 @@ public class GameManager : MonoBehaviour {
 
     private bool m_paused;
     private int m_select;
+
+    private RectTransform LeftCurtain;
+    private RectTransform RightCurtain;
+    private bool transitioning;
     #endregion
 
     #region Cached Components
@@ -121,6 +125,13 @@ public class GameManager : MonoBehaviour {
         m_commands[0] = "resume";
         m_commands[1] = "exit";
 
+        LeftCurtain = transform.GetChild(0).GetChild(4).GetComponent<RectTransform>();
+        RightCurtain = transform.GetChild(0).GetChild(5).GetComponent<RectTransform>();
+        transitioning = false;
+
+        //Debug.Log("Opening Curtains");
+        //StartCoroutine(BeginOpeningCurtains());
+
         DontDestroyOnLoad(this);
     }
 
@@ -133,6 +144,8 @@ public class GameManager : MonoBehaviour {
         PointManager.PointsUIEvent += PlayerPointUI;
         PlayerManager.PauseEvent += Pause;
         PlayerManager.SelectEvent += Select;
+        Debug.Log("Opening Curtains");
+        StartCoroutine(BeginOpeningCurtains());
     }
     #endregion
 
@@ -162,6 +175,10 @@ public class GameManager : MonoBehaviour {
                 m_paused = true;
                 Time.timeScale = 0;
                 GetComponentInChildren<Canvas>(true).gameObject.SetActive(true);
+                GetComponentInChildren<Canvas>(true).transform.GetChild(0).gameObject.SetActive(true);
+                GetComponentInChildren<Canvas>(true).transform.GetChild(1).gameObject.SetActive(true);
+                GetComponentInChildren<Canvas>(true).transform.GetChild(2).gameObject.SetActive(true);
+                GetComponentInChildren<Canvas>(true).transform.GetChild(3).gameObject.SetActive(true);
             }
             else if (m_paused) {
                 for (int i = 0; i < m_NumPlayers; i++) {
@@ -169,6 +186,10 @@ public class GameManager : MonoBehaviour {
                 }
                 m_paused = false;
                 Time.timeScale = 1;
+                GetComponentInChildren<Canvas>(true).transform.GetChild(0).gameObject.SetActive(false);
+                GetComponentInChildren<Canvas>(true).transform.GetChild(1).gameObject.SetActive(false);
+                GetComponentInChildren<Canvas>(true).transform.GetChild(2).gameObject.SetActive(false);
+                GetComponentInChildren<Canvas>(true).transform.GetChild(3).gameObject.SetActive(false);
                 GetComponentInChildren<Canvas>(true).gameObject.SetActive(false);
             }
         }
@@ -212,6 +233,73 @@ public class GameManager : MonoBehaviour {
             }
         }
         SceneManager.LoadScene(0);
+    }
+    #endregion
+
+    #region Curtain Logic
+    public void CallCoroutine() {
+        StartCoroutine(BeginClosingCurtains());
+    }
+     IEnumerator BeginClosingCurtains() {
+        transitioning = true;
+        bool startedClose = false;
+        transform.GetChild(0).gameObject.SetActive(true);
+        while (transitioning)
+        {
+            if (!startedClose)
+            {
+                StartCoroutine(CloseCurtains());
+                startedClose = true;
+            }
+            yield return null;
+        }
+        StartCoroutine(BeginOpeningCurtains());
+    }
+
+    IEnumerator BeginOpeningCurtains()
+    {
+        transitioning = true;
+        bool startedOpen = false;
+        while (transitioning)
+        {
+            if (!startedOpen)
+            {
+                StartCoroutine(OpenCurtains());
+                startedOpen = true;
+            }
+            yield return null;
+        }
+        transform.GetChild(0).gameObject.SetActive(false);
+    }
+
+    IEnumerator OpenCurtains()
+    {
+        float elapsedTime = 0;
+        Vector3 minScale = LeftCurtain.localScale;
+        Vector3 maxScale = new Vector3(0, 1, 0);
+        while (LeftCurtain.localScale.x > 0)
+        {
+            LeftCurtain.localScale = Vector3.Lerp(minScale, maxScale, elapsedTime / 3);
+            RightCurtain.localScale = Vector3.Lerp(minScale, maxScale, elapsedTime / 3);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        transitioning = false;
+    }
+
+    IEnumerator CloseCurtains()
+    {
+        float elapsedTime = 0;
+        Vector3 minScale = LeftCurtain.localScale;
+        Vector3 maxScale = new Vector3(1, 1, 0);
+        while (LeftCurtain.localScale.x < 1)
+        {
+            LeftCurtain.localScale = Vector3.Lerp(minScale, maxScale, elapsedTime / 3);
+            RightCurtain.localScale = Vector3.Lerp(minScale, maxScale, elapsedTime / 3);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        transitioning = false;
     }
     #endregion
 
